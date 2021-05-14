@@ -20,7 +20,7 @@ Initial Autoclickers to Create for the User-Generated Library (Some of These Wer
 Another function of this program will be that it will support autoclickers as macros. For instance, the user could set it up that when he presses ‘G’ on the keyboard and the program is running, that the autoclicker he linked to the key runs.
 
 
-#Notes
+# Notes
 - This is still currently in development for version 1.0
 
 # Authors (So Far)
