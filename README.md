@@ -1,5 +1,5 @@
 # Autoclicker Program
-This will by far be the biggest project of these, and the one that I’ve already started the programming of. The most important part about this program is that it will support easily generatable autoclickers for a user, support any number of autoclickers from a user-generated library that will be existing, and users will be able to easily use any autoclicker, as well as easily create any autoclicker. 
+This will by far be the biggest project of these, and the one that I’ve already started the programming of. The most important part about this program is that it will support easily generatable autoclickers for a user, support any number of autoclickers from a user-generated library that will be existing, and users will be able to easily use any autoclicker, as well as easily create any autoclicker.
 
 One such function of ease is that users will be able to easily create menus for their autoclickers, being able to customize the layout of their autoclickers, even to the extent of supporting user profiles and preset customized layouts. Users will also easily be able to “load” or “save” any autoclickers, as well.
 
@@ -17,7 +17,7 @@ Initial Autoclickers to Create for the User-Generated Library (Some of These Wer
 
 - N64 game model extractor -> Extract models from N64 games via Lemmy’s Plugin
 
-Another function of this program will be that it will support autoclickers as macros. For instance, the user could set it up that when he presses ‘G’ on the keyboard and the program is running, that the autoclicker he linked to the key runs.
+Another function of this program will be that it will support autoclickers as macros. For instance, the user could set it up that when he presses ‘G’ on the keyboard and the program is running, that the autoclicker he linked to the key runs. 
 
 
 # Notes
