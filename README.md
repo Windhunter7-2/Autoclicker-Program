@@ -25,4 +25,4 @@ Another function of this program will be that it will support autoclickers as ma
 
 # Authors (So Far)
 - Evan Baker
-
+- Nicholas Szymonik
