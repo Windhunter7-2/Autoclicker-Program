@@ -7,6 +7,8 @@ package ClickingTranslation;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
+import ImageComparison.CompareImages;
+
 public class Mapping {
 	
 	/**
@@ -32,10 +34,20 @@ public class Mapping {
 			Keyboard start = new Keyboard();
 			start.startAutoclick(instructions);
 		}
-		else if ( first.equals("Advanced Keyboard") )
+		else if ( first.equals("AdvancedKeyboard") )
 		{
 			Advanced_Keyboard start = new Advanced_Keyboard();
 			start.startAutoclick(instructions);
+		}
+		else if ( first.equals("Wait") )
+		{
+			CompareImages start = new CompareImages();
+			start.startAutoclick_wait(instructions);
+		}
+		else if ( first.equals("CompareImages") )
+		{
+			CompareImages start = new CompareImages();
+			start.startAutoclick_cmpImg(instructions);
 		}
 		
 		//MAJOR EDITING: INSERT OTHER FORMS OF AUTO-CLICKS <HERE>...
