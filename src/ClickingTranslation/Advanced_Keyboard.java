@@ -1,5 +1,8 @@
 package ClickingTranslation;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 public class Advanced_Keyboard {
@@ -22,8 +25,135 @@ public class Advanced_Keyboard {
 	 */
 	private int numClicks;
 	
+	/**
+	 * This is whether this class is processing 
+	 */
+	private boolean isUnicode;
+	
 	public void startAutoclick(ArrayList<String> instructions)
 	{
+		convertInstructions(instructions);
+		Robot click = null;
+		try {
+			click = new Robot();
+			for (int i = 0; i < numClicks; ++i) {
+				if (isUnicode) {
+					throw new RuntimeException("TODO clickUnicode()");
+				} else {
+					switch (keyCombo) {
+					//TODO test all combos beneath this line
+					case "Windows + .":
+						click.keyPress(KeyEvent.VK_WINDOWS);
+						click.keyPress(KeyEvent.VK_PERIOD);
+						click.keyRelease(KeyEvent.VK_PERIOD);
+						click.keyRelease(KeyEvent.VK_WINDOWS);
+						break;
+					case "Windows + Shift + S":
+						click.keyPress(KeyEvent.VK_WINDOWS);
+						click.keyPress(KeyEvent.VK_SHIFT);
+						click.keyPress(KeyEvent.VK_S);
+						click.keyPress(KeyEvent.VK_S);
+						click.keyRelease(KeyEvent.VK_SHIFT);
+						click.keyRelease(KeyEvent.VK_WINDOWS);
+						break;
+					case "Alt + Tab":
+						click.keyPress(KeyEvent.VK_ALT);
+						click.keyPress(KeyEvent.VK_TAB);
+						click.keyRelease(KeyEvent.VK_TAB);
+						click.keyRelease(KeyEvent.VK_ALT);
+						break;
+					case "Printscreen":
+						click.keyPress(KeyEvent.VK_PRINTSCREEN);
+						click.keyRelease(KeyEvent.VK_PRINTSCREEN);
+						break;
+					case "Caps Lock":
+						click.keyPress(KeyEvent.VK_CAPS_LOCK);
+						click.keyRelease(KeyEvent.VK_CAPS_LOCK);
+						break;
+					case "Tab":
+						click.keyPress(KeyEvent.VK_TAB);
+						click.keyRelease(KeyEvent.VK_TAB);
+						break;
+					case "Enter":
+						click.keyPress(KeyEvent.VK_ENTER);
+						click.keyRelease(KeyEvent.VK_ENTER);
+						break;
+					case "Escape":
+						click.keyPress(KeyEvent.VK_ESCAPE);
+						click.keyRelease(KeyEvent.VK_ESCAPE);
+						break;
+					case "Shift": //hold
+						click.keyPress(KeyEvent.VK_SHIFT);
+						click.delay(1000); //TODO figure out how long to hold for
+						click.keyRelease(KeyEvent.VK_SHIFT);
+						break;
+					case "Alt": //hold
+						click.keyPress(KeyEvent.VK_ALT);
+						click.delay(1000); //TODO figure out how long to hold for
+						click.keyRelease(KeyEvent.VK_ALT);
+						break;
+					case "Ctrl": //hold
+						click.keyPress(KeyEvent.VK_CONTROL);
+						click.delay(1000); //TODO figure out how long to hold for
+						click.keyRelease(KeyEvent.VK_CONTROL);
+						break;
+					case "F1":
+						click.keyPress(KeyEvent.VK_F1);
+						click.keyRelease(KeyEvent.VK_F1);
+						break;
+					case "F2":
+						click.keyPress(KeyEvent.VK_F2);
+						click.keyRelease(KeyEvent.VK_F2);
+						break;
+					case "F3":
+						click.keyPress(KeyEvent.VK_F3);
+						click.keyRelease(KeyEvent.VK_F3);
+						break;
+					case "F4":
+						click.keyPress(KeyEvent.VK_F4);
+						click.keyRelease(KeyEvent.VK_F4);
+						break;
+					case "F5":
+						click.keyPress(KeyEvent.VK_F5);
+						click.keyRelease(KeyEvent.VK_F5);
+						break;
+					case "F6":
+						click.keyPress(KeyEvent.VK_F6);
+						click.keyRelease(KeyEvent.VK_F6);
+						break;
+					case "F7":
+						click.keyPress(KeyEvent.VK_F7);
+						click.keyRelease(KeyEvent.VK_F7);
+						break;
+					case "F8":
+						click.keyPress(KeyEvent.VK_F8);
+						click.keyRelease(KeyEvent.VK_F8);
+						break;
+					case "F9":
+						click.keyPress(KeyEvent.VK_F9);
+						click.keyRelease(KeyEvent.VK_F9);
+						break;
+					case "F10":
+						click.keyPress(KeyEvent.VK_F10);
+						click.keyRelease(KeyEvent.VK_F10);
+						break;
+					case "F11":
+						click.keyPress(KeyEvent.VK_F11);
+						click.keyRelease(KeyEvent.VK_F11);
+						break;
+					case "F12":
+						click.keyPress(KeyEvent.VK_F12);
+						click.keyRelease(KeyEvent.VK_F12);
+						break;
+					default:
+						throw new UnsupportedOperationException("The keyboard combination \"" + keyCombo + "\" is not defined");
+					}
+				}
+			}
+		} catch (AWTException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		/*
 		 * Must be O(n), where n is numClicks
 		 * This starts the auto-click of the given instructions. First call convertInstructions(instructions) to set the
@@ -55,6 +185,10 @@ public class Advanced_Keyboard {
 	
 	private void convertInstructions(ArrayList<String> instructions)
 	{
+		numClicks = Integer.valueOf(instructions.get(0));
+		unicodeKey = Integer.valueOf(instructions.get(1));
+		keyCombo = instructions.get(2);
+		isUnicode = Boolean.valueOf(instructions.get(3));
 		/*
 		 * Must be O(1)
 		 * Given that the format of the given instructions ArrayList is the following:
@@ -74,5 +208,4 @@ public class Advanced_Keyboard {
 
 
 	}
-
 }

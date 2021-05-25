@@ -1,0 +1,6 @@
+Image Processing
+-Check a particular box before clicking
+	-User defines region by click/drag
+	-No tolerance
+-If match, click and continue; else, wait
+	-End wait after specific amount of time, fail
