@@ -32,6 +32,18 @@ public class Advanced_Keyboard {
 	
 	public void startAutoclick(ArrayList<String> instructions)
 	{
+		/*
+		 * Must be O(n), where n is numClicks
+		 * This starts the auto-click of the given instructions. First call convertInstructions(instructions) to set the
+		 * globals to be used, and then implement the keypresses, via either calling clickUnicode(), if unicodeKey is not
+		 * equal to 0, or if it is 0, instead do a series of keyPresses with a Robot class, matching the keyboard combination
+		 * in the String keyCombo. The currently supported ones in Version 1 of the program will be:
+		 * “Windows + .”, “Windows + Shift + S”, “Alt + Tab”, “Printscreen”, “Caps Lock”, “Tab”, “Enter”, “Escape”, “Delete”,
+		 * “Backspace”, “Shift” (Hold), “Alt” (Hold), “Ctrl” (Hold), and “FX” where “X” is which number (For example, “F1”, “F2”, etc.)
+		 * For example, if after calling convertInstructions(), numClicks is 2, unicodeKey is 0, and keyCombo is “Alt + Tab”, it should
+		 * use the Robot to hold down the Alt key while pressing the Tab key, and then do that a second time, as well. See the Keyboard
+		 * class for a similar example.
+		 */
 		convertInstructions(instructions);
 		Robot click = null;
 		try {
@@ -40,48 +52,39 @@ public class Advanced_Keyboard {
 				if (isUnicode) {
 					throw new RuntimeException("TODO clickUnicode()");
 				} else {
-					switch (keyCombo) {
-					//TODO test all combos beneath this line
+					switch (keyCombo) {	
 					case "Windows + .":
-						click.keyPress(KeyEvent.VK_WINDOWS);
-						click.keyPress(KeyEvent.VK_PERIOD);
-						click.keyRelease(KeyEvent.VK_PERIOD);
-						click.keyRelease(KeyEvent.VK_WINDOWS);
+						pressOrder(click, new int[]{KeyEvent.VK_WINDOWS, KeyEvent.VK_PERIOD});
 						break;
 					case "Windows + Shift + S":
-						click.keyPress(KeyEvent.VK_WINDOWS);
-						click.keyPress(KeyEvent.VK_SHIFT);
-						click.keyPress(KeyEvent.VK_S);
-						click.keyPress(KeyEvent.VK_S);
-						click.keyRelease(KeyEvent.VK_SHIFT);
-						click.keyRelease(KeyEvent.VK_WINDOWS);
+						pressOrder(click, new int[] {KeyEvent.VK_WINDOWS, KeyEvent.VK_SHIFT, KeyEvent.VK_S});
 						break;
+						//TODO test all combos beneath this line
 					case "Alt + Tab":
-						click.keyPress(KeyEvent.VK_ALT);
-						click.keyPress(KeyEvent.VK_TAB);
-						click.keyRelease(KeyEvent.VK_TAB);
-						click.keyRelease(KeyEvent.VK_ALT);
+						pressOrder(click, new int[] {KeyEvent.VK_ALT, KeyEvent.VK_TAB});
 						break;
 					case "Printscreen":
-						click.keyPress(KeyEvent.VK_PRINTSCREEN);
-						click.keyRelease(KeyEvent.VK_PRINTSCREEN);
+						pressOrder(click, new int[] {KeyEvent.VK_PRINTSCREEN});
 						break;
 					case "Caps Lock":
-						click.keyPress(KeyEvent.VK_CAPS_LOCK);
-						click.keyRelease(KeyEvent.VK_CAPS_LOCK);
+						pressOrder(click, new int[] {KeyEvent.VK_CAPS_LOCK});
 						break;
 					case "Tab":
-						click.keyPress(KeyEvent.VK_TAB);
-						click.keyRelease(KeyEvent.VK_TAB);
+						pressOrder(click, new int[] {KeyEvent.VK_TAB});
 						break;
 					case "Enter":
-						click.keyPress(KeyEvent.VK_ENTER);
-						click.keyRelease(KeyEvent.VK_ENTER);
+						pressOrder(click, new int[] {KeyEvent.VK_ENTER});
 						break;
 					case "Escape":
-						click.keyPress(KeyEvent.VK_ESCAPE);
-						click.keyRelease(KeyEvent.VK_ESCAPE);
+						pressOrder(click, new int[] {KeyEvent.VK_ESCAPE});
 						break;
+						/*NOTE: If the user is already holding a key when click.keyRelease is called,
+						 *then the user's held key will also be canceled.
+						 *For instance, if the user is holding SHIFT when that key is released,
+						 *subsequent letters will be lowercase even if the user keeps holding shift.
+						 *This doesn't break anything - releasing the key and pressing it again still works-
+						 *but it is a behavior to keep in mind.						
+						 */
 					case "Shift": //hold
 						click.keyPress(KeyEvent.VK_SHIFT);
 						click.delay(1000); //TODO figure out how long to hold for
@@ -97,53 +100,46 @@ public class Advanced_Keyboard {
 						click.delay(1000); //TODO figure out how long to hold for
 						click.keyRelease(KeyEvent.VK_CONTROL);
 						break;
+						/* NOTE: holding the "Fn" key while using this program does nothing. 
+						 * The function keys act as they would in the application's context.
+						 * There's no KeyEvent.VK_FN either.
+						 * The Fn key might be special to my laptop's keyboard, but I don't know.
+						 */
 					case "F1":
-						click.keyPress(KeyEvent.VK_F1);
-						click.keyRelease(KeyEvent.VK_F1);
+						pressOrder(click, new int[] {KeyEvent.VK_F1});
 						break;
 					case "F2":
-						click.keyPress(KeyEvent.VK_F2);
-						click.keyRelease(KeyEvent.VK_F2);
+						pressOrder(click, new int[] {KeyEvent.VK_F2});
 						break;
 					case "F3":
-						click.keyPress(KeyEvent.VK_F3);
-						click.keyRelease(KeyEvent.VK_F3);
+						pressOrder(click, new int[] {KeyEvent.VK_F3});
 						break;
 					case "F4":
-						click.keyPress(KeyEvent.VK_F4);
-						click.keyRelease(KeyEvent.VK_F4);
+						pressOrder(click, new int[] {KeyEvent.VK_F4});
 						break;
 					case "F5":
-						click.keyPress(KeyEvent.VK_F5);
-						click.keyRelease(KeyEvent.VK_F5);
+						pressOrder(click, new int[] {KeyEvent.VK_F5});
 						break;
 					case "F6":
-						click.keyPress(KeyEvent.VK_F6);
-						click.keyRelease(KeyEvent.VK_F6);
+						pressOrder(click, new int[] {KeyEvent.VK_F6});
 						break;
 					case "F7":
-						click.keyPress(KeyEvent.VK_F7);
-						click.keyRelease(KeyEvent.VK_F7);
+						pressOrder(click, new int[] {KeyEvent.VK_F7});
 						break;
 					case "F8":
-						click.keyPress(KeyEvent.VK_F8);
-						click.keyRelease(KeyEvent.VK_F8);
+						pressOrder(click, new int[] {KeyEvent.VK_F8});
 						break;
-					case "F9":
-						click.keyPress(KeyEvent.VK_F9);
-						click.keyRelease(KeyEvent.VK_F9);
+					case "F9": //I wasn't able to test this one because Eclipse doesn't use F9
+						pressOrder(click, new int[] {KeyEvent.VK_F9});
 						break;
 					case "F10":
-						click.keyPress(KeyEvent.VK_F10);
-						click.keyRelease(KeyEvent.VK_F10);
+						pressOrder(click, new int[] {KeyEvent.VK_F10});
 						break;
-					case "F11":
-						click.keyPress(KeyEvent.VK_F11);
-						click.keyRelease(KeyEvent.VK_F11);
+					case "F11": //Warning: this runs the program. If you test it in Eclipse, it may cause the program to execute copies of itself.
+						pressOrder(click, new int[] {KeyEvent.VK_F11});
 						break;
 					case "F12":
-						click.keyPress(KeyEvent.VK_F12);
-						click.keyRelease(KeyEvent.VK_F12);
+						pressOrder(click, new int[] {KeyEvent.VK_F12});
 						break;
 					default:
 						throw new UnsupportedOperationException("The keyboard combination \"" + keyCombo + "\" is not defined");
@@ -151,23 +147,24 @@ public class Advanced_Keyboard {
 				}
 			}
 		} catch (AWTException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		/*
-		 * Must be O(n), where n is numClicks
-		 * This starts the auto-click of the given instructions. First call convertInstructions(instructions) to set the
-		 * globals to be used, and then implement the keypresses, via either calling clickUnicode(), if unicodeKey is not
-		 * equal to 0, or if it is 0, instead do a series of keyPresses with a Robot class, matching the keyboard combination
-		 * in the String keyCombo. The currently supported ones in Version 1 of the program will be:
-		 * “Windows + .”, “Windows + Shift + S”, “Alt + Tab”, “Printscreen”, “Caps Lock”, “Tab”, “Enter”, “Escape”, “Delete”,
-		 * “Backspace”, “Shift” (Hold), “Alt” (Hold), “Ctrl” (Hold), and “FX” where “X” is which number (For example, “F1”, “F2”, etc.)
-		 * For example, if after calling convertInstructions(), numClicks is 2, unicodeKey is 0, and keyCombo is “Alt + Tab”, it should
-		 * use the Robot to hold down the Alt key while pressing the Tab key, and then do that a second time, as well. See the Keyboard
-		 * class for a similar example.
-		 */
 	}
 	
+	/**
+	 * Presses keys in the given order, left to right.
+	 * Releases them in reverse order.
+	 * O(n), where n is the number of keys.
+	 * @param events the list of KeyEvents.
+	 */
+	private void pressOrder(Robot r, int[] events) {
+		for(int i = 0; i < events.length; ++i) {
+			r.keyPress(events[i]);
+		}
+		for(int i = events.length - 1; i >= 0; --i) {
+			r.keyRelease(events[i]);
+		}
+	}
 	private void clickUnicode()
 	{
 		/*
@@ -204,7 +201,13 @@ public class Advanced_Keyboard {
 	 * @param args Command line arguments
 	 */
 	public static void main(String[] args) {
-		
+		ArrayList<String> instr = new ArrayList<String>();
+		instr.add("1");	//Number of Clicks
+		instr.add("0");	//UnicodeKey
+		instr.add("F12");//KeyCombo
+		instr.add("0"); //IsUnicode
+		Advanced_Keyboard forTesting = new Advanced_Keyboard();
+		forTesting.startAutoclick(instr);
 
 
 	}
