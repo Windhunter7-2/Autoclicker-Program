@@ -36,10 +36,6 @@ public class Keyboard {
 	 */
 	public void startAutoclick(ArrayList<String> instructions)
 	{
-		//TO DO: EVAN IS CURRENTLY WORKING ON THIS METHOD!!!
-		int reminder_EvanIsWorkingOnThis;
-		
-		
 		//Set Up Robot
 		convertInstructions(instructions);
 		Robot click = null;
@@ -150,10 +146,6 @@ public class Keyboard {
 						whichButton = KeyEvent.VK_MINUS;
 					else if ( (keyboardButton.charAt(j) == '=') || (keyboardButton.charAt(j) == '+') )
 						whichButton = KeyEvent.VK_EQUALS;
-					
-//					ZZZ -> DO THE BELOW BUTTONS (AND TESTING) NEXT:
-//						THEY NEED PROPER KeyEvents!!!
-//						-> <ALSO> Do Function Keys & Word-Keys (e.g. Tab, Esc, Enter, Shift, PrintScreen, etc.)
 					else if ( (keyboardButton.charAt(j) == '[') || (keyboardButton.charAt(j) == '{') )
 						whichButton = KeyEvent.VK_OPEN_BRACKET;
 					else if ( (keyboardButton.charAt(j) == ']') || (keyboardButton.charAt(j) == '}') )
@@ -170,42 +162,8 @@ public class Keyboard {
 						whichButton = KeyEvent.VK_PERIOD;
 					else if ( (keyboardButton.charAt(j) == '/') || (keyboardButton.charAt(j) == '?') )
 						whichButton = KeyEvent.VK_SLASH;
-//					else if (keyboardButton.charAt(j) == '/')
-//						whichButton = KeyEvent.VK_SLASH;
-//					else if (keyboardButton.charAt(j) == '\\')
-//						whichButton = KeyEvent.VK_R;
-//					else if (keyboardButton.charAt(j) == '|')
-//						whichButton = KeyEvent.VK_S;
-//					else if (keyboardButton.charAt(j) == '[')
-//						whichButton = KeyEvent.VK_T;
-//					else if (keyboardButton.charAt(j) == ']')
-//						whichButton = KeyEvent.VK_U;
-//					else if (keyboardButton.charAt(j) == '{')
-//						whichButton = KeyEvent.VK_V;
-//					else if (keyboardButton.charAt(j) == '}')
-//						whichButton = KeyEvent.VK_W;
-//					else if (keyboardButton.charAt(j) == ',')
-//						whichButton = KeyEvent.VK_COMMA;
-//					else if (keyboardButton.charAt(j) == '<')
-//						whichButton = KeyEvent.VK_Y;
-//					else if (keyboardButton.charAt(j) == '.')
-//						whichButton = KeyEvent.VK_Z;
-//					else if (keyboardButton.charAt(j) == '>')
-//						whichButton = KeyEvent.VK_A;
-//					else if (keyboardButton.charAt(j) == '?')
-//						whichButton = KeyEvent.VK_B;
-//					else if (keyboardButton.charAt(j) == ';')
-//						whichButton = KeyEvent.VK_C;
-//					else if (keyboardButton.charAt(j) == ':')
-//						whichButton = KeyEvent.VK_D;
-//					else if (keyboardButton.charAt(j) == '\'')
-//						whichButton = KeyEvent.VK_E;
-//					else if (keyboardButton.charAt(j) == '\"')
-//						whichButton = KeyEvent.VK_F;
 					else
 						whichButton = KeyEvent.VK_SPACE;
-						
-					System.out.println("Current Char = " + keyboardButton.charAt(j));
 					
 					//Click Keyboard Button
 					if (capitalLetter)
@@ -223,7 +181,6 @@ public class Keyboard {
 				
 		//Try/Catch Block
 		} catch (AWTException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -250,12 +207,11 @@ public class Keyboard {
 	 * @param args Command line arguments
 	 */
 	public static void main(String[] args) {
-		//Xena Alcatraz [ { ] } \ | ; : ' " , < . > / ?'
 		ArrayList<String> instr = new ArrayList<String>();
 		instr.add("1");	//Number of Clicks
 		instr.add("0");	//Constant Delay OVERRIDE (DEFAULT Should Be 0)
 		instr.add("0");	//Held Down for This Many Milliseconds (PER Click)
-		instr.add("Xena Alcatraz [ { ] } \\ | ; : \' \" , < . > / ?");	//Key / Set of Keys to Click
+		instr.add("Xena Alcatraz [ { ] } \\ | ; : \' \" , < . > / ?     \'");	//Key / Set of Keys to Click
 		
 		Keyboard forTesting = new Keyboard();
 		forTesting.startAutoclick(instr);
