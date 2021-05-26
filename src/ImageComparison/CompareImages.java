@@ -51,6 +51,7 @@ public class CompareImages {
 		//TODO -> Finishing Planning...
 		//TODO -> Make <Sure> to Use compareScreens() <&> Timer to Prevent Overusing Memory!!!
 		//TODO -> Make <Sure> That It Starts Out with <Checking> Boundary Sizes to Match Width/Height Beforehand!!!
+		//TODO -> Use ImageCompareFiles.loadImage() to Get the Image to Compare to!!!
 		convertInstructions_cmpImg(instructions);
 	}
 	

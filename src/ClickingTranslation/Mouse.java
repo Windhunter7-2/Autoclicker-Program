@@ -91,7 +91,6 @@ public class Mouse {
 			
 		//Try/Catch Block
 		} catch (AWTException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

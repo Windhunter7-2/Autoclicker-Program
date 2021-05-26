@@ -1,8 +1,8 @@
 package FileHandling;
 
 public class UserSettings {
-
-	//TO DO -> Finishing Planning...
+	
+	//This Will Not Be Used in Version 1.0...
 
 	/**
 	 * Main method. Strictly for testing.

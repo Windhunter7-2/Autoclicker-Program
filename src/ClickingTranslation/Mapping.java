@@ -34,7 +34,7 @@ public class Mapping {
 			Keyboard start = new Keyboard();
 			start.startAutoclick(instructions);
 		}
-		else if ( first.equals("AdvancedKeyboard") )
+		else if ( first.equals("AdvKeyboard") )
 		{
 			Advanced_Keyboard start = new Advanced_Keyboard();
 			start.startAutoclick(instructions);
