@@ -135,7 +135,7 @@ public class Advanced_Keyboard {
 					case "F10":
 						pressOrder(click, new int[] {KeyEvent.VK_F10});
 						break;
-					case "F11": //Warning: this runs the program. If you test it in Eclipse, it may cause the program to execute copies of itself.
+					case "F11": //Warning: this runs the program in Eclipse. If you test it in Eclipse, it may cause the program to execute copies of itself.
 						pressOrder(click, new int[] {KeyEvent.VK_F11});
 						break;
 					case "F12":
