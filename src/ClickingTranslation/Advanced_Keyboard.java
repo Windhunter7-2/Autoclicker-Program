@@ -3,7 +3,11 @@ package ClickingTranslation;
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
+import java.io.FileReader;
 import java.util.ArrayList;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 
 public class Advanced_Keyboard {
 	
@@ -29,7 +33,7 @@ public class Advanced_Keyboard {
 	 * This is whether this class is processing 
 	 */
 	private boolean isUnicode;
-	
+
 	public void startAutoclick(ArrayList<String> instructions)
 	{
 		/*
@@ -50,7 +54,7 @@ public class Advanced_Keyboard {
 			click = new Robot();
 			for (int i = 0; i < numClicks; ++i) {
 				if (isUnicode) {
-					throw new RuntimeException("TODO clickUnicode()");
+					clickUnicode(click);
 				} else {
 					switch (keyCombo) {	
 					case "Windows + .":
@@ -172,8 +176,13 @@ public class Advanced_Keyboard {
 	 * Instead, it's a copy-paste from a file containing several Unicode planes.
 	 * Credit to Paul Sarena (https://github.com/bits/UTF-8-Unicode-Test-Documents) for the base Unicode file.
 	 */
-	private void clickUnicode()
+	private void clickUnicode(Robot r)
 	{
+		Clipboard c = Toolkit.getDefaultToolkit().getSystemClipboard();
+		StringSelection s = new StringSelection(Character.valueOf((char)(unicodeKey)).toString());
+		c.setContents(s, null);
+		pressOrder(r, new int[] {KeyEvent.VK_CONTROL, KeyEvent.VK_V});
+		//System.out.println(Character.valueOf((char)(unicodeKey)).toString());
 		/*
 		 * Must be less than or equal to O(n), where n is the number of Unicode characters
 		 * Creating the additionally required file (The Unicode document) is part of this method, and the reason is that since this
@@ -208,12 +217,17 @@ public class Advanced_Keyboard {
 	 * @param args Command line arguments
 	 */
 	public static void main(String[] args) {
-		ArrayList<String> instr = new ArrayList<String>();
-		instr.add("1");	//Number of Clicks
-		instr.add("0");	//UnicodeKey
-		instr.add("F12");//KeyCombo
-		instr.add("0"); //IsUnicode
 		Advanced_Keyboard forTesting = new Advanced_Keyboard();
-		forTesting.startAutoclick(instr);
+		for (int i = 0; i < 1; ++i) {
+			ArrayList<String> instr = new ArrayList<String>();
+			instr.add("3");	//Number of Clicks
+			instr.add(String.valueOf(97));	//UnicodeKey
+			instr.add("F12");//KeyCombo
+			instr.add("true"); //IsUnicode
+			forTesting.startAutoclick(instr);
+		}
 	}
+	/*
+	 *
+	 */
 }
