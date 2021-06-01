@@ -10,7 +10,7 @@ import java.io.IOException;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
-public class MainDirectoryInfo {
+public class MainDirectory {
 	
 	/**
 	 * Gets the main directory for all of my programs.
@@ -126,9 +126,11 @@ public class MainDirectoryInfo {
 	 */
 	public static void main(String[] args) {
 		
-		MainDirectoryInfo directory = new MainDirectoryInfo();
+		MainDirectory directory = new MainDirectory();
 		directory.setMainDirectory();
-		directory.getMainDirectory();
+		System.out.println(
+				directory.getMainDirectory()
+		);
 
 	}
 
