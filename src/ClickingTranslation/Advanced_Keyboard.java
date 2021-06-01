@@ -178,10 +178,15 @@ public class Advanced_Keyboard {
 	 */
 	private void clickUnicode(Robot r)
 	{
-		Clipboard c = Toolkit.getDefaultToolkit().getSystemClipboard();
+		throw new RuntimeException("TODO clickUnicode");
+		/*Clipboard c = Toolkit.getDefaultToolkit().getSystemClipboard();
 		StringSelection s = new StringSelection(Character.valueOf((char)(unicodeKey)).toString());
 		c.setContents(s, null);
-		pressOrder(r, new int[] {KeyEvent.VK_CONTROL, KeyEvent.VK_V});
+		pressOrder(r, new int[] {KeyEvent.VK_CONTROL, KeyEvent.VK_V});*/
+		
+		//https://unicode-table.com/en/search/?q=U%2B
+		
+		
 		//System.out.println(Character.valueOf((char)(unicodeKey)).toString());
 		/*
 		 * Must be less than or equal to O(n), where n is the number of Unicode characters
@@ -218,10 +223,10 @@ public class Advanced_Keyboard {
 	 */
 	public static void main(String[] args) {
 		Advanced_Keyboard forTesting = new Advanced_Keyboard();
-		for (int i = 0; i < 1; ++i) {
+		for (int i = 0; i < 26; ++i) {
 			ArrayList<String> instr = new ArrayList<String>();
-			instr.add("3");	//Number of Clicks
-			instr.add(String.valueOf(97));	//UnicodeKey
+			instr.add("1");	//Number of Clicks
+			instr.add(String.valueOf(256));	//UnicodeKey
 			instr.add("F12");//KeyCombo
 			instr.add("true"); //IsUnicode
 			forTesting.startAutoclick(instr);
