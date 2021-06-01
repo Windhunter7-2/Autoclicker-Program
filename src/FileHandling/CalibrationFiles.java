@@ -1,9 +1,16 @@
 package FileHandling;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import External.MainDirectory;
 
 public class CalibrationFiles {
-
+	private MainDirectory md = new MainDirectory();
 	public void calibrate(String fileName)
 	{
+		if(new File(md.getMainDirectory()+"Autoclicker-Program/Autoclickers/"+fileName+".autoclick").exists()) {return;}
+		else createAutoclicker(fileName);
+		
 		/*
 		 * Must be O(1)
 		 * Checks if "Settings/Calibration/fileName.autoclick" exists; if it does exist, simply return; otherwise,
@@ -13,6 +20,7 @@ public class CalibrationFiles {
 	
 	private void createAutoclicker(String fileName)
 	{
+		throw new RuntimeException("TODO createAutoclicker()");
 		/*
 		 * Must be O(n)*, where n is the number of characters in the autoclicker template file
 		 * (O() might be different for CompareImages, because of the pixels)
@@ -37,8 +45,13 @@ public class CalibrationFiles {
 	 * @param args Command line arguments
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		CalibrationFiles cf = new CalibrationFiles();
+		cf.calibrate("MyNameJeff");
+		System.out.println("File found case handled");
+		cf.calibrate("WhyYouNotTalking");
+		
+		
+		
 	}
 
 }
