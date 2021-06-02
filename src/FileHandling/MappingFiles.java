@@ -39,6 +39,16 @@ public class MappingFiles {
 	public Instruction setMouse(boolean clickUsed, String nameOfPosition, String mouseButton, int numClicks, boolean
 			mouseWheelUsed, int mouseWheelAmt, int constantDelayOverride, int heldDownForXMilliseconds)
 	{
+		return new Instruction(new String[]{
+				String.valueOf(clickUsed),
+				"x:"+toPascalCase(nameOfPosition),
+				mouseButton,
+				String.valueOf(numClicks),
+				String.valueOf(mouseWheelUsed),
+				String.valueOf(mouseWheelAmt),
+				String.valueOf(constantDelayOverride),
+				String.valueOf(heldDownForXMilliseconds)
+		});
 		//return
 		/*
 		 * Must be O(n), where n is the number of characters in nameOfPosition
@@ -51,12 +61,12 @@ public class MappingFiles {
 		 * "ThisIsAnExampleX/y"
 		 */
 		
-		return null;
+		//return null;
 	}
 
 	public Instruction setWait(int waitTime)
 	{
-		return new Instruction(new String[] {String.valueOf(waitTime)});
+		return new Instruction(new String[]{String.valueOf(waitTime)});
 		/*
 		 * Must be O(1)
 		 * Return an instance of the Instruction class with its variable set to a String version of waitTime
@@ -65,6 +75,12 @@ public class MappingFiles {
 
 	public Instruction setCompareImages(String imageLocation, String nameOfBoundingBox, boolean untilSame, boolean untilDifferent)
 	{
+		return new Instruction(new String[]{
+				imageLocation,
+				"xs:"+toPascalCase(nameOfBoundingBox),
+				String.valueOf(untilSame),
+				String.valueOf(untilDifferent),
+		});
 		/*
 		 * Must be O(1)
 		 * Return an instance of the Instruction class with its variables set to String versions of the equivalent parameters
@@ -75,7 +91,6 @@ public class MappingFiles {
 		 * capitalized; for example, if nameOfBoundingBox equals "This is an Example x1/y1/x2/y2", then what would be stored into
 		 * the String would, instead of "This is an Example x1/y1/x2/y2", be "ThisIsAnExampleX1/y1/x2/y2"
 		 */
-		return null;
 	}
 	
 	public String toPascalCase(String inString) {
@@ -94,5 +109,4 @@ public class MappingFiles {
 		MappingFiles mf = new MappingFiles();
 		System.out.println(mf.toPascalCase("my name is jeff and i like meth"));
 	}
-
 }
