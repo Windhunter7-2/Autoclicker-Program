@@ -3,22 +3,28 @@ package FileHandling;
 import java.util.ArrayList;
 
 public class MappingFiles {
-	
-	private String needToStillImplementThis;
-	
+		
 	public class Instruction
 	{
 		//Example (setKeyboard): [numClicks, constantDelayOverride, heldDownForXMilliseconds, keyboardButton]
 		public ArrayList<String> instrucVals;
+		
+		public Instruction(String[] arguments) {
+			instrucVals = new ArrayList<String>();
+			for (String s : arguments) {
+				instrucVals.add(s);
+			}
+		}
 	}
+	
 	
 	public Instruction setAdvKeyboard(int numClicks, int unicodeKey, String keyCombo, boolean isUnicode)
 	{
+		return new Instruction(new String[]{String.valueOf(numClicks), String.valueOf(unicodeKey), keyCombo, String.valueOf(isUnicode)});
 		/*
 		 * Must be O(1)
 		 * Return an instance of the Instruction class with its variables set to String versions of the equivalent parameters
 		 */
-		return null;
 	}
 
 	public Instruction setKeyboard(int numClicks, int constantDelayOverride, int heldDownForXMilliseconds, String keyboardButton)
@@ -27,12 +33,13 @@ public class MappingFiles {
 		 * Must be O(1)
 		 * Return an instance of the Instruction class with its variables set to String versions of the equivalent parameters
 		 */
-		return null;
+		return new Instruction(new String[]{String.valueOf(numClicks), String.valueOf(constantDelayOverride), String.valueOf(heldDownForXMilliseconds), keyboardButton});
 	}
 
 	public Instruction setMouse(boolean clickUsed, String nameOfPosition, String mouseButton, int numClicks, boolean
 			mouseWheelUsed, int mouseWheelAmt, int constantDelayOverride, int heldDownForXMilliseconds)
 	{
+		//return
 		/*
 		 * Must be O(n), where n is the number of characters in nameOfPosition
 		 * Return an instance of the Instruction class with its variables set to String versions of the equivalent parameters
@@ -43,16 +50,17 @@ public class MappingFiles {
 		 * "This is an Example x/y", then what would be stored into the String would, instead of "This is an Example x/y", be
 		 * "ThisIsAnExampleX/y"
 		 */
+		
 		return null;
 	}
 
 	public Instruction setWait(int waitTime)
 	{
+		return new Instruction(new String[] {String.valueOf(waitTime)});
 		/*
 		 * Must be O(1)
 		 * Return an instance of the Instruction class with its variable set to a String version of waitTime
 		 */
-		return null;
 	}
 
 	public Instruction setCompareImages(String imageLocation, String nameOfBoundingBox, boolean untilSame, boolean untilDifferent)
@@ -69,14 +77,22 @@ public class MappingFiles {
 		 */
 		return null;
 	}
-
+	
+	public String toPascalCase(String inString) {
+		String[] spaceDelim = inString.split(" ");
+		String outString = "";
+		for (String s : spaceDelim) {
+			outString = outString + Character.toUpperCase(s.charAt(0)) + s.substring(1);
+		}
+		return outString;
+	}
 	/**
 	 * Main method. Strictly for testing.
 	 * @param args Command line arguments
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		MappingFiles mf = new MappingFiles();
+		System.out.println(mf.toPascalCase("my name is jeff and i like meth"));
 	}
 
 }
