@@ -101,6 +101,7 @@ public class MappingFiles {
 		}
 		return outString;
 	}
+	
 	/**
 	 * Main method. Strictly for testing.
 	 * @param args Command line arguments
