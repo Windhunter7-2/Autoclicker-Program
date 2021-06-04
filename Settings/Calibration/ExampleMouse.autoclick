@@ -1,2 +1,1 @@
-Mouse true 1000 540 LeftClick 2 false -1 200 0
-Mouse true 1000 740 LeftClick 1 false -1 200 0
+Mouse true x:ExampleMouseLocationA LeftClick 2 false -1 200 0Mouse true x:ExampleMouseLocationB LeftClick 1 false -1 200 0

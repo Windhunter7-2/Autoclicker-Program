@@ -2,11 +2,13 @@ package FileHandling;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Scanner;
 import External.MainDirectory;
 
 public class CalibrationFiles {
 	private MainDirectory md = new MainDirectory();
-	public void calibrate(String fileName)
+	private FileHandling fh = new FileHandling();
+	public void calibrate(String fileName) throws IOException
 	{
 		if(new File(md.getMainDirectory()+"Autoclicker-Program/Autoclickers/"+fileName+".autoclick").exists()) {return;}
 		else createAutoclicker(fileName);
@@ -18,9 +20,29 @@ public class CalibrationFiles {
 		 */
 	}
 	
-	private void createAutoclicker(String fileName)
+	private void createAutoclicker(String fileName) throws IOException
 	{
-		throw new RuntimeException("TODO createAutoclicker()");
+		String[] oldContents = fh.getText("Autoclicker-Program/Autoclickers/"+fileName+".txt").split("\n");
+		for (int i = 0; i < oldContents.length; ++i) {
+			Scanner sc = new Scanner(oldContents[i]);
+			if(sc.hasNext()) {
+				switch(sc.next()) {
+				case("Mouse"):
+					System.out.println("TODO Mouse calibration");
+					break;
+				case("CompareImages"):
+					System.out.println("TODO CompareImages calibration");
+					break;
+				}
+			}
+			sc.close();
+		}
+		String newContents = "";
+		for (String s : oldContents) {
+			newContents = newContents + s;
+		}
+		fh.setText("Autoclicker-Program/Settings/Calibration/"+fileName+".autoclick", newContents);
+		//throw new RuntimeException("TODO createAutoclicker()");
 		/*
 		 * Must be O(n)*, where n is the number of characters in the autoclicker template file
 		 * (O() might be different for CompareImages, because of the pixels)
@@ -44,9 +66,9 @@ public class CalibrationFiles {
 	 * Main method. Strictly for testing.
 	 * @param args Command line arguments
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		CalibrationFiles cf = new CalibrationFiles();
-		cf.calibrate("MyNameJeff");
+		cf.calibrate("LoremIpsum");
 		System.out.println("File found case handled");
 		cf.calibrate("WhyYouNotTalking");
 		
