@@ -1,8 +1,16 @@
 package FileHandling;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.MouseInfo;
+import java.awt.Point;
+import java.awt.event.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
+
+import javax.swing.JFrame;
+
 import External.MainDirectory;
 
 public class CalibrationFiles {
@@ -10,7 +18,7 @@ public class CalibrationFiles {
 	private FileHandling fh = new FileHandling();
 	public void calibrate(String fileName) throws IOException
 	{
-		if(new File(md.getMainDirectory()+"Autoclicker-Program/Autoclickers/"+fileName+".autoclick").exists()) {return;}
+		if(new File(md.getMainDirectory()+"Autoclicker-Program/Settings/Calibration/"+fileName+".autoclick").exists()) {return;}
 		else createAutoclicker(fileName);
 		
 		/*
@@ -25,10 +33,20 @@ public class CalibrationFiles {
 		String[] oldContents = fh.getText("Autoclicker-Program/Autoclickers/"+fileName+".txt").split("\n");
 		for (int i = 0; i < oldContents.length; ++i) {
 			Scanner sc = new Scanner(oldContents[i]);
+			
 			if(sc.hasNext()) {
 				switch(sc.next()) {
 				case("Mouse"):
-					System.out.println("TODO Mouse calibration");
+					JFrame jf = new JFrame();
+					GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+					ge.getDefaultScreenDevice().setFullScreenWindow(jf);
+					jf.setAlwaysOnTop(true);
+					MouseCalibrator mc = new MouseCalibrator();
+					//System.out.println("waiting");
+					jf.addMouseListener(mc);
+					while(!mc.clicked) {}
+					System.out.println(mc.pos);
+					jf.dispose();
 					break;
 				case("CompareImages"):
 					System.out.println("TODO CompareImages calibration");
@@ -61,6 +79,22 @@ public class CalibrationFiles {
 		 * fileName, to save the image as a .png
 		 */
 	}
+	
+	/**
+	 * listener for mouse clicks
+	 * @author User
+	 *
+	 */
+	private class MouseCalibrator extends MouseAdapter{
+		public String pos = "";
+		public boolean clicked = false;
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			Point p = MouseInfo.getPointerInfo().getLocation();
+			pos = p.x + " " + p.y;
+			clicked = true;
+		}		
+	}
 
 	/**
 	 * Main method. Strictly for testing.
@@ -71,9 +105,6 @@ public class CalibrationFiles {
 		cf.calibrate("LoremIpsum");
 		System.out.println("File found case handled");
 		cf.calibrate("WhyYouNotTalking");
-		
-		
-		
 	}
 
 }
