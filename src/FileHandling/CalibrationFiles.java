@@ -1,15 +1,17 @@
 package FileHandling;
+
+import java.awt.event.*;
+import java.awt.geom.Rectangle2D;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.MouseInfo;
 import java.awt.Point;
-import java.awt.event.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
-
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 import External.MainDirectory;
 
@@ -33,24 +35,31 @@ public class CalibrationFiles {
 		String[] oldContents = fh.getText("Autoclicker-Program/Autoclickers/"+fileName+".txt").split("\n");
 		for (int i = 0; i < oldContents.length; ++i) {
 			Scanner sc = new Scanner(oldContents[i]);
-			
 			if(sc.hasNext()) {
-				switch(sc.next()) {
-				case("Mouse"):
+				String line = sc.next();
+				if (line.equals("Mouse")){
 					JFrame jf = new JFrame();
-					GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-					ge.getDefaultScreenDevice().setFullScreenWindow(jf);
+					GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(jf);
 					jf.setAlwaysOnTop(true);
 					MouseCalibrator mc = new MouseCalibrator();
-					//System.out.println("waiting");
 					jf.addMouseListener(mc);
-					while(!mc.clicked) {}
-					System.out.println(mc.pos);
+					JLabel text = new JLabel("Click Anywhere Within Window To Calibrate", JLabel.CENTER);
+					jf.add(text);
+					while(!mc.clicked) {} //Wait for user input
+					oldContents[i] = oldContents[i].replaceAll("x:[^\s]*",mc.pos);
 					jf.dispose();
-					break;
-				case("CompareImages"):
-					System.out.println("TODO CompareImages calibration");
-					break;
+				}
+				else if (line.equals("CompareImages")) {				
+					JFrame jf = new JFrame();
+					GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(jf);
+					jf.setAlwaysOnTop(true);
+					CompareCalibrator cc = new CompareCalibrator();
+					jf.addMouseListener(cc);
+					JLabel text = new JLabel("Click And Drag Within Window To Define Comparison Region", JLabel.CENTER);
+					jf.add(text);
+					while(!cc.clicked) {} //Wait for user input
+					oldContents[i] = oldContents[i].replaceAll("xs:[^\s]*", cc.startPos + " " + cc.endPos);
+					jf.dispose();
 				}
 			}
 			sc.close();
@@ -86,14 +95,45 @@ public class CalibrationFiles {
 	 *
 	 */
 	private class MouseCalibrator extends MouseAdapter{
-		public String pos = "";
-		public boolean clicked = false;
+		public String pos;
+		public boolean clicked;
+		public MouseCalibrator() {
+			pos = "0 0";
+			clicked = false;
+
+		}
 		@Override
-		public void mouseReleased(MouseEvent e) {
+		public void mouseClicked(MouseEvent e) {
 			Point p = MouseInfo.getPointerInfo().getLocation();
 			pos = p.x + " " + p.y;
 			clicked = true;
 		}		
+	}
+	
+	private class CompareCalibrator extends MouseAdapter{
+		public String startPos;
+		public String endPos;
+		public boolean clicked;
+		public CompareCalibrator() {
+			startPos = null;
+			endPos = null;
+			clicked = false;
+		}
+		
+		@Override
+		public void mousePressed(MouseEvent e) {
+			Point p = MouseInfo.getPointerInfo().getLocation();
+			startPos = p.x + " " + p.y;
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			Point p = MouseInfo.getPointerInfo().getLocation();
+			endPos = p.x + " " + p.y;
+			if (startPos != null && endPos != null) {
+				clicked = true;
+			}
+		}
 	}
 
 	/**
