@@ -6,7 +6,10 @@ import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import FileHandling.ImageCompareFiles;
 
 public class CompareImages {
 
@@ -15,7 +18,17 @@ public class CompareImages {
 	 * A *constant* number to represent the best time to wait before asking the user if they still want to wait (To avoid
 	 * memory overuse); this number equals 5 minutes.
 	 */
-	private long timeouter = 300000;
+	private static long timeouter = 300000;
+	
+	/**
+	 * The current time taken so far for the screenshot comparison.
+	 */
+	private static volatile long curTime = 0;
+	
+	/**
+	 * Whether or not the program should issue a warning regarding a timeout from the program taking too long.
+	 */
+	private static volatile boolean timeout = false;
 	
 	/**
 	 * The location of the image to compare against the user's screenshot.
@@ -44,16 +57,88 @@ public class CompareImages {
 	
 	/**
 	 * This starts the auto-click of the given instructions, for comparing image instructions.
+	 * It stops the algorithmic comparison if the timeout occurs.
 	 * @param instructions The instructions given (In order) for the auto-click (Comparing images ones)
+	 * @throws IOException 
+	 * @throws AWTException 
 	 */
-	public void startAutoclick_cmpImg(ArrayList<String> instructions)
+	public void startAutoclick_cmpImg(ArrayList<String> instructions) throws IOException, AWTException
 	{
-		//TODO -> Finishing Planning...
-		//TODO -> Make <Sure> to Use compareScreens() <&> Timer to Prevent Overusing Memory!!!
-		//TODO -> Make <Sure> That It Starts Out with <Checking> Boundary Sizes to Match Width/Height Beforehand!!!
-		//TODO -> Use ImageCompareFiles.loadImage() to Get the Image to Compare to!!!
+		//Get the Instructions
 		convertInstructions_cmpImg(instructions);
+		
+		//Get Dimensions / Pixel Locations
+		int x = pixelLocations[0];
+		int y = pixelLocations[1];
+		ImageCompareFiles imageLoader = new ImageCompareFiles();
+		BufferedImage imageToCompareTo = imageLoader.loadImage(imageLocation);	//The Screenshot to Compare to
+		int height = imageToCompareTo.getHeight();
+		int width = imageToCompareTo.getWidth();
+		Rectangle screenRectangle = new Rectangle(x, y, width, height);
+		Robot robot;
+		
+		//While Timer Active, Compare Images
+		Timer timer = new Timer();
+		timer.start();
+		boolean imageCmpDone = false;
+		while (timeout == false)
+		{
+			robot = new Robot();
+			BufferedImage screenshot = robot.createScreenCapture(screenRectangle);	//Create Screenshot of That Part of the Screen
+			boolean toCheck = compareScreens(imageToCompareTo, screenshot, width, height);	//Compare the Screenshots
+			
+			//Mark As Successfully Compared, and Exit Loop
+			if (untilSame == true)
+			{
+				if (toCheck == true)
+					imageCmpDone = true;
+			}
+			else if (untilDifferent == true)
+			{
+				if (toCheck == false)
+					imageCmpDone = true;
+			}
+			if (imageCmpDone == true)
+				break;
+		}
+		
+		//If Not Yet Successfully Compared, a Timeout Occurred Here; Prompt the User to Restart Or to Stop
+		if (imageCmpDone == false)
+		{
+			boolean repeat = cmpImage_cont();	//Decide Whether to Retry the Image Comparison Or Not
+			if (repeat == true)	//If Retrying Image Comparison, Just Call the Method Recursively (Again)
+				startAutoclick_cmpImg(instructions);
+		}
+		
+		//If Successfully Compared, Return (Also Return if User Decides to Not Continue Image Check)
+		return;
 	}
+	
+	/**
+	 * This handles the potential timeout occurrence.
+	 */
+	private static class Timer extends Thread
+	{
+		public void run()
+		{
+			while (curTime <= timeouter)	//Until the Timer Is Reached, Update the Timer
+				curTime++;
+			timeout = true;
+			return;
+		}
+	}
+	
+	/**
+	 * There has not yet been a successful comparison of images, and a timeout has occurred. This prompts the user to select whether
+	 * to restart and retry the image comparison, or to exit the current instruction and continue the autoclicker as normal.
+	 * @return true if the desire to retry the image comparison, and false otherwise
+	 */
+	private boolean cmpImage_cont()
+	{
+		//TODO Need to Implement This!!!
+		return true;
+	}
+
 	
 	/**
 	 * This starts the auto-click of the given instructions, for waiting instructions.
@@ -132,30 +217,6 @@ public class CompareImages {
 	 * @param args Command line arguments
 	 */
 	public static void main(String[] args) {
-		
-		//TODO THE STUFF HERE IS REMINDER IMPORTANT CODE FOR SCREENSHOT BUILDING
-		CompareImages zzz = new CompareImages();
-		
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		Rectangle screenRectangle = new Rectangle(screenSize);
-		Robot robot;
-		try {
-			robot = new Robot();
-			BufferedImage image = robot.createScreenCapture(screenRectangle);	//Create Screenshot of *Whole* Screen
-			
-			//Compare Two Images
-			BufferedImage imageToCompareAgainst = robot.createScreenCapture(screenRectangle);
-			
-			int width = image.getWidth();
-			int height = image.getHeight();
-			
-			System.out.println( zzz.compareScreens(image, imageToCompareAgainst, width, height) );
-			
-		} catch (AWTException e) {
-			e.printStackTrace();
-		}
-		//TODO THE STUFF HERE IS REMINDER IMPORTANT CODE FOR SCREENSHOT BUILDING
-
 		
 		//Example Test A (Waiting)
 		ArrayList<String> instr_wait = new ArrayList<String>();
