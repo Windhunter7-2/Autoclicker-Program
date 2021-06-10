@@ -22,6 +22,7 @@ Another function of this program will be that it will support autoclickers as ma
 
 # Notes
 - This is still currently in development for version 1.0
+- If the user is using the code as itself, instead of the 1.0 .zipfile, they must rename the downloaded folder to be called "Autoclicker Program" instead of "Autoclicker-Program"
 
 # Authors (So Far)
 - Evan Baker
