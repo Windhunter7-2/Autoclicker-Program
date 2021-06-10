@@ -46,7 +46,7 @@ public class CalibrationFiles {
 					JLabel text = new JLabel("Click Anywhere Within Window To Calibrate", JLabel.CENTER);
 					jf.add(text);
 					while(!mc.clicked) {} //Wait for user input
-					oldContents[i] = oldContents[i].replaceAll("x:[^\s]*",mc.pos);
+					oldContents[i] = oldContents[i].replaceAll("x:[^\t\n\f\r]*",mc.pos);
 					jf.dispose();
 				}
 				else if (line.equals("CompareImages")) {				
@@ -58,7 +58,7 @@ public class CalibrationFiles {
 					JLabel text = new JLabel("Click And Drag Within Window To Define Comparison Region", JLabel.CENTER);
 					jf.add(text);
 					while(!cc.clicked) {} //Wait for user input
-					oldContents[i] = oldContents[i].replaceAll("xs:[^\s]*", cc.startPos + " " + cc.endPos);
+					oldContents[i] = oldContents[i].replaceAll("xs:[^\t\n\f\r]*", cc.startPos + " " + cc.endPos);
 					jf.dispose();
 				}
 			}
