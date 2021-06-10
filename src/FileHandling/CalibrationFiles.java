@@ -20,7 +20,7 @@ public class CalibrationFiles {
 	private FileHandling fh = new FileHandling();
 	public void calibrate(String fileName) throws IOException
 	{
-		if(new File(md.getMainDirectory()+"Autoclicker Program/Settings/Calibration/"+fileName+".autoclick").exists()) {return;}
+		if(new File(md.getMainDirectory()+"Autoclicker-Program/Settings/Calibration/"+fileName+".autoclick").exists()) {return;}
 		else createAutoclicker(fileName);
 		
 		/*
@@ -32,7 +32,7 @@ public class CalibrationFiles {
 	
 	private void createAutoclicker(String fileName) throws IOException
 	{
-		String[] oldContents = fh.getText("Autoclicker Program/Autoclickers/"+fileName+".txt").split("\n");
+		String[] oldContents = fh.getText("Autoclicker-Program/Autoclickers/"+fileName+".txt").split("\n");
 		for (int i = 0; i < oldContents.length; ++i) {
 			Scanner sc = new Scanner(oldContents[i]);
 			if(sc.hasNext()) {
@@ -68,7 +68,7 @@ public class CalibrationFiles {
 		for (String s : oldContents) {
 			newContents = newContents + s;
 		}
-		fh.setText("Autoclicker Program/Settings/Calibration/"+fileName+".autoclick", newContents);
+		fh.setText("Autoclicker-Program/Settings/Calibration/"+fileName+".autoclick", newContents);
 		//throw new RuntimeException("TODO createAutoclicker()");
 		/*
 		 * Must be O(n)*, where n is the number of characters in the autoclicker template file
