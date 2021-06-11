@@ -9,6 +9,8 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import FileHandling.ImageCompareFiles;
 
 public class CompareImages {
@@ -81,11 +83,17 @@ public class CompareImages {
 		Timer timer = new Timer();
 		timer.start();
 		boolean imageCmpDone = false;
+		
+		int TEMP_COUNT = 0;
+		
 		while (timeout == false)
 		{
 			robot = new Robot();
 			BufferedImage screenshot = robot.createScreenCapture(screenRectangle);	//Create Screenshot of That Part of the Screen
 			boolean toCheck = compareScreens(imageToCompareTo, screenshot, width, height);	//Compare the Screenshots
+			
+			imageLoader.saveImage(screenshot, ("C:/temp/Screenshot #" + TEMP_COUNT + ".png") );
+			System.out.println("Saved Image #" + TEMP_COUNT + "... toCheck = " + toCheck);
 			
 			//Mark As Successfully Compared, and Exit Loop
 			if (untilSame == true)
@@ -107,7 +115,11 @@ public class CompareImages {
 		{
 			boolean repeat = cmpImage_cont();	//Decide Whether to Retry the Image Comparison Or Not
 			if (repeat == true)	//If Retrying Image Comparison, Just Call the Method Recursively (Again)
+			{
+				curTime = 0;
+				timeout = false;
 				startAutoclick_cmpImg(instructions);
+			}
 		}
 		
 		//If Successfully Compared, Return (Also Return if User Decides to Not Continue Image Check)
@@ -135,7 +147,27 @@ public class CompareImages {
 	 */
 	private boolean cmpImage_cont()
 	{
-		//TODO Need to Implement This!!!
+		//Convert timeouter to Minutes
+		double minutes = (timeouter / 60000);
+		String minutes_Str = String.format("%.2f", minutes);
+		if ((minutes_Str.charAt(2) == '0') || (minutes_Str.charAt(3) == '0'))
+			minutes_Str = String.format("%.0f", minutes);
+		
+		//The GUI JOptionPane
+		Object [] buttons = {"Continue Waiting...", "Stop Waiting", "Exit Program"};
+		String warningText = ("It has been " + minutes_Str + " minutes without the screenshot being compared changing.\nWould you "
+				+ "like to:\n      (1) Wait further,\n      (2) Stop waiting and continue the autoclicker as normal, or\n      (3) "
+				+ "Consider this an error and exit the program?");
+		int option = JOptionPane.showOptionDialog(null, warningText, "Screenshot Comparison TimeOut",
+				JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, buttons, buttons[0]);
+		
+		//Make Selection
+		if (option == 0)
+			return true;
+		else if (option == 1)
+			return false;
+		else if (option == 2)
+			System.exit(-1);
 		return true;
 	}
 
@@ -215,17 +247,37 @@ public class CompareImages {
 	/**
 	 * Main method. Strictly for testing.
 	 * @param args Command line arguments
+	 * @throws IOException 
+	 * @throws AWTException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException, AWTException {
 		
 		//Example Test A (Waiting)
 		ArrayList<String> instr_wait = new ArrayList<String>();
-		instr_wait.add("5000");	//Wait Time of 5 Seconds
+		instr_wait.add("500");	//Wait Time of 1/2 Second
 		
 		CompareImages forTesting = new CompareImages();
 		System.out.println("Starting waiting...");
 		forTesting.startAutoclick_wait(instr_wait);
 		System.out.println("Finished waiting...");
+		
+		//Test Screenshot Comparison - Take Screenshot to Compare
+		ImageCompareFiles test = new ImageCompareFiles();
+		Robot robot = new Robot();
+		Rectangle screenRectangle = new Rectangle(550, 362, 938, 387);
+		BufferedImage screenshot = robot.createScreenCapture(screenRectangle);	//Create Screenshot of That Part of the Screen
+		test.saveImage(screenshot, "C:/temp/TestScreenshot.png");
+		
+		//Test Screenshot Comparison - Instructions
+		ArrayList<String> instr = new ArrayList<String>();
+		instr.add("C:/temp/TestScreenshot.png");
+		instr.add("550");
+		instr.add("362");
+		instr.add("-1");
+		instr.add("-1");
+		instr.add("true");
+		instr.add("false");	//Wait Until <Different>
+		forTesting.startAutoclick_cmpImg(instr);
 
 
 	}

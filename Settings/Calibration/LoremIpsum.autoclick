@@ -1,1 +1,1 @@
-Mouse true 368 296 LeftClick 2 false -1 200 0Mouse true 1309 373 LeftClick 1 false -1 200 0CompareImages jeff.png 286 206 501 364 true true
+Mouse true 1530 759Mouse true 1469 347	LocationB LeftClick 1 false -1 200 0CompareImages jeff.png 1470 175 770 679

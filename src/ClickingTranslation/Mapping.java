@@ -4,6 +4,8 @@
 
 package ClickingTranslation;
 
+import java.awt.AWTException;
+import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -14,8 +16,10 @@ public class Mapping {
 	/**
 	 * This executes a particular instruction given (An instruction is all the words of one of the lines from the user's file).
 	 * @param instructions The *current* instructions given on what to do
+	 * @throws AWTException 
+	 * @throws IOException 
 	 */
-	private void executeInstruction(ArrayList<String> instructions)
+	private void executeInstruction(ArrayList<String> instructions) throws IOException, AWTException
 	{
 		//Set First Word (AKA Which Class to Run)
 		String first = instructions.get(0);
@@ -62,8 +66,10 @@ public class Mapping {
 	/**
 	 * This takes a String (From the file contents of the user), and runs the mapping portion of the clicking translation.
 	 * @param fileContents The contents from the user's file, in total
+	 * @throws AWTException 
+	 * @throws IOException 
 	 */
-	public void startMap(String fileContents)
+	public void startMap(String fileContents) throws IOException, AWTException
 	{
 		ArrayList<String> lines = contentsToLines(fileContents);
 		for (int i = 0; i < lines.size(); i++)
@@ -158,8 +164,10 @@ public class Mapping {
 	/**
 	 * Main method. Strictly for testing.
 	 * @param args Command line arguments
+	 * @throws AWTException 
+	 * @throws IOException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException, AWTException {
 		
 		//Example Test
 		Mapping forTesting = new Mapping();
