@@ -1,3 +1,3 @@
 Mouse true x:ExampleMouseLocationA LeftClick 2 false -1 200 0
-Mouse true x:ExampleMouse	LocationB LeftClick 1 false -1 200 0
+Mouse true x:ExampleMouseLocationB LeftClick 1 false -1 200 0
 CompareImages jeff.png xs:BoundBox true true

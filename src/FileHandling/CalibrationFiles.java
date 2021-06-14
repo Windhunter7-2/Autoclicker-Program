@@ -18,7 +18,9 @@ import External.MainDirectory;
 public class CalibrationFiles {
 	private MainDirectory md = new MainDirectory();
 	private FileHandling fh = new FileHandling();
-	public void calibrate(String fileName) throws IOException
+	private long inputWait = 5000L;
+	private long infoWait = 5000L; 
+	public void calibrate(String fileName) throws IOException, InterruptedException
 	{
 		if(new File(md.getMainDirectory()+"Autoclicker-Program/Settings/Calibration/"+fileName+".autoclick").exists()) {return;}
 		else createAutoclicker(fileName);
@@ -30,7 +32,7 @@ public class CalibrationFiles {
 		 */
 	}
 	
-	private void createAutoclicker(String fileName) throws IOException
+	private void createAutoclicker(String fileName) throws IOException, InterruptedException
 	{
 		String[] oldContents = fh.getText("Autoclicker-Program/Autoclickers/"+fileName+".txt").split("\n");
 		for (int i = 0; i < oldContents.length; ++i) {
@@ -38,28 +40,24 @@ public class CalibrationFiles {
 			if(sc.hasNext()) {
 				String line = sc.next();
 				if (line.equals("Mouse")){
-					JFrame jf = new JFrame();
-					GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(jf);
-					jf.setAlwaysOnTop(true);
-					MouseCalibrator mc = new MouseCalibrator();
-					jf.addMouseListener(mc);
-					JLabel text = new JLabel("Click Anywhere Within Window To Calibrate", JLabel.CENTER);
-					jf.add(text);
-					while(!mc.clicked) {} //Wait for user input
-					oldContents[i] = oldContents[i].replaceAll("x:[^\t\n\f\r]*",mc.pos);
-					jf.dispose();
+					Point p = calibSetup("When this window closes, hover over where you want to click and wait.");
+					oldContents[i] = oldContents[i].replaceAll("x:[^ \t\n\f\r]*", p.x + " " + p.y);
+					
 				}
 				else if (line.equals("CompareImages")) {				
-					JFrame jf = new JFrame();
-					GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(jf);
-					jf.setAlwaysOnTop(true);
-					CompareCalibrator cc = new CompareCalibrator();
-					jf.addMouseListener(cc);
-					JLabel text = new JLabel("Click And Drag Within Window To Define Comparison Region", JLabel.CENTER);
-					jf.add(text);
-					while(!cc.clicked) {} //Wait for user input
-					oldContents[i] = oldContents[i].replaceAll("xs:[^\t\n\f\r]*", cc.startPos + " " + cc.endPos);
-					jf.dispose();
+					Point sp = calibSetup("When this window closes, hover over region corner and wait.");
+					Point ep = calibSetup("When this window closes, hover over opposite region corner and wait.");
+					if (sp.x > ep.x) {
+						int tmp = sp.x;
+						sp.x = ep.x;
+						ep.x = tmp;
+					}
+					if (sp.y > ep.y) {
+						int tmp = sp.y;
+						sp.y = ep.y;
+						ep.y = tmp;
+					}
+					oldContents[i] = oldContents[i].replaceAll("xs:[^ \t\n\f\r]*", sp.x + " " + sp.y + " " + ep.x + " " + ep.y);
 				}
 			}
 			sc.close();
@@ -69,7 +67,6 @@ public class CalibrationFiles {
 			newContents = newContents + s;
 		}
 		fh.setText("Autoclicker-Program/Settings/Calibration/"+fileName+".autoclick", newContents);
-		//throw new RuntimeException("TODO createAutoclicker()");
 		/*
 		 * Must be O(n)*, where n is the number of characters in the autoclicker template file
 		 * (O() might be different for CompareImages, because of the pixels)
@@ -89,12 +86,32 @@ public class CalibrationFiles {
 		 */
 	}
 	
+	private Point calibSetup(String inText) throws InterruptedException {
+		JFrame jf = new JFrame();
+		jf.setVisible(true);
+		jf.setBounds(0,0,600,600);
+		jf.setAlwaysOnTop(true);
+		JLabel text = new JLabel(inText, JLabel.CENTER);
+		jf.add(text);
+		Thread.sleep(infoWait);
+		jf.dispose();
+		Thread.sleep(inputWait);
+		return MouseInfo.getPointerInfo().getLocation();
+		/*GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(jf);
+		jf.setAlwaysOnTop(true);
+		MouseCalibrator mc = new MouseCalibrator();
+		jf.addMouseListener(mc);
+		JLabel text = new JLabel("Click Anywhere Within Window To Calibrate", JLabel.CENTER);
+		jf.add(text);
+		while(!mc.clicked) {} //Wait for user input*/
+	}
+	
 	/**
 	 * listener for mouse clicks
 	 * @author User
 	 *
 	 */
-	private class MouseCalibrator extends MouseAdapter{
+	/*private class MouseCalibrator extends MouseAdapter{
 		public String pos;
 		public boolean clicked;
 		public MouseCalibrator() {
@@ -134,13 +151,13 @@ public class CalibrationFiles {
 				clicked = true;
 			}
 		}
-	}
+	}*/
 
 	/**
 	 * Main method. Strictly for testing.
 	 * @param args Command line arguments
 	 */
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, InterruptedException {
 		CalibrationFiles cf = new CalibrationFiles();
 		cf.calibrate("LoremIpsum");
 		System.out.println("File found case handled");
