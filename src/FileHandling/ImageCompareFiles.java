@@ -6,25 +6,32 @@ import javax.imageio.ImageIO;
 import External.MainDirectory;
 
 public class ImageCompareFiles {
+	
+	/**
+	 * The main directory of the programs
+	 */
 	private static MainDirectory md = new MainDirectory();
 	
+	/**
+	 * Gets the image stored in the given fileName location, and returns it as a BufferedImage.
+	 * @param fileName The file name to load the image from
+	 * @return The image loaded from the file
+	 * @throws IOException
+	 */
 	public BufferedImage loadImage(String fileName) throws IOException
 	{
 		return ImageIO.read(new File(fileName));//new BufferedImage(new File())
-		/*
-		 * Gets the image stored in the given fileName location, and stores it into a BufferedImage, then returns that
-		 * It's fine to use FileHandling methods to access the files
-		 */
-		//return null;
 	}
 	
+	/**
+	 * Converts the BufferedImage image into a .png image, saving it to the given fileName.
+	 * @param image The BufferedImage to save as an image
+	 * @param fileName The file name to save the image as
+	 * @throws IOException
+	 */
 	public void saveImage(BufferedImage image, String fileName) throws IOException
 	{
 		ImageIO.write(image, "png", new File(fileName));
-		/*
-		 * Converts the BufferedImage image into a .png image, and then saves it to the given fileName
-		 * It's fine to use FileHandling methods to access the files
-		 */
 	}
 	
 	/**
@@ -39,8 +46,6 @@ public class ImageCompareFiles {
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
-		// TODO Auto-generated method stub
-		
 	}
 
 }
