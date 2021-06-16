@@ -86,6 +86,14 @@ public class CalibrationFiles {
 			newContents = newContents + s;
 		}
 		fh.setText("Autoclicker-Program/Settings/Calibration/"+fileName+".autoclick", newContents);
+		JFrame endFrame = new JFrame();
+		endFrame.setVisible(true);
+		endFrame.setBounds(0,0,600,600);
+		endFrame.setAlwaysOnTop(true);
+		JLabel text = new JLabel("<html><p text-align:center>Calibration Complete.<br>Thank you for your time!</p></html>", JLabel.CENTER);
+		endFrame.add(text);
+		Thread.sleep(infoWait);
+		endFrame.dispose();
 		/*
 		 * Must be O(n)*, where n is the number of characters in the autoclicker template file
 		 * (O() might be different for CompareImages, because of the pixels)
