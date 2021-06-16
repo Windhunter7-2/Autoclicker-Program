@@ -3,13 +3,22 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.File;
 import java.io.IOException;
-
 import External.MainDirectory;
-//import java.io.FileNotFoundException;
+
 public class FileHandling {
+	
+	/**
+	 * This is the main directory of the programs.
+	 */
 	private static MainDirectory md = new MainDirectory();
+	
+	/**
+	 * This reads the given file, fileNameWithExt, and returns it as a String.
+	 * @param fileNameWithExt The file to read from
+	 * @return The text in the file
+	 * @throws IOException
+	 */
 	public String getText(String fileNameWithExt) throws IOException
 	{
 		String retString = new String("");
@@ -21,21 +30,19 @@ public class FileHandling {
 		}
 		br.close();
 		return retString;
-		/*
-		 * Must be O(n), where n is the number of characters in the textfile
-		 * Reads the file fileNameWithExt, then return it as a String
-		 */
 	}
 	
+	/**
+	 * This writes to the file fileNameWithExt, with the contents being written as the given String, contents.
+	 * @param fileNameWithExt The file being written to (Overwrites, rather than concatenates)
+	 * @param contents The contents to put into the file
+	 * @throws IOException
+	 */
 	public void setText(String fileNameWithExt, String contents)throws IOException
 	{
 		BufferedWriter bw = new BufferedWriter(new FileWriter(md.getMainDirectory() + fileNameWithExt));	
 		bw.write(contents);
 		bw.close();
-		/*
-		 * Must be O(n), where n is the number of characters in the contents
-		 * Writes to the file fileNameWithExt, with the contents being the given String, contents
-		 */
 	}
 	
 	/**
