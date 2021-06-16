@@ -1,16 +1,15 @@
 package ImageComparison;
 
 import java.awt.AWTException;
-import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.Robot;
-import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import External.MainDirectory;
 import FileHandling.ImageCompareFiles;
 
 public class CompareImages {
@@ -80,20 +79,20 @@ public class CompareImages {
 		Robot robot;
 		
 		//While Timer Active, Compare Images
-		Timer timer = new Timer();
-		timer.start();
 		boolean imageCmpDone = false;
-		
-		int TEMP_COUNT = 0;
+		long originalTime = System.currentTimeMillis();
 		
 		while (timeout == false)
 		{
+			//Check Current Time Here; Until the Timer Is Reached, Update the Timer
+			curTime = (System.currentTimeMillis() - originalTime);
+			if (curTime > timeouter)
+				timeout = true;
+			
+			//Create Current Screenshot
 			robot = new Robot();
 			BufferedImage screenshot = robot.createScreenCapture(screenRectangle);	//Create Screenshot of That Part of the Screen
 			boolean toCheck = compareScreens(imageToCompareTo, screenshot, width, height);	//Compare the Screenshots
-			
-			imageLoader.saveImage(screenshot, ("C:/temp/Screenshot #" + TEMP_COUNT + ".png") );
-			System.out.println("Saved Image #" + TEMP_COUNT + "... toCheck = " + toCheck);
 			
 			//Mark As Successfully Compared, and Exit Loop
 			if (untilSame == true)
@@ -114,6 +113,11 @@ public class CompareImages {
 		if (imageCmpDone == false)
 		{
 			boolean repeat = cmpImage_cont();	//Decide Whether to Retry the Image Comparison Or Not
+			try {
+				Thread.sleep(3000);	//Close Window *Before* Restarting Screenshot Comparison; 3 Seconds for It
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			if (repeat == true)	//If Retrying Image Comparison, Just Call the Method Recursively (Again)
 			{
 				curTime = 0;
@@ -124,20 +128,6 @@ public class CompareImages {
 		
 		//If Successfully Compared, Return (Also Return if User Decides to Not Continue Image Check)
 		return;
-	}
-	
-	/**
-	 * This handles the potential timeout occurrence.
-	 */
-	private static class Timer extends Thread
-	{
-		public void run()
-		{
-			while (curTime <= timeouter)	//Until the Timer Is Reached, Update the Timer
-				curTime++;
-			timeout = true;
-			return;
-		}
 	}
 	
 	/**
@@ -266,18 +256,21 @@ public class CompareImages {
 		Robot robot = new Robot();
 		Rectangle screenRectangle = new Rectangle(550, 362, 938, 387);
 		BufferedImage screenshot = robot.createScreenCapture(screenRectangle);	//Create Screenshot of That Part of the Screen
-		test.saveImage(screenshot, "C:/temp/TestScreenshot.png");
+		MainDirectory directory = new MainDirectory();
+		test.saveImage(screenshot, (directory.getMainDirectory() + "/Autoclicker-Program/TestScreenshot.png") );
 		
 		//Test Screenshot Comparison - Instructions
 		ArrayList<String> instr = new ArrayList<String>();
-		instr.add("C:/temp/TestScreenshot.png");
+		String screenshotExample = (directory.getMainDirectory() + "/Autoclicker-Program/TestScreenshot.png");
+		instr.add(screenshotExample);
 		instr.add("550");
 		instr.add("362");
 		instr.add("-1");
 		instr.add("-1");
-		instr.add("true");
-		instr.add("false");	//Wait Until <Different>
+		instr.add("false");
+		instr.add("true");	//Wait Until <Different>
 		forTesting.startAutoclick_cmpImg(instr);
+		System.out.println("Screenshots successfully compared! Waiting for the screenshots to be *different* is complete!");
 
 
 	}
