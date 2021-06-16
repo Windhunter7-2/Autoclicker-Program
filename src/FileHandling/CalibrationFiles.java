@@ -9,6 +9,8 @@ import java.awt.Point;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.Scanner;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -40,13 +42,30 @@ public class CalibrationFiles {
 			if(sc.hasNext()) {
 				String line = sc.next();
 				if (line.equals("Mouse")){
-					Point p = calibSetup("When this window closes, hover over where you want to click and wait.");
-					oldContents[i] = oldContents[i].replaceAll("x:[^ \t\n\f\r]*", p.x + " " + p.y);
+					Pattern p = Pattern.compile("x:[^ \t\n\f\r]*");
+					Matcher m = p.matcher(oldContents[i]);
+					String x = "Unnamed";
+					if(m.find()) {
+						x = oldContents[i].substring(m.start()+2, m.end());
+					}
+					Point pt = calibSetup("<html><p text-align:center>Calibrating " + x + ".<br>When this window closes, hover over where you want to click and wait.</p></html>");
+					oldContents[i] = oldContents[i].replaceAll("x:[^ \t\n\f\r]*", pt.x + " " + pt.y);
 					
 				}
-				else if (line.equals("CompareImages")) {				
-					Point sp = calibSetup("When this window closes, hover over region corner and wait.");
-					Point ep = calibSetup("When this window closes, hover over opposite region corner and wait.");
+				else if (line.equals("CompareImages")) {
+					//Finding command name
+					Pattern p = Pattern.compile("xs:[^ \t\n\f\r]*");
+					Matcher m = p.matcher(oldContents[i]);
+					String xs = "Unnamed";
+					if(m.find()) { 
+						xs = oldContents[i].substring(m.start()+3, m.end());
+					}
+					Point sp = calibSetup("<html><p text-align:center>Calibrating "
+					+ xs
+					+ ".<br>When this window closes, hover over top-left corner and wait.</p></html>");
+					Point ep = calibSetup("<html><p text-align:center>Calibrating "
+					+ xs
+					+ ".<br>When this window closes, hover over bottom-right corner and wait.</p></html>");
 					if (sp.x > ep.x) {
 						int tmp = sp.x;
 						sp.x = ep.x;
