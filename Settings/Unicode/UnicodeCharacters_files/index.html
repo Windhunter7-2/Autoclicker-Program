@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<!-- saved from url=(0060)https://s0.2mdn.net/4601119/1613211446652/970x250/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>970x250</title>
+    <!-- IMPORTANT: DETERMINES THE SIZE OF YOUR AD (See Readme)--> 
+    <meta name="ad.size" content="width=970,height=250">
+
+    <!-- GREENSOCK -->
+<!--     <script async src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.0/plugins/CSSPlugin.min.js" integrity="sha384-573/jSfrcGIEH2lRTxQZ4W7E+HTq7d1bt0yZOYVxWVjb3gcs+Dlkbsq1eKjZwRYq" crossorigin="anonymous"></script>
+    <script async src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.0/easing/EasePack.min.js" integrity="sha384-zc3B87A/Yxx74XcNe5nYT43ZELS62RkTdH0DbLI+CDHSHw+hrd0pfiC9kR3JMjNL" crossorigin="anonymous"></script>
+    <script async src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.0/TweenLite.min.js" integrity="sha384-PgxLf9q/ZXfqMiFC6L5bSxACYIZmUKVRqLczIL4ytWVZJFJa8sRqH7x1rpJnPEyR" crossorigin="anonymous"></script>
+    <script async src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.0/TimelineLite.min.js" integrity="sha384-o+oA6q1xn58NBUl7bIYRBv/qHlkOJxh+uZ7DPkExtN9hmm9nDGPTt3wpSE/e70Wi" crossorigin="anonymous"></script> -->
+    <script async="" src="./TweenMax.min.js.download" integrity="sha384-CEWGa7zvp+QFdz40Dx3eLdw4sdl86GAx3dzUkZIntyoF582Do6a2HR86K1OUVQmd" crossorigin="anonymous"></script>
+
+    <!--removeIf(dist)-->
+    <!-- IMPORTANT: GSAP Dev Tools -->
+    <!-- <script src="../../utils/GSDevTools.js"></script> -->
+    <!--endRemoveIf(dist)-->
+
+    <script>
+        var clickTag = " https://us.etrade.com/what-we-offer/pricing-and-rates";
+    </script>
+
+    <!-- OUR SCRIPTS -->
+    <link rel="stylesheet" type="text/css" href="./main.css">
+
+<script type="text/javascript">
+    
+  (function() {
+    var MAX_URL_PARAM_LENGTH = 34;
+    var CLICK_X_URL_KEY = 'nx';
+    var CLICK_Y_URL_KEY = 'ny';
+    var CREATIVE_DIMENSIONS_KEY = 'dim';
+    var AD_URL_PARAM = '&adurl=';
+
+    var relegateNavigation = '';
+    var urlParamMap = {};
+
+    urlParamMap[CLICK_X_URL_KEY] = null;
+    urlParamMap[CLICK_Y_URL_KEY] = null;
+    urlParamMap[CREATIVE_DIMENSIONS_KEY] = null;
+
+    var handleClickTagMessage = function(e) {
+      try {
+        var eventData = JSON.parse(e.data);
+      } catch (err) {
+        return;
+      }
+      if (eventData.isInitClickTag) {
+        if (eventData.clickTags) {
+          for (var i = 0; i < eventData.clickTags.length; i++) {
+            var clkTag = eventData.clickTags[i];
+            window[clkTag.name] = clkTag.url;
+          }
+        } else if (eventData.clickTag) {
+          window.clickTag = eventData.clickTag;
+        }
+        relegateNavigation = eventData.relegateNavigation;
+      }
+    };
+
+    var storeClickCoordinates = function(e) {
+      urlParamMap[CLICK_X_URL_KEY] = Math.round(e.clientX);
+      urlParamMap[CLICK_Y_URL_KEY] = Math.round(e.clientY);
+    };
+
+    var getCreativeDimensions = function() {
+      return window.innerWidth + 'x' + window.innerHeight;
+    }
+
+    var getExitClickParams = function(e) {
+      urlParamMap[CREATIVE_DIMENSIONS_KEY] = getCreativeDimensions();
+
+      var exitParams = '';
+      for (var key in urlParamMap) {
+        exitParams += '&' + key + '=';
+        if (urlParamMap[key] !== null) {
+          exitParams += urlParamMap[key];
+        }
+      }
+      return exitParams;
+    }
+
+    var appendExitClickParams = function(url) {
+      var adUrlIndex = url.toLowerCase().indexOf(AD_URL_PARAM);
+      var paramsToBeAdded = getExitClickParams();
+      if (adUrlIndex > -1 && paramsToBeAdded.length <= MAX_URL_PARAM_LENGTH) {
+        url = url.substr(0, adUrlIndex) + paramsToBeAdded +
+          url.substr(adUrlIndex);
+      };
+      return url;
+    };
+
+    if (open.call) {
+      window.open = function(open) {
+        return function(url, name, features) {
+          url = appendExitClickParams(url);
+          if (relegateNavigation === 'parent') {
+            var message = {'clickTag': url, 'isPostClickTag': true};
+            parent.postMessage(JSON.stringify(message), '*');
+          } else {
+            var args = [url, name];
+            if (features) {
+              args.push(features);
+            }
+            open.apply(window, args);
+          }
+        };
+      }(window.open);
+    }
+
+    if (window.addEventListener) {
+      window.addEventListener(
+          'message', handleClickTagMessage, false);
+      window.addEventListener('mousedown', storeClickCoordinates, true);
+    } else {
+      window.attachEvent('onmessage', handleClickTagMessage);
+    }
+  })();
+    
+  </script></head>
+
+<body>
+    <!--removeIf(dist)--><!-- <div class="center"> --><!--endRemoveIf(dist)-->
+    <div id="container" style="width: 970px; height: 250px; visibility: inherit; opacity: 1;">
+        <a href="javascript:void(window.open(window.clickTag))">
+            <!-- Banner contents will be auto-generated by the gulp process below **AUTO DIV START** 
+                Do not change or alter the AUTO DIV START comment, process is dependent upon it! -->
+            <!-- **AUTO DIV START** -->
+			
+            <div id="bg" class="sprite" style="visibility: inherit; opacity: 0.833308; transform: translate3d(161.692px, 0px, 0px) scale(1.33338, 1.33338);"></div>
+            <div id="bg2" class="sprite" style="visibility: inherit; opacity: 0.40454; transform: translate3d(-218.002px, 0px, 0px) scale(1.44949, 1.44949);"></div>
+
+            <div class="sprite retina_container">
+                
+                <div id="copy1a" class="copy sprite"></div>
+                <div id="copy1b" class="copy sprite" style="visibility: hidden; opacity: 0;"></div>
+                <div id="copy2" class="copy sprite" style="visibility: inherit; opacity: 1;"></div>
+                <div id="copy3" class="copy sprite" style="transform: matrix(1, 0, 0, 1, 0, 500);"></div>
+                <div id="copy4" class="copy sprite" style="transform: matrix(1, 0, 0, 1, 0, 500);"></div>
+                <div id="copy5" class="copy sprite" style="transform: matrix(1, 0, 0, 1, 0, 0);"></div>
+                <div id="copy_ef1" class="copy_ef copy sprite" style="visibility: hidden; opacity: 0;"></div>
+                <div id="copy_ef2" class="copy_ef copy sprite" style="visibility: hidden; opacity: 0; transform: matrix(1.25, 0, 0, 1.25, 0, 0);"></div>
+                <div id="logobox" class="sprite"></div>
+                <!-- <div id="cover" class="sprite"></div> -->
+                <div id="logo" class="sprite"></div>
+                <div id="cta_container" class="sprite">
+                    <div id="cta" class="sprite"></div>
+                    <div id="cta_over" class="sprite" style="visibility: hidden; opacity: 0;"></div>
+                </div>
+                <div id="legal" class="sprite" style="visibility: hidden; opacity: 0;"></div>
+            </div>
+
+            <div id="border_top" class="sprite" style="width: 970px;"></div> 
+            <div id="border_right" class="sprite" style="height: 250px;"></div>
+            <div id="border_left" class="sprite" style="height: 250px;"></div>
+            <div id="border_bottom" class="sprite" style="width: 970px;"></div> 
+        </a>
+    </div>
+    <!--removeIf(dist)--><!--endRemoveIf(dist)-->
+
+
+<script type="text/javascript" src="./main.js.download"></script>
+
+<script type="text/javascript">
+    window.onload = function(){
+        window.setTimeout(function() { init(); }, 1000);
+    }
+
+</script>
+
+
+</body></html>

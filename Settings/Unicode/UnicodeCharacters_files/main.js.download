@@ -1,0 +1,155 @@
+'use strict';
+var masterTl;
+var stopWatch;
+var stopWatchLoop;
+
+//IIFE TO EXTRACT DIMENSION DATA
+var dimensions = (function(){
+        var str = document.querySelectorAll('[name="ad.size"]')[0].getAttributeNode('content').value;
+        var widthMatch = /width\=(\d+)/.exec(str);
+        var heightMatch = /height\=(\d+)/.exec(str);
+        return {
+            width: parseInt(widthMatch[1]),
+            height: parseInt(heightMatch[1])
+        }
+})();
+
+function borderSize(width, height){
+    border_top.style.width = width + 'px';
+    border_bottom.style.width = width + 'px';
+    border_right.style.height = height + 'px';
+    border_left.style.height = height + 'px';
+}
+
+
+
+// console.log(ctaWidth);
+
+//set timeline
+function newTimeline(name) {
+ return new TimelineMax({id:name})
+ // return new TimelineMax({id:name, repeat:-1, repeatDelay:0})
+}
+
+//INITIALIZE
+function init(){
+    IDsToVars();
+    borderSize(dimensions.width,dimensions.height);
+
+    container.style.width = dimensions.width + 'px';
+    container.style.height = dimensions.height + 'px';
+    
+    masterTl = newTimeline();
+    addListeners();
+    animate();
+    bgAnim();
+    timeLineLength();
+    
+    //removeIf(dist) 
+    // GSDevTools.create();
+    //endRemoveIf(dist) 
+}
+
+function addListeners(){
+    container.onmouseover=function(){cta_Over()};
+    container.onmouseout=function(){cta_Out()};
+}
+
+function bgAnim(){
+    var Width = dimensions.width/2;
+    var maxDur = masterTl.duration();
+    TweenMax.fromTo(bg, maxDur, {x:Width, scale:2, autoAlpha:0.5}, {x:0, scale:1, autoAlpha:1, ease: Power0.easeNone});
+    TweenMax.fromTo(bg2, maxDur, {x:-Width, scale:2, autoAlpha:0.9}, {x:0, scale:1, autoAlpha:0, ease: SlowMo.ease.config( 0.1, 0.7, false)});
+}
+
+
+
+//ANIMATE
+function animate(){
+    //timeline animation here
+    timerReset();
+
+    var dur = 0.5;
+    var hold = 2.5;
+
+    // var logoBox = 140; //Height (or width) of box with log & cta 
+    var Height = dimensions.height*2; 
+    var Width = dimensions.width*2; 
+     
+    // var borderWidth = 10; //must match border thichness
+
+    // var copyHolderHeightMax = Height*2 + 'px'; //retina 2x compensation
+    // var copyHolderHeightMin = borderWidth*2 + 'px'; //retina 2x compensation
+
+    // var backEaseOutCover = Back.easeOut.config(borderWidth*.0633);
+    var backEaseOut = Back.easeOut.config(1.5);
+    var backEaseIn = Back.easeIn.config(1.5);
+
+    
+    masterTl
+    .set([container], {autoAlpha:1})
+    // .set(cover, {height:logoBox + 'px'})
+    .set(cta_over, {autoAlpha:0})
+    // .set('.copy', {transformPerspective:'800px'})
+    
+    // .set([copy1a,copy1b,copy2a,copy2b], {x:'-='+borderWidth*2, y:'-='+borderWidth*2})
+  
+
+    .add('frame1', '+='+hold)
+        .to(copy1b, dur, {autoAlpha:0}, 'frame1')
+    
+    .add('frame2')
+        .from(copy2, dur, {autoAlpha:0}, 'frame2')
+        .from(copy3, dur, {y:Height, ease: Power4.easeOut}, 'frame2+='+dur)
+        
+    .add('frame3', '+='+hold/2)
+        .to(copy3, dur, {y:Height, ease: Power4.easeIn}, 'frame3')
+        .from(copy4, dur, {y:Height, ease: Power4.easeOut}, 'frame3+='+dur)
+
+    .add('frame4', '+='+hold/2)
+        .to(copy4, dur, {y:Height, ease: Power4.easeIn}, 'frame4')
+        .from(copy5, dur, {y:Height, ease: Power4.easeOut}, 'frame4+='+dur)
+
+    .add('ef', '+='+hold)
+        .to([copy1a,copy2,copy5], dur, {autoAlpha:0}, 'ef')
+        .from(copy_ef1, dur, {autoAlpha:0}, 'ef+='+dur)
+        .from(copy_ef2, dur, {autoAlpha:0, scale:1.25, ease: Power1.easeOut}, 'ef+='+dur*2)
+  .from(legal, dur, {autoAlpha:0, ease: Power1.easeOut}, 'ef+='+dur*3)
+     
+    .call(returnTimer)
+
+}
+
+
+function cta_Over(){
+    TweenMax.to(cta_over, 0.125, {autoAlpha:1}); 
+}
+
+function cta_Out(){
+    TweenMax.to(cta_over, 0.125, {autoAlpha:0}); 
+}
+
+function timerReset(){    
+    stopWatch=new Date().getTime(); 
+}
+
+function returnTimer(stopWatchLoopNum){
+    stopWatch=((new Date().getTime())-stopWatch)*.001;
+    console.log(stopWatch+' seconds');
+}
+
+function timeLineLength(){
+    console.log('Master TL duration is: ' + masterTl.duration());
+}
+
+//SET IDs IN DOM TO GLOBAL VARIABLES
+function IDsToVars(){
+    var allElements = document.getElementsByTagName('*');
+    
+    for (var q = 0; q<allElements.length; q++){
+         var el = allElements[q];
+         if (el.id){
+            window[el.id]=document.getElementById(el.id);
+        }
+    }
+};
