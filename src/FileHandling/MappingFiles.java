@@ -15,6 +15,14 @@ public class MappingFiles {
 				instrucVals.add(s);
 			}
 		}
+		
+		public String toString() {
+			String outStr = "";
+			for (String s : instrucVals) {
+				outStr = outStr + s + " ";
+			}
+			return outStr.substring(0, outStr.length()-1);
+		}
 	}
 	
 	

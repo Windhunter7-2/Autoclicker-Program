@@ -1,6 +1,7 @@
 package FileHandling;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -38,9 +39,11 @@ public class FileHandling {
 	 * @param contents The contents to put into the file
 	 * @throws IOException
 	 */
-	public void setText(String fileNameWithExt, String contents)throws IOException
+	public void setText(String fileNameWithExt, String contents) throws IOException
 	{
-		BufferedWriter bw = new BufferedWriter(new FileWriter(md.getMainDirectory() + fileNameWithExt));	
+		File f = new File(md.getMainDirectory() + fileNameWithExt);
+		f.createNewFile(); //Creates a new file if necessary.
+		BufferedWriter bw = new BufferedWriter(new FileWriter(f));	
 		bw.write(contents);
 		bw.close();
 	}
@@ -52,7 +55,7 @@ public class FileHandling {
 	 */
 	public static void main(String[] args) throws IOException {
 		FileHandling fh = new FileHandling();
-		String ogText = fh.getText("Amogus.txt");
+		String ogText = "amogus";//fh.getText("Amogus.txt");
 		System.out.println(ogText);
 		fh.setText("Amogus.txt", "GETOUTOFMYHEADGETOUTOFMYHEADGETOUTOFMYHEADGETOUTOFMYHEADGETOUTOFMYHEAD");
 		System.out.println(fh.getText("Amogus.txt"));
