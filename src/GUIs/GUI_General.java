@@ -1,9 +1,12 @@
 package GUIs;
 
+import java.awt.AWTException;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import ClickingTranslation.Mapping;
 import External.MainDirectory;
+import FileHandling.CalibrationFiles;
 import FileHandling.FileHandling;
 import FileHandling.MappingFiles;
 
@@ -65,11 +68,15 @@ public class GUI_General {
 		 * element with a space (For a hypothetical example, if instrucVals were ["Bob", "Alice", "Tim"], the resultant String
 		 * would be "Bob Alice Tim"; this calculated String is what should be returned from the function
 		 */
-		
 	}
 	
-	public void runAutoclick(String fileName)
+	public void runAutoclick(String fileName) throws InterruptedException, IOException, AWTException
 	{
+		CalibrationFiles cf = new CalibrationFiles();
+		Mapping m = new Mapping();
+		cf.calibrate(fileName);
+		m.startMap(fh.getText("Autoclicker-Program/Settings/Calibration/"+fileName+".autoclick"));
+		
 		/*
 		 * Must be O(1)
 		 * Call CalibrationFiles.calibrate(), *then* call FileHandling.getText(), using the *full* file name/location as its argument,
@@ -80,9 +87,12 @@ public class GUI_General {
 
 	/**
 	 * Testing only.
+	 * @throws AWTException 
+	 * @throws IOException
+	 * @throws InterruptedException 
 	 * @params args unused.
 	 */
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, InterruptedException, AWTException {
 		GUI_General gg = new GUI_General();
 		ArrayList<String> as = new ArrayList<>();
 		as.add(gg.createAutoclickInstr("Keyboard", "Blehh", null, false, false, 1, 2, 1000, 0, 0, 0));
@@ -91,6 +101,7 @@ public class GUI_General {
 		as.add(gg.createAutoclickInstr("Wait", null, null, false, false, 3, 0, 0, 0, 0, 0));
 		as.add(gg.createAutoclickInstr("CompareImages", "Region1", "Box1", true, false, 0, 0, 0, 0, 0, 0));
 		gg.createAutoclick("GUIGeneralTest.txt", as);
+		gg.runAutoclick("GUIGeneralTest");
 		
 	}
 }

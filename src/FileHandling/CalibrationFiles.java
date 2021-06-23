@@ -83,9 +83,9 @@ public class CalibrationFiles {
 		}
 		String newContents = "";
 		for (String s : oldContents) {
-			newContents = newContents + s;
+			newContents = newContents + s + "\n";
 		}
-		fh.setText("Autoclicker-Program/Settings/Calibration/"+fileName+".autoclick", newContents);
+		fh.setText("Autoclicker-Program/Settings/Calibration/"+fileName+".autoclick", newContents.substring(0,newContents.length()-1));
 		JFrame endFrame = new JFrame();
 		endFrame.setVisible(true);
 		endFrame.setBounds(0,0,600,600);

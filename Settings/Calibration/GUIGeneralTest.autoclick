@@ -1,0 +1,5 @@
+Keyboard 1 2 1000 Blehh
+AdvKeyboard 1 2 Ctrl false
+Mouse true 1406 16 Left 3 false 0 30 100
+Wait 3
+CompareImages Region1 798 1 1232 386 true false

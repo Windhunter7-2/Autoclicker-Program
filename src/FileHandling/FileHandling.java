@@ -8,7 +8,6 @@ import java.io.IOException;
 import External.MainDirectory;
 
 public class FileHandling {
-	
 	/**
 	 * This is the main directory of the programs.
 	 */
