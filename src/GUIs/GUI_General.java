@@ -56,6 +56,7 @@ public class GUI_General {
 			break;
 		}
 		outInstruction = whichOne + " " + mfi.toString();
+		System.out.println(outInstruction);
 		return outInstruction;
 		/*
 		 * whichOne is which autoclicker type (i.e. "Keyboard", "AdvKeyboard", "Mouse", "Wait", or "CompareImages)
@@ -87,7 +88,7 @@ public class GUI_General {
 
 	/**
 	 * Testing only.
-	 * @throws AWTException 
+	 * @throws AWTException BlehhBlehh
 	 * @throws IOException
 	 * @throws InterruptedException 
 	 * @params args unused.
@@ -97,8 +98,8 @@ public class GUI_General {
 		ArrayList<String> as = new ArrayList<>();
 		as.add(gg.createAutoclickInstr("Keyboard", "Blehh", null, false, false, 1, 2, 1000, 0, 0, 0));
 		as.add(gg.createAutoclickInstr("AdvKeyboard", "Ctrl", null, false, false, 1, 2, 0, 0, 0, 0));
-		as.add(gg.createAutoclickInstr("Mouse", "Mouse1", "Left", true, false, 3, 0, 30, 100, 0, 0));
-		as.add(gg.createAutoclickInstr("Wait", null, null, false, false, 3, 0, 0, 0, 0, 0));
+		as.add(gg.createAutoclickInstr("Mouse", "Mouse1", "LeftClick", true, false, 1, 0, 30, 100, 0, 0));
+		as.add(gg.createAutoclickInstr("Wait", null, null, false, false, 3000, 0, 0, 0, 0, 0));
 		as.add(gg.createAutoclickInstr("CompareImages", "Region1", "Box1", true, false, 0, 0, 0, 0, 0, 0));
 		gg.createAutoclick("GUIGeneralTest.txt", as);
 		gg.runAutoclick("GUIGeneralTest");
