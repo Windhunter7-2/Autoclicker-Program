@@ -18,8 +18,9 @@ public class Mapping {
 	 * @param instructions The *current* instructions given on what to do
 	 * @throws AWTException 
 	 * @throws IOException 
+	 * @throws InterruptedException 
 	 */
-	private void executeInstruction(ArrayList<String> instructions) throws IOException, AWTException
+	private void executeInstruction(ArrayList<String> instructions) throws IOException, AWTException, InterruptedException
 	{
 		//Set First Word (AKA Which Class to Run)
 		String first = instructions.get(0);
@@ -68,8 +69,9 @@ public class Mapping {
 	 * @param fileContents The contents from the user's file, in total
 	 * @throws AWTException 
 	 * @throws IOException 
+	 * @throws InterruptedException 
 	 */
-	public void startMap(String fileContents) throws IOException, AWTException
+	public void startMap(String fileContents) throws IOException, AWTException, InterruptedException
 	{
 		ArrayList<String> lines = contentsToLines(fileContents);
 		for (int i = 0; i < lines.size(); i++)
@@ -166,8 +168,9 @@ public class Mapping {
 	 * @param args Command line arguments
 	 * @throws AWTException 
 	 * @throws IOException 
+	 * @throws InterruptedException 
 	 */
-	public static void main(String[] args) throws IOException, AWTException {
+	public static void main(String[] args) throws IOException, AWTException, InterruptedException {
 		
 		//Example Test
 		Mapping forTesting = new Mapping();

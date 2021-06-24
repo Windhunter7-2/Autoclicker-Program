@@ -88,7 +88,7 @@ public class GUI_General {
 
 	/**
 	 * Testing only.
-	 * @throws AWTException BlehhBlehh
+	 * @throws AWTException
 	 * @throws IOException
 	 * @throws InterruptedException 
 	 * @params args unused.

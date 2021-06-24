@@ -34,7 +34,7 @@ public class Advanced_Keyboard {
 	 */
 	private boolean isUnicode;
 
-	public void startAutoclick(ArrayList<String> instructions)
+	public void startAutoclick(ArrayList<String> instructions) throws InterruptedException
 	{
 		/*
 		 * Must be O(n), where n is numClicks
@@ -63,7 +63,6 @@ public class Advanced_Keyboard {
 					case "Windows + Shift + S":
 						pressOrder(click, new int[] {KeyEvent.VK_WINDOWS, KeyEvent.VK_SHIFT, KeyEvent.VK_S});
 						break;
-						//TODO test all combos beneath this line
 					case "Alt + Tab":
 						pressOrder(click, new int[] {KeyEvent.VK_ALT, KeyEvent.VK_TAB});
 						break;
@@ -175,19 +174,16 @@ public class Advanced_Keyboard {
 	 * This isn't quite an "input", as many unicode characters don't have direct device inputs.
 	 * Instead, it's a copy-paste from a file containing several Unicode planes.
 	 * Credit to Paul Sarena (https://github.com/bits/UTF-8-Unicode-Test-Documents) for the base Unicode file.
+	 * @throws InterruptedException 
 	 */
-	private void clickUnicode(Robot r)
+	private void clickUnicode(Robot r) throws InterruptedException
 	{
-		throw new RuntimeException("TODO clickUnicode");
-		/*Clipboard c = Toolkit.getDefaultToolkit().getSystemClipboard();
+		//throw new RuntimeException("TODO clickUnicode");
+		Clipboard c = Toolkit.getDefaultToolkit().getSystemClipboard();
 		StringSelection s = new StringSelection(Character.valueOf((char)(unicodeKey)).toString());
 		c.setContents(s, null);
-		pressOrder(r, new int[] {KeyEvent.VK_CONTROL, KeyEvent.VK_V});*/
-		
-		//https://unicode-table.com/en/search/?q=U%2B
-		
-		
-		//System.out.println(Character.valueOf((char)(unicodeKey)).toString());
+		pressOrder(r, new int[] {KeyEvent.VK_CONTROL, KeyEvent.VK_V});
+		Thread.sleep(10L);
 		/*
 		 * Must be less than or equal to O(n), where n is the number of Unicode characters
 		 * Creating the additionally required file (The Unicode document) is part of this method, and the reason is that since this
@@ -198,6 +194,7 @@ public class Advanced_Keyboard {
 		 * specifically, it should get the corresponding character from the document, use auto clicking to physically select the
 		 * associated character and copy that to the user’s clipboard, followed by pasting that character from the clipboard (Via Ctrl+V).
 		 * Note that much of this will be a lot easier using the already-defined auto-clicks, which is fine for this particular method.
+		 * 
 		 */
 	}
 	
@@ -220,16 +217,18 @@ public class Advanced_Keyboard {
 	/**
 	 * Main method. Strictly for testing.
 	 * @param args Command line arguments
+	 * @throws InterruptedException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException { 
 		Advanced_Keyboard forTesting = new Advanced_Keyboard();
 		for (int i = 0; i < 26; ++i) {
 			ArrayList<String> instr = new ArrayList<String>();
 			instr.add("1");	//Number of Clicks
-			instr.add(String.valueOf(256));	//UnicodeKey
+			instr.add(String.valueOf(9000+i));	//UnicodeKey
 			instr.add("F12");//KeyCombo
 			instr.add("true"); //IsUnicode
 			forTesting.startAutoclick(instr);
+			//Thread.sleep(1000L);
 		}
 	}
 	/*
