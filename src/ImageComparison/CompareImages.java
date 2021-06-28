@@ -191,7 +191,8 @@ public class CompareImages {
 		String S5 = instructions.get(4);
 		String S6 = instructions.get(5);
 		String S7 = instructions.get(6);
-		imageLocation = S1;
+		MainDirectory directory = new MainDirectory();
+		imageLocation = (directory.getMainDirectory() + "/Autoclicker-Program/Settings/Images/" + S1);
 		pixelLocations[0] = Integer.parseInt(S2);
 		pixelLocations[1] = Integer.parseInt(S3);
 		pixelLocations[2] = Integer.parseInt(S4);
@@ -261,7 +262,7 @@ public class CompareImages {
 		
 		//Test Screenshot Comparison - Instructions
 		ArrayList<String> instr = new ArrayList<String>();
-		String screenshotExample = (directory.getMainDirectory() + "/Autoclicker-Program/TestScreenshot.png");
+		String screenshotExample = "TestScreenshot.png";
 		instr.add(screenshotExample);
 		instr.add("550");
 		instr.add("362");
