@@ -1,10 +1,15 @@
 package GUIs;
 
+import java.awt.AWTException;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javafx.scene.control.Button;
+import javafx.scene.control.Separator;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
 public class GUI_Main {
 	
@@ -42,59 +47,70 @@ public class GUI_Main {
 	
 	public void gui_initial()
 	{
+		gui_general("Initial GUI", false);
 		/*
 		 * Call gui_general("Initial GUI", false), and have this Pane be centered on the screen, in decently larger dimensions
 		 */
-		
-		return;
 	}
 	
 	public void gui_main(String autoclickName)
 	{
+		gui_general(autoclickName, true);
 		/*
 		 * Call gui_general(autoclickName, true), and have this Pane be off to the right in a smaller size, like in the drawn
 		 * GUI specs
 		 */
-		
-		return;
 	}
 	
+	/*
+	 * Creates a Pane of 4 HBoxes/VBoxes, in the order, from top to bottom, of:
+	 * (1) gui_message(autoclickName)
+	 * (2) gui_mainButtons()
+	 * (3) If and only if runButton is true, gui_autoclickButton()
+	 * (4) gui_exit()
+	 * (These should be top to bottom like a VBox; if it doesn't go that way normally, force it via a nested VBox)
+	 */
 	public Pane gui_general(String autoclickName, boolean runButton)
 	{
-		/*
-		 * Creates a Pane of 4 HBoxes/VBoxes, in the order, from top to bottom, of:
-		 * (1) gui_message(autoclickName)
-		 * (2) gui_mainButtons()
-		 * (3) If and only if runButton is true, gui_autoclickButton()
-		 * (4) gui_exit()
-		 * (These should be top to bottom like a VBox; if it doesn't go that way normally, force it via a nested VBox)
-		 */
-		
-		return null;
+		Pane p = new Pane();
+		//Adding a null argument might be dodgy
+		p.getChildren().addAll(gui_message(autoclickName), gui_mainButtons(), runButton ? gui_autoclickButton() : null, gui_exit()); 
+		return p;
 	}
 	
+	/*
+	 * Must be O(1)
+	 * This just returns an HBox with a very small button on the lower-right corner of the HBox, which says "Exit";
+	 * when clicked on, should call System.exit(0). (See drawn GUI for more position specifics)
+	 */
 	private HBox gui_exit()
 	{
-		/*
-		 * Must be O(1)
-		 * This just returns an HBox with a very small button on the lower-right corner of the HBox, which says "Exit";
-		 * when clicked on, should call System.exit(0). (See drawn GUI for more position specifics)
-		 */
-		
-		return null;
+		HBox h = new HBox();
+		Button b = new Button("Exit");
+		b.setOnMouseClicked(event -> {System.exit(0);});
+		h.getChildren().add(b);
+		return h;
 	}
 
+	/*
+	 * Must be O(n), where n is the number of characters in autoclickName
+	 * Return an HBox that contains a message (Or series of messages), based on the input of the autoclicker's name;
+	 * 		If autoclickName equals "Initial GUI", this message should be one welcoming the user to the program
+	 * 		Otherwise, it should be a reminder to the user of *which* autoclicker, indicated by autoclickName, is
+	 * 		currently loaded into the program
+	 */
 	private HBox gui_message(String autoclickName)
 	{
-		/*
-		 * Must be O(n), where n is the number of characters in autoclickName
-		 * Return an HBox that contains a message (Or series of messages), based on the input of the autoclicker's name;
-		 * 		If autoclickName equals "Initial GUI", this message should be one welcoming the user to the program
-		 * 		Otherwise, it should be a reminder to the user of *which* autoclicker, indicated by autoclickName, is
-		 * 		currently loaded into the program
-		 */
+		HBox h = new HBox();
+		Text t = new Text();
 		
-		return null;
+		if (autoclickName.equals("Initial GUI")) {
+			t.setText("Welcome to the Autoclicker Program!");
+		} else {
+			t.setText("Current Autoclicker: " + autoclickName);
+		}
+		h.getChildren().add(t);
+		return h;
 	}
 	
 	private VBox gui_mainButtons()
@@ -108,20 +124,42 @@ public class GUI_Main {
 		 * *without* any extensions or folder location data, and then calls gui_main(curAutoclicker). If "Create Autoclicker"
 		 * is clicked, just call gui_createAutoclicker().
 		 */
-		
-		return null;
+		VBox v = new VBox();
+		Button b1 = new Button("CreateAutoclicker");
+		b1.setOnMouseClicked(event -> {gui_createAutoclicker();}); 
+		Button b2 = new Button("Load Autoclicker");
+		b2.setOnMouseClicked(event -> {curAutoclicker = "Amogus";}); //TODO LoadAutoclicker logic
+		v.getChildren().addAll(b1,b2);
+		return v;
 	}
 	
 	private VBox gui_autoclickButton()
 	{
+		
 		/*
 		 * Must be O(1)
 		 * This should have two things: A horizontal separator, and a button for running the current autoclicker. (See
 		 * the drawn GUI specs for the exact wording, etc. requirements for the button) When the button is clicked, it
 		 * should call GUI_General.runAutoclick(), with the String being passed being curAutoclicker.
 		 */
-		
-		return null;
+		VBox v = new VBox();
+		Separator s = new Separator();
+		Button b = new Button("Run Autoclicker"); //TODO Find GUI specs
+		b.setOnMouseClicked(event ->{
+			try {
+				new GUI_General().runAutoclick(curAutoclicker);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (AWTException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+		return v;
 	}
 	
 	private void gui_createAutoclicker()

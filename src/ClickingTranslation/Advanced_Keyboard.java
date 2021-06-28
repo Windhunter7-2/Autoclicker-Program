@@ -194,7 +194,6 @@ public class Advanced_Keyboard {
 		 * specifically, it should get the corresponding character from the document, use auto clicking to physically select the
 		 * associated character and copy that to the user’s clipboard, followed by pasting that character from the clipboard (Via Ctrl+V).
 		 * Note that much of this will be a lot easier using the already-defined auto-clicks, which is fine for this particular method.
-		 * 
 		 */
 	}
 	
@@ -224,11 +223,10 @@ public class Advanced_Keyboard {
 		for (int i = 0; i < 26; ++i) {
 			ArrayList<String> instr = new ArrayList<String>();
 			instr.add("1");	//Number of Clicks
-			instr.add(String.valueOf(9000+i));	//UnicodeKey
+			instr.add(String.valueOf(8162+i));	//UnicodeKey
 			instr.add("F12");//KeyCombo
 			instr.add("true"); //IsUnicode
-			forTesting.startAutoclick(instr);
-			//Thread.sleep(1000L);
+			forTesting.startAutoclick(instr);			//Thread.sleep(1000L);
 		}
 	}
 	/*
