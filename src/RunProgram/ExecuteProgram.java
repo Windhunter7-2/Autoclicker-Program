@@ -6,6 +6,8 @@ import java.io.IOException;
 import ClickingTranslation.Mapping;
 import GUIs.GUI_Main;
 import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 public class ExecuteProgram extends Application {
@@ -19,7 +21,16 @@ public class ExecuteProgram extends Application {
 	public void start(Stage nullStage)
 	{
 		GUI_Main start = new GUI_Main();
-		start.gui_initial();
+		
+		//TODO -> USE THIS FOR TESTING GUI METHODS!!!
+		//Example, Testing gui_click()
+		Stage testStage = new Stage();
+		HBox testHBox = start.gui_click(17);
+		Scene scene = new Scene(testHBox, 400, 300);
+		testStage.setScene(scene);
+		testStage.show();
+		
+//		start.gui_initial();
 	}
 	
 	/**

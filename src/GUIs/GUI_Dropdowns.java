@@ -31,7 +31,7 @@ public class GUI_Dropdowns {
 		return "";
 	}
 
-	public String dropdown_ImageCompare()
+	public String dropdown_ImageCompare(int imageNumber)
 	{
 		return "";
 	}

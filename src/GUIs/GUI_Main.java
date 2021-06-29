@@ -83,7 +83,7 @@ public class GUI_Main {
 	 * This just returns an HBox with a very small button on the lower-right corner of the HBox, which says "Exit";
 	 * when clicked on, should call System.exit(0). (See drawn GUI for more position specifics)
 	 */
-	private HBox gui_exit()
+	public HBox gui_exit()
 	{
 		HBox h = new HBox();
 		Button b = new Button("Exit");
@@ -99,7 +99,7 @@ public class GUI_Main {
 	 * 		Otherwise, it should be a reminder to the user of *which* autoclicker, indicated by autoclickName, is
 	 * 		currently loaded into the program
 	 */
-	private HBox gui_message(String autoclickName)
+	public HBox gui_message(String autoclickName)
 	{
 		HBox h = new HBox();
 		Text t = new Text();
@@ -113,7 +113,7 @@ public class GUI_Main {
 		return h;
 	}
 	
-	private VBox gui_mainButtons()
+	public VBox gui_mainButtons()
 	{
 		/*
 		 * Must be O(1)
@@ -133,7 +133,7 @@ public class GUI_Main {
 		return v;
 	}
 	
-	private VBox gui_autoclickButton()
+	public VBox gui_autoclickButton()
 	{
 		
 		/*
@@ -162,8 +162,19 @@ public class GUI_Main {
 		return v;
 	}
 	
-	private void gui_createAutoclicker()
+	public void gui_createAutoclicker()
 	{
+		//Initialization (Default Capacity of 100)
+		clicks = new ArrayList<String>(100);
+		gui_clicks = new ArrayList<HBox>(100);
+		clickIndices = new ArrayList<Integer>(100);
+		for (int i = 0; i < 100; i++)
+		{
+			clicks.add("");
+			gui_clicks.add(null);
+			clickIndices.add(-1);
+		}
+		
 		/*
 		 * No Big-O requirement
 		 * This is the main GUI for creating autoclickers. It should be a constant while loop (For the duration of the "Create
@@ -184,8 +195,93 @@ public class GUI_Main {
 		return;
 	}
 	
-	private HBox gui_click(int clickNum)
+	private void gui_click_addButton(ChoiceBox<String> choiceBox, Button addBttn, int clickNum)
 	{
+		//Error Check: If Still on "Select", Return (AKA Do Nothing from the Button)
+		String choice = choiceBox.getValue();
+		if ( choice.equals("Select Click Type...") )
+			return;
+		
+		//Call Appropriate Dropdown GUI
+		GUI_Dropdowns sub_gui = new GUI_Dropdowns();
+		String autoclickInstr = "";
+		if ( choice.equals("Mouse") )
+			autoclickInstr = sub_gui.dropdown_Mouse();
+		if ( choice.equals("Keyboard") )
+			autoclickInstr = sub_gui.dropdown_Keyboard();
+		if ( choice.equals("Advanced Keyboard") )
+			autoclickInstr = sub_gui.dropdown_advKeyboard();
+		if ( choice.equals("Wait (General)") )
+			autoclickInstr = sub_gui.dropdown_Wait();
+		if ( choice.equals("Wait (Compare Images)") )
+			autoclickInstr = sub_gui.dropdown_ImageCompare(clickNum);
+		
+		//Add Autoclicker Instruction (And Gray Out Dropdown & Add Buttons)
+		clicks.set(clickNum, autoclickInstr);
+		clickIndices.set(clickNum, 1);
+		addInstr = true;
+		choiceBox.setDisable(true);
+		addBttn.setDisable(true);
+		return;
+	}
+	
+	private void gui_click_remButton(ChoiceBox<String> choiceBox, int clickNum)
+	{
+		//Error Check: If Still on "Select", Return (AKA Do Nothing from the Button)
+		String choice = choiceBox.getValue();
+		if ( choice.equals("Select Click Type...") )
+			return;
+		
+		//"Remove" the HBox
+		clickIndices.set( clickNum, (-1) );
+		return;
+	}
+	
+	public HBox gui_click(int clickNum)
+	{
+		//Main Part: Number Plus Main HBox
+		HBox clickType = new HBox();
+		String largeFont = "-fx-font: 24 arial;";
+		Text blank1 = new Text("      ");
+		Text blank2 = new Text("      ");
+		Text blank3 = new Text("      ");
+		Text click = new Text("Click " + (clickNum + 1) + ":");
+		click.setStyle(largeFont);
+		clickType.getChildren().add(click);
+		clickType.getChildren().add(blank1);
+		
+		//The Dropdown Buttons
+		ChoiceBox<String> dropdown = new ChoiceBox<>();
+		
+		
+		//Adding the Dropdown Buttons
+		String select = "Select Click Type...";
+		dropdown.getItems().add(select);
+		dropdown.getItems().add("Mouse");
+		dropdown.getItems().add("Keyboard");
+		dropdown.getItems().add("Advanced Keyboard");
+		dropdown.getItems().add("Wait (General)");
+		dropdown.getItems().add("Wait (Compare Images)");
+		dropdown.setValue(select);
+		clickType.getChildren().add(dropdown);
+		
+		//Remove Original "Selection" Button
+		if (dropdown.getValue() != null)
+			dropdown.getItems().remove(0);
+		
+		//Add Button
+		clickType.getChildren().add(blank2);
+		Button add = new Button("Add");
+		add.setOnAction( e -> gui_click_addButton(dropdown, add, clickNum) );
+		clickType.getChildren().add(add);
+		
+		//Remove Button
+		clickType.getChildren().add(blank3);
+		Button remove = new Button("Remove");
+		remove.setOnAction( e -> gui_click_remButton(dropdown, clickNum) );
+		clickType.getChildren().add(remove);
+		return clickType;
+		
 		/*
 		 * Must be O(1)
 		 * This is an individual row of the text, and buttons, for each click, as per the GUI drawn specs;
@@ -200,8 +296,6 @@ public class GUI_Main {
 		 * (Grayed out) so that the user can't reselect from there, and toggles addInstr to true. If the "Remove"
 		 * button is clicked, then call clickIndices.set( clickNum, (-1) ).
 		 */
-		
-		return null;
 	}
 	
 	
