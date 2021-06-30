@@ -4,41 +4,41 @@ import java.awt.AWTException;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import javafx.application.Application;
 
 public class GUI_Main {
 	
 	/**
-	 * This says whether or not another row for an additional autoclick instruction should be added. For example, if
-	 * there are Click 1 and Click 2, and Click 2's "Add" button is clicked, then after the next GUI where the user sets
-	 * that autoclick instruction, this boolean will temporarily be turned to true again, and after the line is added,
-	 * go back to false.
+	 * This is the VBox used in the autoclicker creator GUI. It is composed of all the HBoxes with the dropdowns and buttons.
 	 */
-	public boolean addInstr = true;
+	private VBox clicks_gui;
+	
+	/**
+	 * This is the counter used in the autoclicker creator GUI. Note that the numbering is maintained even with removal, so the
+	 * user knows clearly which clicks they have removed.
+	 */
+	private int clicks_counter = 0;
+	
+	/**
+	 * This is a mapping ArrayList to map the counter indices to real indices.
+	 */
+	private ArrayList<Integer> clicks_i;
 	
 	/**
 	 * When creating an autoclicker, this is the list of active individual autoclick instructions. For example, "Wait 100"
 	 * might be an example of one of these Strings in the list.
 	 */
 	private ArrayList<String> clicks;
-	
-	/**
-	 * When creating an autoclicker, this is the list of the active individual autoclick instructions, as they appear
-	 * on the GUI.
-	 */
-	private ArrayList<HBox> gui_clicks;
-	
-	/**
-	 * When creating an autoclicker, this is the list of indices for the active individual autoclick instructions.
-	 * Any integers in this ArrayList with the value of (-1) are regarded as "removed" for the actual clicks;
-	 * otherwise, not the case.
-	 */
-	private ArrayList<Integer> clickIndices;
 	
 	/**
 	 * This is which autoclicker is currently active.
@@ -164,35 +164,33 @@ public class GUI_Main {
 	
 	public void gui_createAutoclicker()
 	{
-		//Initialization (Default Capacity of 100)
-		clicks = new ArrayList<String>(100);
-		gui_clicks = new ArrayList<HBox>(100);
-		clickIndices = new ArrayList<Integer>(100);
-		for (int i = 0; i < 100; i++)
-		{
-			clicks.add("");
-			gui_clicks.add(null);
-			clickIndices.add(-1);
-		}
+		//Initialization
+		clicks_gui = new VBox();
+		clicks = new ArrayList<String>();
+		
+		//Create the Panel Itself
+		Pane list = new Pane();
+		list.getChildren().add(clicks_gui);
+		Stage stage = new Stage();
+		Scene scene = new Scene(list, 400, 300);
+		stage.setScene(scene);
+		stage.show();
+		
+		//Add the First Initial "Add" HBox
+		HBox click = gui_click(clicks_counter);
+		clicks_gui.getChildren().add(click);
+		clicks_i = new ArrayList<Integer>();
+		
+		//Add Main Buttons
+		//TODO -> gui_exit() HBox at the Bottom of the OVERALL VBox, and ADD a Button to the LEFT That Says to "Submit":
+		//		This Button Will Prompt the User for a Filename, Then Call
+		//		GUI_General.createAutoclick(MainDirectory.getMainDirectory() + "/Autoclicker-Program/Autoclickers/F.txt",
+		//				clicks), where F is the filename the user types in
+		//		and Then Call gui_main(F)
 		
 		/*
-		 * No Big-O requirement
-		 * This is the main GUI for creating autoclickers. It should be a constant while loop (For the duration of the "Create
-		 * Autoclicker" GUI), which, every time addInstr is true, call gui_click(), with the parameter being a counter, (i.e.
-		 * start at 0, then 1, then 2, etc.) put that returned HBox into the GUI (As a VBox) so that it matches the drawn GUI specs,
-		 * and then toggle addInstr to false, waiting until true again, then repeat. (Something like a thread with a wait
-		 * instruction might work, but this will likely need some experimentation) In addition, put a gui_exit() HBox at the bottom
-		 * of the VBox, and *edit* that particular HBox to add a button on the left that says to basically submit the current
-		 * autoclicker instruction; clicking this button will prompt the user for a filename, and it will then call
-		 * GUI_General.createAutoclick(MainDirectory.getMainDirectory() + "/Autoclicker-Program/Autoclickers/F.txt",
-		 * clicks), where F is the filename the user types in, followed by calling gui_main(F).
-		 * *Every* time the GUI gets drawn, and *before* adding the HBox, use all the HBoxes from gui_clicks as the HBoxes in the
-		 * GUI, but be sure to skip over any "non-existent" ones, which you can tell if clickIndices has a (-1) or a 1 at the same
-		 * index, since these two ArrayLists have the same mapping. (Ergo, if clickIndices[5] is (-1), skip over gui_clicks[5])
-		 * Only after all these HBoxes are put should you add the HBox that this method adds via the gui_click() method call.
+		 * This is the main GUI for creating autoclickers.
 		 */
-		
-		return;
 	}
 	
 	private void gui_click_addButton(ChoiceBox<String> choiceBox, Button addBttn, int clickNum)
@@ -216,12 +214,23 @@ public class GUI_Main {
 		if ( choice.equals("Wait (Compare Images)") )
 			autoclickInstr = sub_gui.dropdown_ImageCompare(clickNum);
 		
-		//Add Autoclicker Instruction (And Gray Out Dropdown & Add Buttons)
-		clicks.set(clickNum, autoclickInstr);
-		clickIndices.set(clickNum, 1);
-		addInstr = true;
+		//Add Autoclicker Instruction
+		clicks_i.add(clicks_counter);
+		if (clicks_counter != 0)
+		{
+			int index = (clicks_i.get(clicks_counter-1) + 1);	//clicks_i[Previous] + 1
+			clicks_i.set(clicks_counter, index);
+		}
+		clicks.add(autoclickInstr);
+		clicks_counter++;
+		HBox newHBox = gui_click(clicks_counter);
+		clicks_gui.getChildren().add(newHBox);
+		
+		//Gray Out Dropdown & Add Buttons
 		choiceBox.setDisable(true);
+		choiceBox.setOpacity(2.0);
 		addBttn.setDisable(true);
+		addBttn.setOpacity(0.5);
 		return;
 	}
 	
@@ -232,8 +241,15 @@ public class GUI_Main {
 		if ( choice.equals("Select Click Type...") )
 			return;
 		
-		//"Remove" the HBox
-		clickIndices.set( clickNum, (-1) );
+		//"Remove" the HBox (And Shift the Others Because of the Removal)
+		int curIndex = clicks_i.get(clickNum);
+		clicks.remove(curIndex);
+		clicks_gui.getChildren().remove(curIndex);
+		for (int i = clickNum; i < clicks_i.size(); i++)
+		{
+			int c = (clicks_i.get(i) - 1);
+			clicks_i.set(i, c);
+		}
 		return;
 	}
 	
@@ -283,18 +299,7 @@ public class GUI_Main {
 		return clickType;
 		
 		/*
-		 * Must be O(1)
-		 * This is an individual row of the text, and buttons, for each click, as per the GUI drawn specs;
-		 * i.e. "Click X:", the dropdown, the "Add" button, and the "Remove" button. The "Click X:" should show
-		 * (1 + clickNum) in place of X; for example, if clickNum is 0, then the text on the left would be
-		 * "Click 1:", like in the drawn GUI example. The dropdown should have default text of "Select Click Type..."
-		 * and then have the dropdown options be "Advanced Keyboard", "Keyboard", "Mouse", "Wait (General)", and
-		 * "Wait (Compare Images)". After the "Add" button is clicked, then the appropriate GUI_Dropdowns.java method
-		 * is called (See that class for the specific names), and then that String is then *inserted* into the
-		 * ArrayList clicks, at the index clickNum. (For example, if clickNum is 0, insert at index 0) In addition,
-		 * this "Add" button also calls clickIndices.add(clickNum, 1), as well as makes the dropdown menu "stuck"
-		 * (Grayed out) so that the user can't reselect from there, and toggles addInstr to true. If the "Remove"
-		 * button is clicked, then call clickIndices.set( clickNum, (-1) ).
+		 * This is an individual row of the text, and buttons, for each click, as per the GUI drawn specs, etc.
 		 */
 	}
 	
@@ -309,14 +314,9 @@ public class GUI_Main {
 	 * Main method. Strictly for testing.
 	 * @param args Command line arguments
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException, AWTException {
+		
 
-		
-		
-		
-		
-		
-		
 		
 	}
 
