@@ -183,7 +183,7 @@ public class Advanced_Keyboard {
 		StringSelection s = new StringSelection(Character.valueOf((char)(unicodeKey)).toString());
 		c.setContents(s, null);
 		pressOrder(r, new int[] {KeyEvent.VK_CONTROL, KeyEvent.VK_V});
-		Thread.sleep(10L);
+		Thread.sleep(100);
 		/*
 		 * Must be less than or equal to O(n), where n is the number of Unicode characters
 		 * Creating the additionally required file (The Unicode document) is part of this method, and the reason is that since this

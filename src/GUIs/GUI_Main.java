@@ -1,6 +1,7 @@
 package GUIs;
 
 import java.awt.AWTException;
+import java.awt.Label;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -13,8 +14,10 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import javafx.application.Application;
+import javafx.geometry.Orientation;
 
 public class GUI_Main {
 	
@@ -47,6 +50,7 @@ public class GUI_Main {
 	
 	public void gui_initial()
 	{
+		//TODO -> Implement -> Cole
 		gui_general("Initial GUI", false);
 		/*
 		 * Call gui_general("Initial GUI", false), and have this Pane be centered on the screen, in decently larger dimensions
@@ -55,6 +59,7 @@ public class GUI_Main {
 	
 	public void gui_main(String autoclickName)
 	{
+		//TODO -> Implement -> Cole
 		gui_general(autoclickName, true);
 		/*
 		 * Call gui_general(autoclickName, true), and have this Pane be off to the right in a smaller size, like in the drawn
@@ -70,12 +75,16 @@ public class GUI_Main {
 	 * (4) gui_exit()
 	 * (These should be top to bottom like a VBox; if it doesn't go that way normally, force it via a nested VBox)
 	 */
-	public Pane gui_general(String autoclickName, boolean runButton)
+	public VBox gui_general(String autoclickName, boolean runButton)
 	{
-		Pane p = new Pane();
+		//TODO -> Make It Look Nicer -> Evan
+		VBox v = new VBox();
 		//Adding a null argument might be dodgy
-		p.getChildren().addAll(gui_message(autoclickName), gui_mainButtons(), runButton ? gui_autoclickButton() : null, gui_exit()); 
-		return p;
+		v.getChildren().addAll(gui_message(autoclickName), gui_mainButtons());
+		if (runButton == true)
+			v.getChildren().add(gui_autoclickButton());
+		v.getChildren().add(gui_exit()); 
+		return v;
 	}
 	
 	/*
@@ -101,6 +110,7 @@ public class GUI_Main {
 	 */
 	public HBox gui_message(String autoclickName)
 	{
+		//TODO -> Say More in Current Autoclicker Message -> Cole
 		HBox h = new HBox();
 		Text t = new Text();
 		
@@ -115,6 +125,7 @@ public class GUI_Main {
 	
 	public VBox gui_mainButtons()
 	{
+		//TODO -> JOptionPane for Inputting Filename (And Rest of Load Autoclicker Functionality) -> Cole
 		/*
 		 * Must be O(1)
 		 * This should be the two buttons, "Create Autoclicker" and "Load Autoclicker", as drawn in the GUI specs.
@@ -135,7 +146,7 @@ public class GUI_Main {
 	
 	public VBox gui_autoclickButton()
 	{
-		
+		//TODO -> Horizontal Separator -> Evan
 		/*
 		 * Must be O(1)
 		 * This should have two things: A horizontal separator, and a button for running the current autoclicker. (See
@@ -143,7 +154,7 @@ public class GUI_Main {
 		 * should call GUI_General.runAutoclick(), with the String being passed being curAutoclicker.
 		 */
 		VBox v = new VBox();
-		Separator s = new Separator();
+		Separator s = new Separator(Orientation.HORIZONTAL);
 		Button b = new Button("Run Autoclicker"); //TODO Find GUI specs
 		b.setOnMouseClicked(event ->{
 			try {
@@ -159,11 +170,14 @@ public class GUI_Main {
 				e.printStackTrace();
 			}
 		});
+		v.getChildren().add(s);
+		v.getChildren().add(b);
 		return v;
 	}
 	
 	public void gui_createAutoclicker()
 	{
+		//TODO -> Submission / Exit Buttons -> Evan
 		//Initialization
 		clicks_gui = new VBox();
 		clicks = new ArrayList<String>();
@@ -193,12 +207,14 @@ public class GUI_Main {
 		 */
 	}
 	
-	private void gui_click_addButton(ChoiceBox<String> choiceBox, Button addBttn, int clickNum)
+	private void gui_click_addButton(ChoiceBox<String> choiceBox, Button addBttn, Button remBttn, int clickNum)
 	{
 		//Error Check: If Still on "Select", Return (AKA Do Nothing from the Button)
 		String choice = choiceBox.getValue();
 		if ( choice.equals("Select Click Type...") )
 			return;
+		remBttn.setDisable(false);
+		remBttn.setOpacity(1);
 		
 		//Call Appropriate Dropdown GUI
 		GUI_Dropdowns sub_gui = new GUI_Dropdowns();
@@ -288,12 +304,14 @@ public class GUI_Main {
 		//Add Button
 		clickType.getChildren().add(blank2);
 		Button add = new Button("Add");
-		add.setOnAction( e -> gui_click_addButton(dropdown, add, clickNum) );
+		Button remove = new Button("Remove");
+		add.setOnAction( e -> gui_click_addButton(dropdown, add, remove, clickNum) );
 		clickType.getChildren().add(add);
 		
 		//Remove Button
 		clickType.getChildren().add(blank3);
-		Button remove = new Button("Remove");
+		remove.setDisable(true);
+		remove.setOpacity(0.5);
 		remove.setOnAction( e -> gui_click_remButton(dropdown, clickNum) );
 		clickType.getChildren().add(remove);
 		return clickType;
