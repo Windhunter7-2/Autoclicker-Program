@@ -85,9 +85,10 @@ public class GUI_Main {
 	public void gui_main(String autoclickName)
 	{
 		//TODO -> Implement -> Cole
-		
 		mainMenu = gui_general(autoclickName, true);
-		mainStage.setScene(new Scene(mainMenu, 600, 800));
+		mainStage.setScene(new Scene(mainMenu, 450, 600));
+		mainStage.setX(1300);
+		
 		/*
 		 * Call gui_general(autoclickName, true), and have this Pane be off to the right in a smaller size, like in the drawn
 		 * GUI specs
@@ -188,7 +189,6 @@ public class GUI_Main {
 			fc.setInitialDirectory(new File(new MainDirectory().getMainDirectory() + "Autoclicker-Program/Autoclickers"));
 			File f = fc.showOpenDialog(null);
 			if (f != null) {
-				System.out.println(f.getName());
 				curAutoclicker = f.getName().split("\\.")[0];
 				gui_main(curAutoclicker);
 			}
