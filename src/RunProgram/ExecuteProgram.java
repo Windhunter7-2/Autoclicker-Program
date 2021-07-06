@@ -23,7 +23,8 @@ public class ExecuteProgram extends Application {
 		GUI_Main start = new GUI_Main();
 		
 		//TODO -> USE THIS FOR TESTING GUI METHODS!!!
-		start.gui_createAutoclicker();
+		//start.gui_createAutoclicker();
+		start.gui_initial();
 		//Example, Testing gui_click()
 //		Stage testStage = new Stage();
 //		HBox testHBox = start.gui_click(17);

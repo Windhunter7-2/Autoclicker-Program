@@ -36,7 +36,7 @@ public class CalibrationFiles {
 	
 	private void createAutoclicker(String fileName) throws IOException, InterruptedException
 	{
-		String[] oldContents = fh.getText("Autoclicker-Program/Autoclickers/"+fileName+".txt").split("\n");
+		String[] oldContents = fh.getText("Autoclicker-Program/Autoclickers/"+fileName).split("\n");
 		for (int i = 0; i < oldContents.length; ++i) {
 			Scanner sc = new Scanner(oldContents[i]);
 			if(sc.hasNext()) {

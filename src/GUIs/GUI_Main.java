@@ -2,6 +2,7 @@ package GUIs;
 
 import java.awt.AWTException;
 import java.awt.Label;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -9,6 +10,7 @@ import javax.swing.JFrame;
 
 import javax.swing.JOptionPane;
 
+import External.MainDirectory;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -22,6 +24,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -52,14 +55,28 @@ public class GUI_Main {
 	private ArrayList<String> clicks;
 	
 	/**
+	 * The VBox used for the main menu.
+	 */
+	private VBox mainMenu = new VBox();
+
+	/**
+	 * The stage used for the main menu.
+	 */
+	private Stage mainStage = new Stage();
+	
+	/**
 	 * This is which autoclicker is currently active.
 	 */
+	
 	private String curAutoclicker = "";
 	
 	public void gui_initial()
 	{
 		//TODO -> Implement -> Cole
-		gui_general("Initial GUI", false);
+		
+		mainMenu = gui_general("Initial GUI", false);
+		mainStage.setScene(new Scene(mainMenu, 600, 800));
+		mainStage.show();
 		/*
 		 * Call gui_general("Initial GUI", false), and have this Pane be centered on the screen, in decently larger dimensions
 		 */
@@ -68,7 +85,9 @@ public class GUI_Main {
 	public void gui_main(String autoclickName)
 	{
 		//TODO -> Implement -> Cole
-		gui_general(autoclickName, true);
+		
+		mainMenu = gui_general(autoclickName, true);
+		mainStage.setScene(new Scene(mainMenu, 600, 800));
 		/*
 		 * Call gui_general(autoclickName, true), and have this Pane be off to the right in a smaller size, like in the drawn
 		 * GUI specs
@@ -163,7 +182,16 @@ public class GUI_Main {
 		Button b1 = new Button("CreateAutoclicker");
 		b1.setOnMouseClicked(event -> {gui_createAutoclicker();}); 
 		Button b2 = new Button("Load Autoclicker");
-		b2.setOnMouseClicked(event -> {curAutoclicker = "Amogus";}); //TODO LoadAutoclicker logic
+		b2.setOnMouseClicked(event -> {
+			FileChooser fc = new FileChooser();
+			fc.setTitle("Select Which Autoclicker To Load");
+			fc.setInitialDirectory(new File(new MainDirectory().getMainDirectory() + "Autoclicker-Program/Autoclickers"));
+			File f = fc.showOpenDialog(null);
+			if (f != null ) {
+				curAutoclicker = f.getName();
+				gui_main(curAutoclicker);
+			}
+		}); 
 		v.getChildren().addAll(b1,blank,b2);
 		return v;
 	}
@@ -273,7 +301,7 @@ public class GUI_Main {
 			return;
 		remBttn.setDisable(false);
 		remBttn.setOpacity(1);
-		
+
 		//Call Appropriate Dropdown GUI
 		GUI_Dropdowns sub_gui = new GUI_Dropdowns();
 		String autoclickInstr = "";
