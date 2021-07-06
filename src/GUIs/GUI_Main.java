@@ -5,6 +5,9 @@ import java.awt.Label;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -139,7 +142,10 @@ public class GUI_Main {
 		Button b1 = new Button("CreateAutoclicker");
 		b1.setOnMouseClicked(event -> {gui_createAutoclicker();}); 
 		Button b2 = new Button("Load Autoclicker");
-		b2.setOnMouseClicked(event -> {curAutoclicker = "Amogus";}); //TODO LoadAutoclicker logic
+		b2.setOnMouseClicked(event -> {
+			JFrame jf = new JFrame();
+			curAutoclicker = JOptionPane.showInputDialog(jf, "Enter Autoclicker Name");
+		}); 
 		v.getChildren().addAll(b1,b2);
 		return v;
 	}
@@ -284,8 +290,7 @@ public class GUI_Main {
 		
 		//The Dropdown Buttons
 		ChoiceBox<String> dropdown = new ChoiceBox<>();
-		
-		
+				
 		//Adding the Dropdown Buttons
 		String select = "Select Click Type...";
 		dropdown.getItems().add(select);
@@ -320,23 +325,12 @@ public class GUI_Main {
 		 * This is an individual row of the text, and buttons, for each click, as per the GUI drawn specs, etc.
 		 */
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+
 	/**
 	 * Main method. Strictly for testing.
 	 * @param args Command line arguments
 	 */
 	public static void main(String[] args) throws IOException, AWTException {
 		
-
-		
 	}
-
-	
 }
