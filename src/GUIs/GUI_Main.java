@@ -187,8 +187,9 @@ public class GUI_Main {
 			fc.setTitle("Select Which Autoclicker To Load");
 			fc.setInitialDirectory(new File(new MainDirectory().getMainDirectory() + "Autoclicker-Program/Autoclickers"));
 			File f = fc.showOpenDialog(null);
-			if (f != null ) {
-				curAutoclicker = f.getName();
+			if (f != null) {
+				System.out.println(f.getName());
+				curAutoclicker = f.getName().split("\\.")[0];
 				gui_main(curAutoclicker);
 			}
 		}); 
