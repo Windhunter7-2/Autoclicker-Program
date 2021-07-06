@@ -77,13 +77,28 @@ public class GUI_Main {
 	 */
 	public VBox gui_general(String autoclickName, boolean runButton)
 	{
-		//TODO -> Make It Look Nicer -> Evan
+		//For Better Spacing
+		Text blank1 = new Text("\t\t\t");
+		Text blank2 = new Text("\t\t\t");
+		Text blank3 = new Text("\t\t\t\t\t\t\t\t\t");
+		Text blank4 = new Text("\t\n\n\t");
+		Text blank5 = new Text("\t\t\t");
+		Text blank6 = new Text("\t\n\n\n\t");
+		
+		//Apply Better Spacing
 		VBox v = new VBox();
-		//Adding a null argument might be dodgy
-		v.getChildren().addAll(gui_message(autoclickName), gui_mainButtons());
+		HBox h1 = new HBox();
+		HBox h2 = new HBox();
+		HBox h3 = new HBox();
+		h1.getChildren().addAll( blank1, gui_mainButtons() );
+		h2.getChildren().addAll( blank2, gui_autoclickButton() );
+		h3.getChildren().addAll( blank3, gui_exit() );
+		
+		//Adding Stuff
+		v.getChildren().addAll(gui_message(autoclickName), blank4, h1);
 		if (runButton == true)
-			v.getChildren().add(gui_autoclickButton());
-		v.getChildren().add(gui_exit()); 
+			v.getChildren().addAll(blank5, h2);
+		v.getChildren().addAll(blank6, h3); 
 		return v;
 	}
 	
@@ -136,11 +151,12 @@ public class GUI_Main {
 		 * is clicked, just call gui_createAutoclicker().
 		 */
 		VBox v = new VBox();
+		Text blank = new Text("\t\t\t");
 		Button b1 = new Button("CreateAutoclicker");
 		b1.setOnMouseClicked(event -> {gui_createAutoclicker();}); 
 		Button b2 = new Button("Load Autoclicker");
 		b2.setOnMouseClicked(event -> {curAutoclicker = "Amogus";}); //TODO LoadAutoclicker logic
-		v.getChildren().addAll(b1,b2);
+		v.getChildren().addAll(b1,blank,b2);
 		return v;
 	}
 	
