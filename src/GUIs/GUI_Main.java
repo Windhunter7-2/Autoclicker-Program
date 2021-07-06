@@ -6,12 +6,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
+
 import javax.swing.JOptionPane;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Separator;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -20,6 +24,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 
 public class GUI_Main {
@@ -80,13 +85,28 @@ public class GUI_Main {
 	 */
 	public VBox gui_general(String autoclickName, boolean runButton)
 	{
-		//TODO -> Make It Look Nicer -> Evan
+		//For Better Spacing
+		Text blank1 = new Text("\t\t\t");
+		Text blank2 = new Text("\t\t\t");
+		Text blank3 = new Text("\t\t\t\t\t\t\t\t\t");
+		Text blank4 = new Text("\t\n\n\t");
+		Text blank5 = new Text("\t\t\t");
+		Text blank6 = new Text("\t\n\n\n\t");
+		
+		//Apply Better Spacing
 		VBox v = new VBox();
-		//Adding a null argument might be dodgy
-		v.getChildren().addAll(gui_message(autoclickName), gui_mainButtons());
+		HBox h1 = new HBox();
+		HBox h2 = new HBox();
+		HBox h3 = new HBox();
+		h1.getChildren().addAll( blank1, gui_mainButtons() );
+		h2.getChildren().addAll( blank2, gui_autoclickButton() );
+		h3.getChildren().addAll( blank3, gui_exit() );
+		
+		//Adding Stuff
+		v.getChildren().addAll(gui_message(autoclickName), blank4, h1);
 		if (runButton == true)
-			v.getChildren().add(gui_autoclickButton());
-		v.getChildren().add(gui_exit()); 
+			v.getChildren().addAll(blank5, h2);
+		v.getChildren().addAll(blank6, h3); 
 		return v;
 	}
 	
@@ -139,14 +159,12 @@ public class GUI_Main {
 		 * is clicked, just call gui_createAutoclicker().
 		 */
 		VBox v = new VBox();
+		Text blank = new Text("\t\t\t");
 		Button b1 = new Button("CreateAutoclicker");
 		b1.setOnMouseClicked(event -> {gui_createAutoclicker();}); 
 		Button b2 = new Button("Load Autoclicker");
-		b2.setOnMouseClicked(event -> {
-			JFrame jf = new JFrame();
-			curAutoclicker = JOptionPane.showInputDialog(jf, "Enter Autoclicker Name");
-		}); 
-		v.getChildren().addAll(b1,b2);
+		b2.setOnMouseClicked(event -> {curAutoclicker = "Amogus";}); //TODO LoadAutoclicker logic
+		v.getChildren().addAll(b1,blank,b2);
 		return v;
 	}
 	
@@ -181,20 +199,47 @@ public class GUI_Main {
 		return v;
 	}
 	
+	private void gui_create_submit(Stage createStage)
+	{
+		//Error Check: Ignore Button if No Instructions Yet
+		System.out.println("Currently:\n\t" + clicks.size() );
+		if (clicks.size() < 1)
+			return;
+		
+		//Prompt & Storing Which Autoclicker Name
+		String filename = JOptionPane.showInputDialog(null, "Please input the name for this autoclicker you just created:",
+				"Name of Generated Autoclicker", JOptionPane.QUESTION_MESSAGE);
+		curAutoclicker = filename;
+		
+		//Creating the File
+		filename = (filename + ".txt");
+		GUI_General createFile = new GUI_General();
+		try {
+			createFile.createAutoclick(filename, clicks);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		createStage.hide();
+		gui_main(curAutoclicker);
+		return;
+	}
+	
 	public void gui_createAutoclicker()
 	{
-		//TODO -> Submission / Exit Buttons -> Evan
 		//Initialization
 		clicks_gui = new VBox();
 		clicks = new ArrayList<String>();
+		clicks_counter = 0;
 		
 		//Create the Panel Itself
-		Pane list = new Pane();
-		list.getChildren().add(clicks_gui);
+		BorderPane list = new BorderPane();
+		Text border1 = new Text("");
+		Text border2 = new Text("");
+        list.setPadding(new Insets(16));
+        list.setLeft(border1);
+        list.setRight(border2);
+		list.setTop(clicks_gui);
 		Stage stage = new Stage();
-		Scene scene = new Scene(list, 400, 300);
-		stage.setScene(scene);
-		stage.show();
 		
 		//Add the First Initial "Add" HBox
 		HBox click = gui_click(clicks_counter);
@@ -202,11 +247,18 @@ public class GUI_Main {
 		clicks_i = new ArrayList<Integer>();
 		
 		//Add Main Buttons
-		//TODO -> gui_exit() HBox at the Bottom of the OVERALL VBox, and ADD a Button to the LEFT That Says to "Submit":
-		//		This Button Will Prompt the User for a Filename, Then Call
-		//		GUI_General.createAutoclick(MainDirectory.getMainDirectory() + "/Autoclicker-Program/Autoclickers/F.txt",
-		//				clicks), where F is the filename the user types in
-		//		and Then Call gui_main(F)
+		HBox mainButtons = gui_exit();
+		Text blank1 = new Text("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t");
+		Text blank2 = new Text("\t");
+		Button submit = new Button("Submit (Create Autoclicker)");
+		submit.setOnAction( e -> gui_create_submit(stage) );
+		mainButtons.getChildren().add(0, blank2);
+		mainButtons.getChildren().add(0, submit);
+		mainButtons.getChildren().add(0, blank1);
+		list.setBottom(mainButtons);
+		Scene scene = new Scene(list, 700, 500);
+		stage.setScene(scene);
+		stage.show();
 		
 		/*
 		 * This is the main GUI for creating autoclickers.
