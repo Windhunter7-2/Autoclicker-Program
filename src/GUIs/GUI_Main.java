@@ -4,28 +4,32 @@ import java.awt.AWTException;
 import java.awt.Label;
 import java.io.File;
 import java.io.IOException;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
-
 import javax.swing.JFrame;
-
 import javax.swing.JOptionPane;
-
+import External.ImageEditing;
 import External.MainDirectory;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Separator;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.PixelReader;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.scene.transform.Scale;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -108,10 +112,10 @@ public class GUI_Main {
 		//For Better Spacing
 		Text blank1 = new Text("\t\t\t");
 		Text blank2 = new Text("\t\t\t");
-		Text blank3 = new Text("\t\t\t\t\t\t\t\t\t");
+		Text blank3 = new Text("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t");
 		Text blank4 = new Text("\t\n\n\t");
-		Text blank5 = new Text("\t\t\t");
-		Text blank6 = new Text("\t\n\n\n\t");
+		Text blank5 = new Text("\t\n\n\t");
+		Text blank6 = new Text("\t\n\n\n\n\n\n\t");
 		
 		//Apply Better Spacing
 		VBox v = new VBox();
@@ -199,39 +203,51 @@ public class GUI_Main {
 	
 	public VBox gui_autoclickButton()
 	{
-		//TODO -> Horizontal Separator -> Evan
+		//General Setup & Location Settings
+		VBox vbox = new VBox();
+		Text blank1 = new Text("\t\n\n\t");
+		Text blank2 = new Text("\t");
+		ImageEditing img = new ImageEditing();
+		MainDirectory md = new MainDirectory();
+		String location = (md.getMainDirectory() + "Autoclicker-Program/Settings/Graphics/");
+		
+		//Add Horizontal Separator
+		String separatorLoc = (location + "Separator_Horizontal.png");
+		HBox separator = img.imageToHBox(separatorLoc, "transparent");
+		vbox.getChildren().addAll(separator, blank1);
+		
+		//Add Autoclick Button
+		String buttonLoc = (location + "CustomButton_Autoclick.png");
+		Button button = img.imageToButton(buttonLoc, "", "", true);
+		HBox autoclick = new HBox();
+		autoclick.getChildren().addAll(blank2, button);
+		vbox.getChildren().add(autoclick);
+		
+		//Button Functionality
+		autoclick.setOnMouseClicked(event ->{
+			try {
+				new GUI_General().runAutoclick(curAutoclicker);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (AWTException e) {
+				e.printStackTrace();
+			}
+		});
+		return vbox;
+		
 		/*
 		 * Must be O(1)
 		 * This should have two things: A horizontal separator, and a button for running the current autoclicker. (See
 		 * the drawn GUI specs for the exact wording, etc. requirements for the button) When the button is clicked, it
 		 * should call GUI_General.runAutoclick(), with the String being passed being curAutoclicker.
 		 */
-		VBox v = new VBox();
-		Separator s = new Separator(Orientation.HORIZONTAL);
-		Button b = new Button("Run Autoclicker"); //TODO Find GUI specs
-		b.setOnMouseClicked(event ->{
-			try {
-				new GUI_General().runAutoclick(curAutoclicker);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (AWTException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		});
-		v.getChildren().add(s);
-		v.getChildren().add(b);
-		return v;
 	}
 	
 	private void gui_create_submit(Stage createStage)
 	{
 		//Error Check: Ignore Button if No Instructions Yet
-		System.out.println("Currently:\n\t" + clicks.size() );
 		if (clicks.size() < 1)
 			return;
 		
