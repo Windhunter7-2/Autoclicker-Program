@@ -110,9 +110,9 @@ public class GUI_Main {
 	public VBox gui_general(String autoclickName, boolean runButton)
 	{
 		//For Better Spacing
-		Text blank1 = new Text("\t\t\t");
+		Text blank1 = new Text("\t\t\t\t\t");
 		Text blank2 = new Text("\t\t\t");
-		Text blank3 = new Text("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t");
+		Text blank3 = new Text("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t");
 		Text blank4 = new Text("\t\n\n\t");
 		Text blank5 = new Text("\t\n\n\t");
 		Text blank6 = new Text("\t\n\n\n\n\n\n\t");
@@ -196,7 +196,10 @@ public class GUI_Main {
 				curAutoclicker = f.getName().split("\\.")[0];
 				gui_main(curAutoclicker);
 			}
-		}); 
+		});
+		ImageEditing resizer = new ImageEditing();
+		b1 = (Button) resizer.resize(b1, 1.5, 1.5);
+		b2 = (Button) resizer.resize(b2, 1.5, 1.5);
 		v.getChildren().addAll(b1,blank,b2);
 		return v;
 	}
@@ -224,7 +227,7 @@ public class GUI_Main {
 		vbox.getChildren().add(autoclick);
 		
 		//Button Functionality
-		autoclick.setOnMouseClicked(event ->{
+		button.setOnMouseClicked(event ->{
 			try {
 				new GUI_General().runAutoclick(curAutoclicker);
 			} catch (InterruptedException e) {
