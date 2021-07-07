@@ -21,18 +21,7 @@ public class ExecuteProgram extends Application {
 	public void start(Stage nullStage)
 	{
 		GUI_Main start = new GUI_Main();
-		
-		//TODO -> USE THIS FOR TESTING GUI METHODS!!!
-		//start.gui_createAutoclicker();
 		start.gui_initial();
-		//Example, Testing gui_click()
-//		Stage testStage = new Stage();
-//		HBox testHBox = start.gui_click(17);
-//		Scene scene = new Scene(testHBox, 400, 300);
-//		testStage.setScene(scene);
-//		testStage.show();
-		
-//		start.gui_initial();
 	}
 	
 	/**

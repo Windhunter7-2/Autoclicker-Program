@@ -28,6 +28,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.scene.transform.Scale;
 import javafx.stage.FileChooser;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import javafx.application.Application;
@@ -75,9 +76,7 @@ public class GUI_Main {
 	private String curAutoclicker = "";
 	
 	public void gui_initial()
-	{
-		//TODO -> Implement -> Cole
-		
+	{	
 		mainMenu = gui_general("Initial GUI", false);
 		mainStage.setScene(new Scene(mainMenu, 600, 800));
 		mainStage.show();
@@ -88,11 +87,9 @@ public class GUI_Main {
 	
 	public void gui_main(String autoclickName)
 	{
-		//TODO -> Implement -> Cole
 		mainMenu = gui_general(autoclickName, true);
-		mainStage.setScene(new Scene(mainMenu, 450, 600));
-		mainStage.setX(1300);
-		
+		mainStage.setScene(new Scene(mainMenu, 600, 800));
+		mainStage.setX(Screen.getPrimary().getVisualBounds().getMaxX()-600);	
 		/*
 		 * Call gui_general(autoclickName, true), and have this Pane be off to the right in a smaller size, like in the drawn
 		 * GUI specs
@@ -122,9 +119,9 @@ public class GUI_Main {
 		HBox h1 = new HBox();
 		HBox h2 = new HBox();
 		HBox h3 = new HBox();
-		h1.getChildren().addAll( blank1, gui_mainButtons() );
-		h2.getChildren().addAll( blank2, gui_autoclickButton() );
-		h3.getChildren().addAll( blank3, gui_exit() );
+		h1.getChildren().addAll(blank1, gui_mainButtons());
+		h2.getChildren().addAll(blank2, gui_autoclickButton());
+		h3.getChildren().addAll(blank3, gui_exit());
 		
 		//Adding Stuff
 		v.getChildren().addAll(gui_message(autoclickName), blank4, h1);
@@ -164,7 +161,7 @@ public class GUI_Main {
 		if (autoclickName.equals("Initial GUI")) {
 			t.setText("Welcome to the Autoclicker Program!");
 		} else {
-			t.setText("Current Autoclicker: " + autoclickName);
+			t.setText("The autoclicker currently loaded is: " + autoclickName);
 		}
 		h.getChildren().add(t);
 		return h;
