@@ -24,7 +24,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
 import javafx.scene.transform.Scale;
 import javafx.stage.FileChooser;
@@ -78,7 +80,7 @@ public class GUI_Main {
 	public void gui_initial()
 	{	
 		mainMenu = gui_general("Initial GUI", false);
-		mainStage.setScene(new Scene(mainMenu, 600, 800));
+		mainStage.setScene(new Scene(mainMenu, 420, 225));
 		mainStage.show();
 		/*
 		 * Call gui_general("Initial GUI", false), and have this Pane be centered on the screen, in decently larger dimensions
@@ -88,8 +90,8 @@ public class GUI_Main {
 	public void gui_main(String autoclickName)
 	{
 		mainMenu = gui_general(autoclickName, true);
-		mainStage.setScene(new Scene(mainMenu, 600, 800));
-		mainStage.setX(Screen.getPrimary().getVisualBounds().getMaxX()-600);	
+		mainStage.setScene(new Scene(mainMenu, 420, 350));
+		mainStage.setX(Screen.getPrimary().getVisualBounds().getMaxX()-420);	
 		/*
 		 * Call gui_general(autoclickName, true), and have this Pane be off to the right in a smaller size, like in the drawn
 		 * GUI specs
@@ -107,9 +109,9 @@ public class GUI_Main {
 	public VBox gui_general(String autoclickName, boolean runButton)
 	{
 		//For Better Spacing
-		Text blank1 = new Text("\t\t\t\t\t");
-		Text blank2 = new Text("\t\t\t");
-		Text blank3 = new Text("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t");
+		//Text blank1 = new Text("\t\t\t\t\t");
+		//Text blank2 = new Text("\t\t\t");
+		//Text blank3 = new Text("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t");
 		Text blank4 = new Text("\t\n\n\t");
 		Text blank5 = new Text("\t\n\n\t");
 		Text blank6 = new Text("\t\n\n\n\n\n\n\t");
@@ -119,15 +121,26 @@ public class GUI_Main {
 		HBox h1 = new HBox();
 		HBox h2 = new HBox();
 		HBox h3 = new HBox();
-		h1.getChildren().addAll(blank1, gui_mainButtons());
-		h2.getChildren().addAll(blank2, gui_autoclickButton());
-		h3.getChildren().addAll(blank3, gui_exit());
+		HBox h4 = new HBox();
+		h1.getChildren().addAll(gui_mainButtons());
+		h1.setTranslateX(100);
+		h1.setTranslateY(20);
+		h2.getChildren().addAll(gui_autoclickButton());
+		h2.setTranslateX(40);
+		h2.setTranslateY(50);
+		h3.getChildren().addAll(gui_exit());
+	
+		//h3.setLayoutX(200);
+		h3.setTranslateX(350);
+		h3.setTranslateY(80);
+		h4.getChildren().addAll(gui_message(autoclickName));
+		h4.setTranslateX(10);
 		
 		//Adding Stuff
-		v.getChildren().addAll(gui_message(autoclickName), blank4, h1);
+		v.getChildren().addAll(h4, h1);
 		if (runButton == true)
-			v.getChildren().addAll(blank5, h2);
-		v.getChildren().addAll(blank6, h3); 
+			v.getChildren().addAll(h2);
+		v.getChildren().addAll(h3); 
 		return v;
 	}
 	
@@ -157,12 +170,14 @@ public class GUI_Main {
 		//TODO -> Say More in Current Autoclicker Message -> Cole
 		HBox h = new HBox();
 		Text t = new Text();
+		t.setTextAlignment(TextAlignment.CENTER);
 		
 		if (autoclickName.equals("Initial GUI")) {
 			t.setText("Welcome to the Autoclicker Program!");
 		} else {
-			t.setText("The autoclicker currently loaded is: " + autoclickName);
+			t.setText("The autoclicker currently loaded is: \n" + autoclickName);
 		}
+		t.setStyle("-fx-font: 24 arial");
 		h.getChildren().add(t);
 		return h;
 	}
@@ -180,7 +195,6 @@ public class GUI_Main {
 		 * is clicked, just call gui_createAutoclicker().
 		 */
 		VBox v = new VBox();
-		Text blank = new Text("\t\t\t");
 		Button b1 = new Button("CreateAutoclicker");
 		b1.setOnMouseClicked(event -> {gui_createAutoclicker();}); 
 		Button b2 = new Button("Load Autoclicker");
@@ -196,8 +210,10 @@ public class GUI_Main {
 		});
 		ImageEditing resizer = new ImageEditing();
 		b1 = (Button) resizer.resize(b1, 1.5, 1.5);
+		b1.setTranslateY(0);
 		b2 = (Button) resizer.resize(b2, 1.5, 1.5);
-		v.getChildren().addAll(b1,blank,b2);
+		b2.setTranslateY(20);
+		v.getChildren().addAll(b1,b2);
 		return v;
 	}
 	
@@ -205,8 +221,8 @@ public class GUI_Main {
 	{
 		//General Setup & Location Settings
 		VBox vbox = new VBox();
-		Text blank1 = new Text("\t\n\n\t");
-		Text blank2 = new Text("\t");
+		//Text blank1 = new Text("\t\n\n\t");
+		//Text blank2 = new Text("\t");
 		ImageEditing img = new ImageEditing();
 		MainDirectory md = new MainDirectory();
 		String location = (md.getMainDirectory() + "Autoclicker-Program/Settings/Graphics/");
@@ -214,13 +230,14 @@ public class GUI_Main {
 		//Add Horizontal Separator
 		String separatorLoc = (location + "Separator_Horizontal.png");
 		HBox separator = img.imageToHBox(separatorLoc, "transparent");
-		vbox.getChildren().addAll(separator, blank1);
+		vbox.getChildren().addAll(separator);
 		
 		//Add Autoclick Button
 		String buttonLoc = (location + "CustomButton_Autoclick.png");
 		Button button = img.imageToButton(buttonLoc, "", "", true);
 		HBox autoclick = new HBox();
-		autoclick.getChildren().addAll(blank2, button);
+		autoclick.getChildren().addAll( button);
+		autoclick.setTranslateX(30);
 		vbox.getChildren().add(autoclick);
 		
 		//Button Functionality
