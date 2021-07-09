@@ -4,6 +4,7 @@ import java.awt.AWTException;
 import java.io.IOException;
 
 import ClickingTranslation.Mapping;
+import GUIs.GUI_Dropdowns;
 import GUIs.GUI_Main;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -20,8 +21,12 @@ public class ExecuteProgram extends Application {
 	 */
 	public void start(Stage nullStage)
 	{
-		GUI_Main start = new GUI_Main();
-		start.gui_initial();
+//		GUI_Main start = new GUI_Main();
+//		start.gui_initial();
+		
+		GUI_Dropdowns test = new GUI_Dropdowns();
+		System.out.println("String: " + test.dropdown_Keyboard() );
+
 	}
 	
 	/**
