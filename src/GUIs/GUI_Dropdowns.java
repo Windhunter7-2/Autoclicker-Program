@@ -1,5 +1,10 @@
 package GUIs;
 
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
 public class GUI_Dropdowns {
 	
 	/*
@@ -11,6 +16,20 @@ public class GUI_Dropdowns {
 	 * See MappingFiles.java for a quick reference on what the requirements for each autoclick type are.
 	 */
 	
+	public String adv_Keyboard = "";
+	public String keyboard = "";
+	public String mouse = "";
+	public String wait = "";
+	public String imageCompare = "";
+	
+	//THIS IS AN EXAMPLE BUTTON
+	public void exampleButton(Stage stage)
+	{
+		System.out.println("Button clicked!");
+		keyboard = "This Should Be the Autoclicker Instruction for Whatever Stage Is Given!";
+		stage.close();
+	}
+	
 	public String dropdown_advKeyboard()
 	{
 		return "";
@@ -18,7 +37,17 @@ public class GUI_Dropdowns {
 
 	public String dropdown_Keyboard()
 	{
-		return "";
+		
+		//THIS IS EXAMPLE CODE TO IMPLEMENT AN EXAMPLE BUTTON; THE BUTTON FOR THE METHOD WILL BE THE EQUIVALENT OF A "SUBMIT" BUTTON!!!
+		GUI_Main x = new GUI_Main();
+		VBox y = x.gui_general("Initial GUI", false);
+		Stage z = new Stage();
+		z.setScene(new Scene(y, 420, 225));
+		Button test = new Button("TESTING");
+		test.setOnAction( e -> exampleButton(z) );
+		y.getChildren().add(test);
+		z.showAndWait();
+		return keyboard;
 	}
 
 	public String dropdown_Mouse()
@@ -42,7 +71,6 @@ public class GUI_Dropdowns {
 	 */
 	public static void main(String[] args) {
 
-		
 		
 		
 		
