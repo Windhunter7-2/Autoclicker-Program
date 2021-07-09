@@ -11,9 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 public class ExecuteProgram extends Application {
-
 	//TO DO -> Finishing Planning...
-	
 	/**
 	 * Initializes the program.
 	 * @param nullStage A dummy parameter
@@ -33,5 +31,4 @@ public class ExecuteProgram extends Application {
 	public static void main(String[] args) throws IOException, AWTException {
 		launch(args);
 	}
-
 }
