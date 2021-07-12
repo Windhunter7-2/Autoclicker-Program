@@ -108,15 +108,6 @@ public class GUI_Main {
 	 */
 	public VBox gui_general(String autoclickName, boolean runButton)
 	{
-		//For Better Spacing
-		//Text blank1 = new Text("\t\t\t\t\t");
-		//Text blank2 = new Text("\t\t\t");
-		//Text blank3 = new Text("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t");
-		Text blank4 = new Text("\t\n\n\t");
-		Text blank5 = new Text("\t\n\n\t");
-		Text blank6 = new Text("\t\n\n\n\n\n\n\t");
-		
-		//Apply Better Spacing
 		VBox v = new VBox();
 		HBox h1 = new HBox();
 		HBox h2 = new HBox();
@@ -129,8 +120,6 @@ public class GUI_Main {
 		h2.setTranslateX(40);
 		h2.setTranslateY(50);
 		h3.getChildren().addAll(gui_exit());
-	
-		//h3.setLayoutX(200);
 		h3.setTranslateX(350);
 		h3.setTranslateY(80);
 		h4.getChildren().addAll(gui_message(autoclickName));
@@ -138,10 +127,12 @@ public class GUI_Main {
 		
 		//Adding Stuff
 		v.getChildren().addAll(h4, h1);
-		if (runButton == true)
+		if (runButton == true) {
 			v.getChildren().addAll(h2);
+		}
 		v.getChildren().addAll(h3); 
 		return v;
+		
 	}
 	
 	/*
@@ -342,7 +333,9 @@ public class GUI_Main {
 		if ( choice.equals("Mouse") )
 			autoclickInstr = sub_gui.dropdown_Mouse();
 		if ( choice.equals("Keyboard") )
+			
 			autoclickInstr = sub_gui.dropdown_Keyboard();
+			System.out.println(autoclickInstr);
 		if ( choice.equals("Advanced Keyboard") )
 			autoclickInstr = sub_gui.dropdown_advKeyboard();
 		if ( choice.equals("Wait (General)") )

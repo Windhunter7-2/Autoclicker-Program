@@ -19,12 +19,10 @@ public class ExecuteProgram extends Application {
 	 */
 	public void start(Stage nullStage)
 	{
-//		GUI_Main start = new GUI_Main();
-//		start.gui_initial();
-		
-		GUI_Dropdowns test = new GUI_Dropdowns();
-		System.out.println("String: " + test.dropdown_Keyboard() );
-
+		GUI_Main start = new GUI_Main();
+		start.gui_initial();
+		//GUI_Dropdowns test = new GUI_Dropdowns();
+		//System.out.println("String: " + test.dropdown_Keyboard() );
 	}
 	
 	/**
