@@ -36,12 +36,14 @@ public class CalibrationFiles {
 	
 	private void createAutoclicker(String fileName) throws IOException, InterruptedException
 	{
+		boolean isChanged = false; //Test if we do any mouse-based calibrations
 		String[] oldContents = fh.getText("Autoclicker-Program/Autoclickers/"+fileName+".txt").split("\n");
 		for (int i = 0; i < oldContents.length; ++i) {
 			Scanner sc = new Scanner(oldContents[i]);
 			if(sc.hasNext()) {
 				String line = sc.next();
 				if (line.equals("Mouse")){
+					isChanged = true;
 					Pattern p = Pattern.compile("x:[^ \t\n\f\r]*");
 					Matcher m = p.matcher(oldContents[i]);
 					String x = "Unnamed";
@@ -53,6 +55,7 @@ public class CalibrationFiles {
 					
 				}
 				else if (line.equals("CompareImages")) {
+					isChanged = true;
 					//Finding command name
 					Pattern p = Pattern.compile("xs:[^ \t\n\f\r]*");
 					Matcher m = p.matcher(oldContents[i]);
@@ -85,15 +88,18 @@ public class CalibrationFiles {
 		for (String s : oldContents) {
 			newContents = newContents + s + "\n";
 		}
+		
 		fh.setText("Autoclicker-Program/Settings/Calibration/"+fileName+".autoclick", newContents.substring(0, Math.max(newContents.length()-1,0)));
-		JFrame endFrame = new JFrame();
-		endFrame.setVisible(true);
-		endFrame.setBounds(0,0,600,600);
-		endFrame.setAlwaysOnTop(true);
-		JLabel text = new JLabel("<html><p text-align:center>Calibration Complete.<br>Thank you for your time!</p></html>", JLabel.CENTER);
-		endFrame.add(text);
-		Thread.sleep(infoWait);
-		endFrame.dispose();
+		if (isChanged) {
+			JFrame endFrame = new JFrame();
+			endFrame.setVisible(true);
+			endFrame.setBounds(0,0,601,600);
+			endFrame.setAlwaysOnTop(true);
+			JLabel text = new JLabel("<html><p text-align:center>Calibration Complete.<br>Thank you for your time!</p></html>", JLabel.CENTER);
+			endFrame.add(text);
+			Thread.sleep(infoWait);
+			endFrame.dispose();
+		}
 		/*
 		 * Must be O(n)*, where n is the number of characters in the autoclicker template file
 		 * (O() might be different for CompareImages, because of the pixels)
@@ -116,7 +122,7 @@ public class CalibrationFiles {
 	private Point calibSetup(String inText) throws InterruptedException {
 		JFrame jf = new JFrame();
 		jf.setVisible(true);
-		jf.setBounds(0,0,600,600);
+		jf.setBounds(0,0,601,600);
 		jf.setAlwaysOnTop(true);
 		JLabel text = new JLabel(inText, JLabel.CENTER);
 		jf.add(text);
