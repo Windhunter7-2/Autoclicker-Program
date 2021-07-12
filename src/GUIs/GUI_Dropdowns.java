@@ -4,7 +4,9 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -61,7 +63,64 @@ public class GUI_Dropdowns {
 
 	public String dropdown_Mouse()
 	{
-		return "";
+		Stage s = new Stage();
+		VBox vb = new VBox();
+		
+		HBox hb1 = new HBox(new Text("Use click?"));
+		CheckBox cb1 = new CheckBox();
+		hb1.getChildren().add(cb1);
+		
+		HBox hb2 = new HBox(new Text("Name for this action:"));
+		TextField nameField = new TextField();
+		hb2.getChildren().add(nameField);
+		
+		HBox hb3 = new HBox(new Text("Type of click:"));
+		TextField typeField = new TextField("LeftClick");
+		hb3.getChildren().add(typeField);
+		
+		HBox hb4 = new HBox(new Text("Number of clicks:"));
+		TextField numField = new TextField("0");
+		hb4.getChildren().add(numField);
+		
+		HBox hb5 = new HBox(new Text("Use mouse wheel?"));
+		CheckBox cb2 = new CheckBox();
+		hb5.getChildren().add(cb2);
+		
+		HBox hb6 = new HBox(new Text("How far to scroll? (positive values scroll downwards)"));
+		TextField scrollField = new TextField("0");
+		hb6.getChildren().add(scrollField);
+		
+		HBox hb7 = new HBox(new Text("Delay between clicks / turns:"));
+		TextField cdoField = new TextField("0");
+		hb7.getChildren().add(cdoField);
+		
+		HBox hb8 = new HBox(new Text("How long to hold each click:"));
+		TextField holdField = new TextField("0");
+		hb8.getChildren().add(holdField);
+		
+		Button submit = new Button("Submit Instruction");
+		submit.setOnMouseClicked(event -> s.hide());
+		vb.getChildren().addAll(hb1, hb2, hb3, hb4, hb5, hb6, hb7, hb8, submit);
+		s.setScene(new Scene(vb, 420, 475));
+		s.showAndWait();
+		return "Mouse " 
+		+ cb1.isSelected() 
+		+ " x:"
+		+ nameField.getText()
+		+ " "
+		+ typeField.getText()
+		+ " "
+		+ numField.getText()
+		+ " "
+		+ cb2.isSelected()
+		+ " "
+		+ scrollField.getText()
+		+ " "
+		+ cdoField.getText()
+		+ " "
+		+ holdField.getText();
+		
+		
 	}
 
 	public String dropdown_Wait()

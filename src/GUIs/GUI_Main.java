@@ -332,8 +332,8 @@ public class GUI_Main {
 		String autoclickInstr = "";
 		if ( choice.equals("Mouse") )
 			autoclickInstr = sub_gui.dropdown_Mouse();
+			System.out.println(autoclickInstr);
 		if ( choice.equals("Keyboard") )
-			
 			autoclickInstr = sub_gui.dropdown_Keyboard();
 			System.out.println(autoclickInstr);
 		if ( choice.equals("Advanced Keyboard") )
