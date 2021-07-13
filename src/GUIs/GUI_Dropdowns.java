@@ -5,6 +5,7 @@ import java.text.NumberFormat;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -45,14 +46,14 @@ public class GUI_Dropdowns {
 	{
 		Stage s = new Stage();
 		VBox vb = new VBox();
-		Text t1 = new Text("Number of presses per key:");
+		Text t1 = new Text("Number of times to iterate this keyboard sequence:");
 		TextField clickField = new TextField("1");
-		Text t2 = new Text("Delay between key presses:");
+		Text t2 = new Text("Delay between key presses (In milliseconds):");
 		TextField cdoField = new TextField("0");
-		Text t3 = new Text("How long to hold each key:");
+		Text t3 = new Text("How long to hold each key (In milliseconds):");
 		TextField holdField = new TextField("0");
 		Text t4 = new Text("Sequence of keys:");
-		TextField strField = new TextField();
+		TextField strField = new TextField("ABC");
 		Button submit = new Button("Submit Instruction");
 		submit.setOnMouseClicked(event -> s.hide());
 		vb.getChildren().addAll(t1, clickField, t2, cdoField, t3, holdField, t4, strField, submit);
@@ -71,12 +72,23 @@ public class GUI_Dropdowns {
 		hb1.getChildren().add(cb1);
 		
 		HBox hb2 = new HBox(new Text("Name for this action:"));
-		TextField nameField = new TextField();
+		TextField nameField = new TextField("Name Of Click");
+		nameField.setText( nameField.getText().replaceAll("\\s+", "") );	//Delete Spaces from Name Field
 		hb2.getChildren().add(nameField);
 		
+		//Dropdown for Click Type
 		HBox hb3 = new HBox(new Text("Type of click:"));
-		TextField typeField = new TextField("LeftClick");
-		hb3.getChildren().add(typeField);
+		ChoiceBox<String> typeField = new ChoiceBox<>();
+		String select = "Select Click Type...";
+		typeField.getItems().add(select);
+		typeField.getItems().add("Left Click");
+		typeField.getItems().add("Right Click");
+		typeField.getItems().add("Middle Click");
+		typeField.getItems().add("No Click (Use Scroller)");
+		typeField.setValue(select);
+		if (typeField.getValue() != null)	//Remove Original "Selection" Button
+			typeField.getItems().remove(0);
+		hb3.getChildren().add(typeField);	//Add to HBox
 		
 		HBox hb4 = new HBox(new Text("Number of clicks:"));
 		TextField numField = new TextField("0");
@@ -103,12 +115,19 @@ public class GUI_Dropdowns {
 		vb.getChildren().addAll(hb1, hb2, hb3, hb4, hb5, hb6, hb7, hb8, submit);
 		s.setScene(new Scene(vb, 420, 475));
 		s.showAndWait();
+		
+		//Dropdown Text Set
+		String type = typeField.getValue();
+		type = type.replaceAll("\\s+","");	//Delete Spaces
+		if ( type.equals("NoClick(UseScroller)") || (type.equals("SelectClickType...")) )
+			type = "NoClick";
+		
 		return "Mouse " 
 		+ cb1.isSelected() 
 		+ " x:"
 		+ nameField.getText()
 		+ " "
-		+ typeField.getText()
+		+ type
 		+ " "
 		+ numField.getText()
 		+ " "
