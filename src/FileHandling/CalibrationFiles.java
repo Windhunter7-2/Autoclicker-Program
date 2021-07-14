@@ -110,11 +110,13 @@ public class CalibrationFiles {
 		fh.setText("Autoclicker-Program/Settings/Calibration/"+fileName+".autoclick", newContents.substring(0, Math.max(newContents.length()-1,0)));
 		if (isChanged) {
 			JFrame endFrame = new JFrame();
-			endFrame.setVisible(true);
-			endFrame.setBounds(0,0,601,600);
-			endFrame.setAlwaysOnTop(true);
 			JLabel text = new JLabel("<html><p text-align:center>Calibration Complete.<br>Thank you for your time!</p></html>", JLabel.CENTER);
 			endFrame.add(text);
+			endFrame.setBounds(0,0,600,600);
+			endFrame.setAlwaysOnTop(true);
+
+			//endFrame.pack();
+			endFrame.setVisible(true);
 			Thread.sleep(infoWait);
 			endFrame.dispose();
 		}
@@ -139,11 +141,14 @@ public class CalibrationFiles {
 	
 	private Point calibSetup(String inText) throws InterruptedException {
 		JFrame jf = new JFrame();
-		jf.setVisible(true);
-		jf.setBounds(0,0,601,600);
-		jf.setAlwaysOnTop(true);
 		JLabel text = new JLabel(inText, JLabel.CENTER);
 		jf.add(text);
+		
+		jf.setBounds(0,0,600,600);
+		jf.setAlwaysOnTop(true);
+		
+		jf.setVisible(true);
+		//jf.pack();
 		Thread.sleep(infoWait);
 		jf.dispose();
 		Thread.sleep(inputWait);
