@@ -75,8 +75,7 @@ public class GUI_Dropdowns {
 		TextField nameField = new TextField("Name Of Click");
 		nameField.setText( nameField.getText().replaceAll("\\s+", "") );	//Delete Spaces from Name Field
 		hb2.getChildren().add(nameField);
-		
-		//Dropdown for Click Type
+	
 		HBox hb3 = new HBox(new Text("Type of click:"));
 		ChoiceBox<String> typeField = new ChoiceBox<>();
 		String select = "Select Click Type...";
@@ -138,13 +137,21 @@ public class GUI_Dropdowns {
 		+ cdoField.getText()
 		+ " "
 		+ holdField.getText();
-		
-		
 	}
 
 	public String dropdown_Wait()
 	{
-		return "";
+		Stage s = new Stage();
+		VBox vb = new VBox();
+		HBox hb = new HBox(new Text("Wait duration (milliseconds):"));
+		TextField waitField = new TextField("0");
+		hb.getChildren().addAll(waitField);
+		Button submit = new Button("Submit Instruction");
+		submit.setOnMouseClicked(event -> s.hide());
+		vb.getChildren().addAll(hb, submit);
+		s.setScene(new Scene(vb, 420, 475));
+		s.showAndWait();
+		return "Wait " + waitField.getText();
 	}
 
 	public String dropdown_ImageCompare(int imageNumber)
