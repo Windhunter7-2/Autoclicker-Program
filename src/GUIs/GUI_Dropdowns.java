@@ -45,6 +45,7 @@ public class GUI_Dropdowns {
 	public String dropdown_Keyboard()
 	{
 		Stage s = new Stage();
+		s.setTitle("Define Keyboard Input");
 		VBox vb = new VBox();
 		Text t1 = new Text("Number of times to iterate this keyboard sequence:");
 		TextField clickField = new TextField("1");
@@ -65,6 +66,7 @@ public class GUI_Dropdowns {
 	public String dropdown_Mouse()
 	{
 		Stage s = new Stage();
+		s.setTitle("Define Mouse Click");
 		VBox vb = new VBox();
 		
 		HBox hb1 = new HBox(new Text("Use click?"));
@@ -142,6 +144,7 @@ public class GUI_Dropdowns {
 	public String dropdown_Wait()
 	{
 		Stage s = new Stage();
+		s.setTitle("Define Wait Period");
 		VBox vb = new VBox();
 		HBox hb = new HBox(new Text("Wait duration (milliseconds):"));
 		TextField waitField = new TextField("0");
@@ -158,6 +161,7 @@ public class GUI_Dropdowns {
 	{
 		//Set Stage and Boxes
 		Stage s = new Stage();
+		s.setTitle("Define Image Comparison");
 		VBox vb = new VBox();
 		
 		//Selecting to Wait Until Same Or Different

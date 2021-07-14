@@ -78,8 +78,9 @@ public class GUI_Main {
 	private String curAutoclicker = "";
 	
 	public void gui_initial()
-	{	
+	{
 		mainMenu = gui_general("Initial GUI", false);
+		mainStage.setTitle("Autoclicker Main Menu");
 		mainStage.setScene(new Scene(mainMenu, 420, 225));
 		mainStage.show();
 		/*
@@ -297,6 +298,7 @@ public class GUI_Main {
         list.setRight(border2);
 		list.setTop(clicks_gui);
 		Stage stage = new Stage();
+		stage.setTitle("Create A New Autoclicker");
 		
 		//Add the First Initial "Add" HBox
 		HBox click = gui_click(clicks_counter);
