@@ -37,9 +37,129 @@ public class GUI_Dropdowns {
 	 * stage.close(); }
 	 */
 	
+	private String advKeyboard_unicode(int numClicks)
+	{
+		//Set Stage and Boxes
+		Stage s = new Stage();
+		VBox vb = new VBox();
+		
+		//Unicode Key
+		Text t = new Text("Enter the code point of the Unicode character you are using:\n(This is the 4-digit hexadecimal"
+				+ "representation; you can find all Unicode code points here:\n\t\thttps://unicode-table.com/en/)\n\n");
+		TextField unicodeField = new TextField("1F600");
+		
+		//Submit Button
+		Button submit = new Button("Submit Instruction");
+		submit.setOnMouseClicked(event -> s.hide());
+		submit.setTranslateY(20);
+		
+		//Set Scene
+		vb.getChildren().addAll(t, unicodeField, submit);
+		s.setScene(new Scene(vb, 520, 275));
+		s.showAndWait();
+
+		//Return
+		return ( "AdvKeyboard "
+				+ numClicks + " "
+				+ unicodeField.getText() + " "
+				+ "N/A true");
+	}
+	
+	private String advKeyboard_keyCombo(int numClicks)
+	{
+		//Set Stage and Boxes
+		Stage s = new Stage();
+		VBox vb = new VBox();
+		
+		//Grid GUI for Keyboard Combo
+		Text t = new Text("Type of click:");
+		ChoiceBox<String> typeField = new ChoiceBox<>();
+		String select = "Select Click Type...";
+		typeField.getItems().add(select);
+		typeField.setValue(select);
+		if (typeField.getValue() != null)	//Remove Original "Selection" Button
+			typeField.getItems().remove(0);
+		
+		//Dropdown Keyboard Combinations
+		
+		
+		
+		//TODO -> Reformat Dropdown to Grid, <AND> Add the Key Combos
+		//TODO -> I Am Currently Working on Both of These...
+		
+		
+		
+		
+		typeField.getItems().add("Key Combo A");
+		typeField.getItems().add("Key Combo B");
+		typeField.getItems().add("Key Combo C");
+		
+		//Submit Button
+		Button submit = new Button("Submit Instruction");
+		submit.setOnMouseClicked(event -> s.hide());
+		submit.setTranslateY(20);
+		
+		//Set Scene
+		vb.getChildren().addAll(t, typeField, submit);
+		s.setScene(new Scene(vb, 520, 275));
+		s.showAndWait();
+
+		//Dropdown Text Set -> Open Up Other GUI & Return
+		String type = typeField.getValue();
+		if ( (type.equals("Select ClickType ...")) )
+			type = "F12";
+		
+		//Return
+		return ( "AdvKeyboard "
+				+ numClicks + " "
+				+ "N/A "
+				+ type + " "
+				+ "false");
+	}
+	
 	public String dropdown_advKeyboard()
 	{
-		return "";
+		//Set Stage and Boxes
+		Stage s = new Stage();
+		VBox vb = new VBox();
+		
+		//Number of Clicks
+		HBox hb1 = new HBox();
+		Text t1 = new Text("Enter how many times you would like to repeat this instruction:");
+		TextField numClicksField = new TextField("1");
+		hb1.getChildren().addAll(t1, numClicksField);
+		
+		//Whether to Do Unicode Key(s) Or Keyboard Combo
+		HBox hb2 = new HBox();
+		Text t2 = new Text("Type of click:");
+		ChoiceBox<String> typeField = new ChoiceBox<>();
+		String select = "Select Click Type...";
+		typeField.getItems().add(select);
+		typeField.getItems().add("Unicode Character(s)");
+		typeField.getItems().add("Keyboard Combination / Functional Key(s) (e.g. F12)");
+		typeField.setValue(select);
+		if (typeField.getValue() != null)	//Remove Original "Selection" Button
+			typeField.getItems().remove(0);
+		hb2.getChildren().addAll(t2, typeField);	//Add to HBox
+		
+		//Submit Button
+		Button cont = new Button("Continue");
+		cont.setOnMouseClicked(event -> s.hide());
+		cont.setTranslateY(20);
+		
+		//Set Scene
+		vb.getChildren().addAll(hb1, hb2, cont);
+		s.setScene(new Scene(vb, 520, 275));
+		s.showAndWait();
+
+		//Dropdown Text Set -> Open Up Other GUI & Return
+		String type = typeField.getValue();
+		if ( (type.equals("Select Click Type...")) )
+			type = "Unicode Character(s)";
+		if (type.equals("Unicode Character(s)"))
+			return advKeyboard_unicode( Integer.parseInt(numClicksField.getText()) );
+		else	//Keyboard Combo(s)
+			return advKeyboard_keyCombo( Integer.parseInt(numClicksField.getText()) );
 	}
 
 	public String dropdown_Keyboard()
