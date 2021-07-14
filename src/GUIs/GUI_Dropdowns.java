@@ -114,7 +114,7 @@ public class GUI_Dropdowns {
 		Button submit = new Button("Submit Instruction");
 		submit.setOnMouseClicked(event -> s.hide());
 		vb.getChildren().addAll(hb1, hb2, hb3, hb4, hb5, hb6, hb7, hb8, submit);
-		s.setScene(new Scene(vb, 420, 475));
+		s.setScene(new Scene(vb, 420, 275));
 		s.showAndWait();
 		
 		//Dropdown Text Set
@@ -152,7 +152,7 @@ public class GUI_Dropdowns {
 		Button submit = new Button("Submit Instruction");
 		submit.setOnMouseClicked(event -> s.hide());
 		vb.getChildren().addAll(hb, submit);
-		s.setScene(new Scene(vb, 420, 475));
+		s.setScene(new Scene(vb, 420, 150));
 		s.showAndWait();
 		return "Wait " + waitField.getText();
 	}
