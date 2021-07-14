@@ -143,23 +143,13 @@ public class CalibrationFiles {
 		JFrame jf = new JFrame();
 		JLabel text = new JLabel(inText, JLabel.CENTER);
 		jf.add(text);
-		
 		jf.setBounds(0,0,600,600);
 		jf.setAlwaysOnTop(true);
-		
 		jf.setVisible(true);
-		//jf.pack();
 		Thread.sleep(infoWait);
 		jf.dispose();
 		Thread.sleep(inputWait);
 		return MouseInfo.getPointerInfo().getLocation();
-		/*GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(jf);
-		jf.setAlwaysOnTop(true);
-		MouseCalibrator mc = new MouseCalibrator();
-		jf.addMouseListener(mc);
-		JLabel text = new JLabel("Click Anywhere Within Window To Calibrate", JLabel.CENTER);
-		jf.add(text);
-		while(!mc.clicked) {} //Wait for user input*/
 	}
 	
 	/**

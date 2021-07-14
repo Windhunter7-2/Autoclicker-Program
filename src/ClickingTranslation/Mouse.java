@@ -1,6 +1,7 @@
 package ClickingTranslation;
 
 import java.awt.AWTException;
+import java.awt.MouseInfo;
 import java.awt.Robot;
 import java.awt.event.InputEvent;
 import java.util.ArrayList;
@@ -59,7 +60,11 @@ public class Mouse {
 			if (clickUsed)
 			{
 				//Set Up Click
+				System.out.println(xPos + ", " + yPos); //FIXME Delete
+				System.out.println(MouseInfo.getPointerInfo().getLocation());
+				click.mouseMove(0, 0); //This movement enforces consistency
 				click.mouseMove(xPos, yPos);
+				System.out.println(MouseInfo.getPointerInfo().getLocation());
 				click.setAutoDelay(constantDelayOverride);
 				
 				//Set Up Which Mouse Button to Click
