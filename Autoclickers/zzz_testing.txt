@@ -1,0 +1,1 @@
+CompareImages zzz_testing_0.png xs:TestinganImageComparison false false

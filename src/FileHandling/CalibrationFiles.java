@@ -2,10 +2,14 @@ package FileHandling;
 
 import java.awt.event.*;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.awt.AWTException;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.MouseInfo;
 import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.Robot;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -80,6 +84,20 @@ public class CalibrationFiles {
 						ep.y = tmp;
 					}
 					oldContents[i] = oldContents[i].replaceAll("xs:[^ \t\n\f\r]*", sp.x + " " + sp.y + " " + ep.x + " " + ep.y);
+					
+                    //Take Screenshot to Compare (If CompareImages Calibration)
+                    ImageCompareFiles cmp = new ImageCompareFiles();
+                    Robot robot = null;
+                    try {
+                        robot = new Robot();
+                    } catch (AWTException e) {
+                        e.printStackTrace();
+                    }
+                    Rectangle screenRectangle = new Rectangle( sp.x, sp.y, (ep.x-sp.x), (ep.y-sp.y) );
+                    BufferedImage screenshot = robot.createScreenCapture(screenRectangle);    //Create Screenshot of That Part of the Screen
+                    MainDirectory directory = new MainDirectory();
+                    String name = sc.next();	//The Filename (e.g. ExampleScreenshot_0.png)
+                    cmp.saveImage(screenshot, (directory.getMainDirectory() + "/Autoclicker-Program/Settings/Images/" + name) );
 				}
 			}
 			sc.close();

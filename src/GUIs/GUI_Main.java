@@ -264,6 +264,10 @@ public class GUI_Main {
 				"Name of Generated Autoclicker", JOptionPane.QUESTION_MESSAGE);
 		curAutoclicker = filename;
 		
+		//Replace Image Comparison Placeholder Name with Actual Filename
+		for (int i = 0; i < clicks.size(); i++)
+			clicks.set( i, clicks.get(i).replaceAll("autoclickerName", filename) );
+		
 		//Creating the File
 		filename = (filename + ".txt");
 		GUI_General createFile = new GUI_General();

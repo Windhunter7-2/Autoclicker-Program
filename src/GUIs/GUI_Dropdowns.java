@@ -149,7 +149,39 @@ public class GUI_Dropdowns {
 
 	public String dropdown_ImageCompare(int imageNumber)
 	{
-		return "";
+		//Set Stage and Boxes
+		Stage s = new Stage();
+		VBox vb = new VBox();
+		
+		//Selecting to Wait Until Same Or Different
+		Text t1 = new Text("Select if you would like to wait until the images are the same or different:\n\n");
+		Text t2 = new Text("Wait Until Images Are the Same");
+		Text t3 = new Text("Wait Until Images Are Different");
+		Text t4 = new Text("\nNote: The image location and image to compare against will be configured during calibration"
+				+ "\n(Calibration occurs when the autoclicker is loaded the first time)\n\n");
+		HBox hb = new HBox();
+		CheckBox cb1 = new CheckBox();
+		cb1.setSelected(true);
+		CheckBox cb2 = new CheckBox();
+		hb.getChildren().addAll(t2, cb1, t3, cb2);
+		
+		//Image Name
+		Text t5 = new Text("What would you like to call this image to be compared?");
+		TextField nameField = new TextField("Name of Image");
+		
+		//Submit Button
+		Button submit = new Button("Submit Instruction");
+		submit.setOnMouseClicked(event -> s.hide());
+		submit.setTranslateY(20);
+		
+		//Set Scene
+		vb.getChildren().addAll(t1, hb, t4, t5, nameField, submit);
+		s.setScene(new Scene(vb, 520, 275));
+		s.showAndWait();
+		return ( "CompareImages "
+				+ "autoclickerName_" + imageNumber + ".png "
+				+ "xs:" + nameField.getText().replaceAll("\\s+", "") + " "
+				+ cb1.isSelected() + " " + cb2.isSelected() );
 	}
 	
 	/**
