@@ -4,12 +4,14 @@ import java.awt.event.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.awt.AWTException;
+import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Robot;
+import java.awt.Toolkit;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -20,6 +22,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import External.MainDirectory;
+import javafx.stage.Screen;
 
 public class CalibrationFiles {
 	private MainDirectory md = new MainDirectory();
@@ -141,6 +144,11 @@ public class CalibrationFiles {
 	
 	private Point calibSetup(String inText) throws InterruptedException {
 		JFrame jf = new JFrame();
+		//GraphicsConfiguration gc = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
+		//gc.getDefaultTransform().getScaleX();
+		int dpi = Toolkit.getDefaultToolkit().getScreenResolution(); //the current dpi on the device.
+		final double DEF_DPI = 96.0; //default dpi, at least on W10; may differ on other devices. TODO figure out how to calculate this w/ diff device info
+		double scaleInv = DEF_DPI / dpi; //Rescales calibration based on default dpi.
 		JLabel text = new JLabel(inText, JLabel.CENTER);
 		jf.add(text);
 		jf.setBounds(0,0,600,600);
@@ -149,7 +157,9 @@ public class CalibrationFiles {
 		Thread.sleep(infoWait);
 		jf.dispose();
 		Thread.sleep(inputWait);
-		return MouseInfo.getPointerInfo().getLocation();
+		Point p = MouseInfo.getPointerInfo().getLocation();
+		p.move((int)(p.getX() * scaleInv), (int)(p.getY() * scaleInv));
+		return p;
 	}
 	
 	/**

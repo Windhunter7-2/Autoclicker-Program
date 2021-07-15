@@ -1,10 +1,17 @@
 package ClickingTranslation;
 
 import java.awt.AWTException;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsEnvironment;
 import java.awt.MouseInfo;
 import java.awt.Robot;
 import java.awt.event.InputEvent;
 import java.util.ArrayList;
+
+import javafx.stage.Screen;
+import javafx.stage.Window;
+
+import java.awt.Toolkit;
 
 public class Mouse {
 
@@ -55,18 +62,11 @@ public class Mouse {
 		Robot click = null;
 		try {
 			click = new Robot();
-			
-			//If Clicking
 			if (clickUsed)
 			{
-				//Set Up Click
-				System.out.println(xPos + ", " + yPos); //FIXME Delete
-				System.out.println(MouseInfo.getPointerInfo().getLocation());
-				click.mouseMove(0, 0); //This movement enforces consistency
+				click.mouseMove(0, 0); //This movement enforces consistent calibration
 				click.mouseMove(xPos, yPos);
-				System.out.println(MouseInfo.getPointerInfo().getLocation());
 				click.setAutoDelay(constantDelayOverride);
-				
 				//Set Up Which Mouse Button to Click
 				int whichButton = 0;
 				if ( mouseButton.equals("LeftClick") )
