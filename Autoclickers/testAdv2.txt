@@ -1,0 +1,2 @@
+Mouse true x:NameOfClick LeftClick 1 false 0 0 0
+AdvKeyboard 3 0D9E N/A true

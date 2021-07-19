@@ -56,7 +56,6 @@ public class GUI_General {
 			break;
 		}
 		outInstruction = whichOne + " " + mfi.toString();
-		System.out.println(outInstruction);
 		return outInstruction;
 		/*
 		 * whichOne is which autoclicker type (i.e. "Keyboard", "AdvKeyboard", "Mouse", "Wait", or "CompareImages)

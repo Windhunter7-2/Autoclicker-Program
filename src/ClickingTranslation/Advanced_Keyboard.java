@@ -200,7 +200,16 @@ public class Advanced_Keyboard {
 	private void convertInstructions(ArrayList<String> instructions)
 	{
 		numClicks = Integer.valueOf(instructions.get(0));
-		unicodeKey = Integer.valueOf(instructions.get(1));
+		try {
+			unicodeKey = Integer.valueOf(instructions.get(1));
+		} catch (NumberFormatException e) {
+			try {
+				unicodeKey = Integer.valueOf(instructions.get(1), 16);
+			}
+			catch (NumberFormatException e2) {
+				throw e2;
+			}
+		}
 		keyCombo = instructions.get(2);
 		isUnicode = Boolean.valueOf(instructions.get(3));
 		/*
