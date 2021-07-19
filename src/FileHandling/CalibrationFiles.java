@@ -166,7 +166,7 @@ public class CalibrationFiles {
 	
 	/**
 	 * listener for mouse clicks
-	 * @author User
+	 * @author Cole
 	 *
 	 */
 	/*private class MouseCalibrator extends MouseAdapter{
