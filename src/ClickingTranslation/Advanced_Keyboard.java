@@ -178,7 +178,6 @@ public class Advanced_Keyboard {
 	 */
 	private void clickUnicode(Robot r) throws InterruptedException
 	{
-		//throw new RuntimeException("TODO clickUnicode");
 		Clipboard c = Toolkit.getDefaultToolkit().getSystemClipboard();
 		StringSelection s = new StringSelection(Character.valueOf((char)(unicodeKey)).toString());
 		c.setContents(s, null);
@@ -201,14 +200,10 @@ public class Advanced_Keyboard {
 	{
 		numClicks = Integer.valueOf(instructions.get(0));
 		try {
-			unicodeKey = Integer.valueOf(instructions.get(1));
+			unicodeKey = Integer.valueOf(instructions.get(1), 16);
+			//unicodeKey = Integer.valueOf(instructions.get(1));
 		} catch (NumberFormatException e) {
-			try {
-				unicodeKey = Integer.valueOf(instructions.get(1), 16);
-			}
-			catch (NumberFormatException e2) {
-				throw e2;
-			}
+			throw e;
 		}
 		keyCombo = instructions.get(2);
 		isUnicode = Boolean.valueOf(instructions.get(3));
