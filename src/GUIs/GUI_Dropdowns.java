@@ -41,6 +41,7 @@ public class GUI_Dropdowns {
 	{
 		//Set Stage and Boxes
 		Stage s = new Stage();
+		s.setTitle("Define Unicode Input");
 		VBox vb = new VBox();
 		
 		//Unicode Key
@@ -67,8 +68,10 @@ public class GUI_Dropdowns {
 	
 	private String advKeyboard_keyCombo(int numClicks)
 	{
+		
 		//Set Stage and Boxes
 		Stage s = new Stage();
+		s.setTitle("Define Key Combo Input");
 		VBox vb = new VBox();
 		
 		//Grid GUI for Keyboard Combo
@@ -121,6 +124,7 @@ public class GUI_Dropdowns {
 	{
 		//Set Stage and Boxes
 		Stage s = new Stage();
+		s.setTitle("Define Advanced Keyboard Input");
 		VBox vb = new VBox();
 		
 		//Number of Clicks

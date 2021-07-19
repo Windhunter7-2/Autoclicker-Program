@@ -113,6 +113,7 @@ public class CalibrationFiles {
 		fh.setText("Autoclicker-Program/Settings/Calibration/"+fileName+".autoclick", newContents.substring(0, Math.max(newContents.length()-1,0)));
 		if (isChanged) {
 			JFrame endFrame = new JFrame();
+			endFrame.setTitle("All Done!");
 			JLabel text = new JLabel("<html><p text-align:center>Calibration Complete.<br>Thank you for your time!</p></html>", JLabel.CENTER);
 			endFrame.add(text);
 			endFrame.setBounds(0,0,600,600);
@@ -144,6 +145,7 @@ public class CalibrationFiles {
 	
 	private Point calibSetup(String inText) throws InterruptedException {
 		JFrame jf = new JFrame();
+		jf.setTitle("Calibration in Progress...");
 		//GraphicsConfiguration gc = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
 		//gc.getDefaultTransform().getScaleX();
 		int dpi = Toolkit.getDefaultToolkit().getScreenResolution(); //the current dpi on the device.
