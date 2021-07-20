@@ -81,7 +81,9 @@ public class GUI_Main {
 	{
 		mainMenu = gui_general("Initial GUI", false);
 		mainStage.setTitle("Autoclicker Main Menu");
-		mainStage.setScene(new Scene(mainMenu, 420, 225));
+		mainStage.setScene(new Scene(mainMenu, 415, 195));
+		mainStage.setMinWidth(430);
+		mainStage.setMinHeight(230);
 		mainStage.show();
 		/*
 		 * Call gui_general("Initial GUI", false), and have this Pane be centered on the screen, in decently larger dimensions
@@ -91,7 +93,9 @@ public class GUI_Main {
 	public void gui_main(String autoclickName)
 	{
 		mainMenu = gui_general(autoclickName, true);
-		mainStage.setScene(new Scene(mainMenu, 420, 350));
+		mainStage.setScene(new Scene(mainMenu, 420, 310));
+		mainStage.setMinWidth(425);
+		mainStage.setMinHeight(350);
 		mainStage.setX(Screen.getPrimary().getVisualBounds().getMaxX()-420);	
 		/*
 		 * Call gui_general(autoclickName, true), and have this Pane be off to the right in a smaller size, like in the drawn
@@ -159,11 +163,9 @@ public class GUI_Main {
 	 */
 	public HBox gui_message(String autoclickName)
 	{
-		//TODO -> Say More in Current Autoclicker Message -> Cole
 		HBox h = new HBox();
 		Text t = new Text();
-		t.setTextAlignment(TextAlignment.CENTER);
-		
+		t.setTextAlignment(TextAlignment.CENTER);	
 		if (autoclickName.equals("Initial GUI")) {
 			t.setText("Welcome to the Autoclicker Program!");
 		} else {
@@ -176,7 +178,6 @@ public class GUI_Main {
 	
 	public VBox gui_mainButtons()
 	{
-		//TODO -> JOptionPane for Inputting Filename (And Rest of Load Autoclicker Functionality) -> Cole
 		/*
 		 * Must be O(1)
 		 * This should be the two buttons, "Create Autoclicker" and "Load Autoclicker", as drawn in the GUI specs.

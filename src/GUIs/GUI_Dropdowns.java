@@ -2,6 +2,8 @@ package GUIs;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -183,7 +185,6 @@ public class GUI_Dropdowns {
 		submit.setOnMouseClicked(event -> s.hide());
 		vb.getChildren().addAll(t1, clickField, t2, cdoField, t3, holdField, t4, strField, submit);
 		s.setScene(new Scene(vb, 420, 275));
-		s.showAndWait();
 		return "Keyboard " + clickField.getText() + " " + cdoField.getText() + " " + holdField.getText() + " " + strField.getText();
 	}
 
@@ -196,6 +197,7 @@ public class GUI_Dropdowns {
 		HBox hb1 = new HBox(new Text("Use click?"));
 		CheckBox cb1 = new CheckBox();
 		hb1.getChildren().add(cb1);
+		hb1.setPadding(new Insets(0, 0, 8, 0));
 		
 		HBox hb2 = new HBox(new Text("Name for this action:"));
 		TextField nameField = new TextField("Name Of Click");
@@ -222,6 +224,7 @@ public class GUI_Dropdowns {
 		HBox hb5 = new HBox(new Text("Use mouse wheel?"));
 		CheckBox cb2 = new CheckBox();
 		hb5.getChildren().add(cb2);
+		hb5.setPadding(new Insets(0,0,8,0));
 		
 		HBox hb6 = new HBox(new Text("How far to scroll? (positive values scroll downwards)"));
 		TextField scrollField = new TextField("0");
