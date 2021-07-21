@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -68,9 +69,8 @@ public class GUI_Dropdowns {
 				+ "N/A true");
 	}
 	
-	private String advKeyboard_keyCombo(int numClicks)
+	private String advKeyboard_keyCombo_common(int numClicks)
 	{
-		
 		//Set Stage and Boxes
 		Stage s = new Stage();
 		s.setTitle("Define Key Combo Input");
@@ -78,26 +78,74 @@ public class GUI_Dropdowns {
 		
 		//Grid GUI for Keyboard Combo
 		Text t = new Text("Type of click:");
-		ChoiceBox<String> typeField = new ChoiceBox<>();
+		ComboBox<String> typeField = new ComboBox<>();
 		String select = "Select Click Type...";
 		typeField.getItems().add(select);
 		typeField.setValue(select);
-		if (typeField.getValue() != null)	//Remove Original "Selection" Button
-			typeField.getItems().remove(0);
 		
 		//Dropdown Keyboard Combinations
+		typeField.getItems().add("Printscreen");
+		typeField.getItems().add("Caps Lock");
+		typeField.getItems().add("Tab");
+		typeField.getItems().add("Enter");
+		typeField.getItems().add("Escape");
 		
 		
 		
-		//TODO -> Reformat Dropdown to Grid, <AND> Add the Key Combos
-		//TODO -> I Am Currently Working on Both of These...
+		
+		//TODO -> Version 1.2: Add These Additional Keyboard Functionalities
 		
 		
 		
 		
-		typeField.getItems().add("Key Combo A");
-		typeField.getItems().add("Key Combo B");
-		typeField.getItems().add("Key Combo C");
+		
+//		typeField.getItems().add("Delete");
+//		typeField.getItems().add("Backspace");
+//		typeField.getItems().add("Shift");
+//		typeField.getItems().add("Alt");
+//		typeField.getItems().add("Ctrl");
+
+		//Submit Button
+		Button submit = new Button("Submit Instruction");
+		submit.setOnMouseClicked(event -> s.hide());
+		submit.setTranslateY(20);
+		
+		//Set Scene
+		vb.getChildren().addAll(t, typeField, submit);
+		s.setScene(new Scene(vb, 520, 275));
+		s.showAndWait();
+
+		//Dropdown Text Set -> Open Up Other GUI & Return
+		String type = typeField.getValue();
+		if ( (type.equals("Select Click Type...")) )
+			type = "Tab";
+		
+		//Return
+		return ( "AdvKeyboard "
+				+ numClicks + " "
+				+ "N/A "
+				+ type + " "
+				+ "false");
+	}
+	
+	private String advKeyboard_keyCombo_combo(int numClicks)
+	{
+		//Set Stage and Boxes
+		Stage s = new Stage();
+		s.setTitle("Define Key Combo Input");
+		VBox vb = new VBox();
+		
+		//Grid GUI for Keyboard Combo
+		Text t = new Text("Type of click:");
+		ComboBox<String> typeField = new ComboBox<>();
+		String select = "Select Click Type...";
+		typeField.getItems().add(select);
+		typeField.setValue(select);
+		
+		//Dropdown Keyboard Combinations
+		typeField.getItems().add("Windows + .");
+		typeField.getItems().add("Windows + Shift + S");
+		typeField.getItems().add("Alt + Tab");
 		
 		//Submit Button
 		Button submit = new Button("Submit Instruction");
@@ -111,7 +159,58 @@ public class GUI_Dropdowns {
 
 		//Dropdown Text Set -> Open Up Other GUI & Return
 		String type = typeField.getValue();
-		if ( (type.equals("Select ClickType ...")) )
+		if ( (type.equals("Select Click Type...")) )
+			type = "Windows + Shift + S";
+		
+		//Return
+		return ( "AdvKeyboard "
+				+ numClicks + " "
+				+ "N/A "
+				+ type + " "
+				+ "false");
+	}
+	
+	private String advKeyboard_keyCombo_func(int numClicks)
+	{
+		//Set Stage and Boxes
+		Stage s = new Stage();
+		s.setTitle("Define Key Combo Input");
+		VBox vb = new VBox();
+		
+		//Grid GUI for Keyboard Combo
+		Text t = new Text("Type of click:");
+		ComboBox<String> typeField = new ComboBox<>();
+		String select = "Select Click Type...";
+		typeField.getItems().add(select);
+		typeField.setValue(select);
+		
+		//Dropdown Keyboard Combinations
+		typeField.getItems().add("F1");
+		typeField.getItems().add("F2");
+		typeField.getItems().add("F3");
+		typeField.getItems().add("F4");
+		typeField.getItems().add("F5");
+		typeField.getItems().add("F6");
+		typeField.getItems().add("F7");
+		typeField.getItems().add("F8");
+		typeField.getItems().add("F9");
+		typeField.getItems().add("F10");
+		typeField.getItems().add("F11");
+		typeField.getItems().add("F12");
+		
+		//Submit Button
+		Button submit = new Button("Submit Instruction");
+		submit.setOnMouseClicked(event -> s.hide());
+		submit.setTranslateY(20);
+		
+		//Set Scene
+		vb.getChildren().addAll(t, typeField, submit);
+		s.setScene(new Scene(vb, 520, 275));
+		s.showAndWait();
+
+		//Dropdown Text Set -> Open Up Other GUI & Return
+		String type = typeField.getValue();
+		if ( (type.equals("Select Click Type...")) )
 			type = "F12";
 		
 		//Return
@@ -120,6 +219,49 @@ public class GUI_Dropdowns {
 				+ "N/A "
 				+ type + " "
 				+ "false");
+	}
+	
+	private String advKeyboard_keyCombo(int numClicks)
+	{
+		//Set Stage and Boxes
+		Stage s = new Stage();
+		s.setTitle("Define Advanced Keyboard Type");
+		VBox vb = new VBox();
+		
+		//What Type of Key Combo to Do
+		HBox hb = new HBox();
+		Text t = new Text("Type of click:");
+		ChoiceBox<String> typeField = new ChoiceBox<>();
+		String select = "Select Click Type...";
+		typeField.getItems().add(select);
+		typeField.getItems().add("Common Special Keys (e.g. Tab)");
+		typeField.getItems().add("Keyboard Combinations (e.g. Windows + .)");
+		typeField.getItems().add("Function Keys (e.g. F12)");
+		typeField.setValue(select);
+		if (typeField.getValue() != null)	//Remove Original "Selection" Button
+			typeField.getItems().remove(0);
+		hb.getChildren().addAll(t, typeField);	//Add to HBox
+		
+		//Submit Button
+		Button cont = new Button("Continue");
+		cont.setOnMouseClicked(event -> s.hide());
+		cont.setTranslateY(20);
+		
+		//Set Scene
+		vb.getChildren().addAll(hb, cont);
+		s.setScene(new Scene(vb, 520, 275));
+		s.showAndWait();
+
+		//Dropdown Text Set -> Open Up Other GUI & Return
+		String type = typeField.getValue();
+		if ( (type.equals("Select Click Type...")) )
+			type = "Common Special Keys (e.g. Tab)";
+		if (type.equals("Common Special Keys (e.g. Tab)"))
+			return advKeyboard_keyCombo_common(numClicks);
+		if (type.equals("Keyboard Combinations (e.g. Windows + .)"))
+			return advKeyboard_keyCombo_combo(numClicks);
+		else	//Function Keys (e.g. F12)
+			return advKeyboard_keyCombo_func(numClicks);
 	}
 	
 	public String dropdown_advKeyboard()
