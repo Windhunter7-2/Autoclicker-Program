@@ -31,7 +31,17 @@ public class CalibrationFiles {
 	private long infoWait = 5000L; 
 	public void calibrate(String fileName) throws IOException, InterruptedException
 	{
-		if(new File(md.getMainDirectory()+"Autoclicker-Program/Settings/Calibration/"+fileName+".autoclick").exists()) {return;}
+		if(new File(md.getMainDirectory()+"Autoclicker-Program/Settings/Calibration/"+fileName+".autoclick").exists()) {
+			
+			
+			
+			//TODO -> For Version 1.1: Build in Recalibration Given Previous User Mouse Locations!
+			
+			
+			
+			createAutoclicker(fileName);
+//			return;
+			}
 		else createAutoclicker(fileName);
 		
 		/*
