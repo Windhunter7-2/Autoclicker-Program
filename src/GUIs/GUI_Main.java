@@ -308,13 +308,11 @@ public class GUI_Main {
 		
 		//Add Main Buttons
 		HBox mainButtons = gui_exit();
-		Text blank1 = new Text("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t");
-		Text blank2 = new Text("\t");
 		Button submit = new Button("Submit (Create Autoclicker)");
 		submit.setOnAction( e -> gui_create_submit(stage) );
-		mainButtons.getChildren().add(0, blank2);
 		mainButtons.getChildren().add(0, submit);
-		mainButtons.getChildren().add(0, blank1);
+		mainButtons.getChildren().get(1).setTranslateX(20);
+		mainButtons.setTranslateX(450);
 		list.setBottom(mainButtons);
 		Scene scene = new Scene(list, 700, 500);
 		stage.setScene(scene);
@@ -392,13 +390,8 @@ public class GUI_Main {
 		//Main Part: Number Plus Main HBox
 		HBox clickType = new HBox();
 		String largeFont = "-fx-font: 24 arial;";
-		Text blank1 = new Text("      ");
-		Text blank2 = new Text("      ");
-		Text blank3 = new Text("      ");
 		Text click = new Text("Click " + (clickNum + 1) + ":");
 		click.setStyle(largeFont);
-		clickType.getChildren().add(click);
-		clickType.getChildren().add(blank1);
 		
 		//The Dropdown Buttons
 		ChoiceBox<String> dropdown = new ChoiceBox<>();
@@ -412,25 +405,37 @@ public class GUI_Main {
 		dropdown.getItems().add("Wait (General)");
 		dropdown.getItems().add("Wait (Compare Images)");
 		dropdown.setValue(select);
-		clickType.getChildren().add(dropdown);
 		
 		//Remove Original "Selection" Button
 		if (dropdown.getValue() != null)
 			dropdown.getItems().remove(0);
 		
 		//Add Button
-		clickType.getChildren().add(blank2);
 		Button add = new Button("Add");
 		Button remove = new Button("Remove");
 		add.setOnAction( e -> gui_click_addButton(dropdown, add, remove, clickNum) );
 		clickType.getChildren().add(add);
 		
 		//Remove Button
-		clickType.getChildren().add(blank3);
 		remove.setDisable(true);
 		remove.setOpacity(0.5);
 		remove.setOnAction( e -> gui_click_remButton(dropdown, clickNum) );
 		clickType.getChildren().add(remove);
+		
+		//Adding Stuff to Boxes
+		HBox h_addRem = new HBox();
+		remove.setTranslateX(20);
+		h_addRem.getChildren().add(add);
+		h_addRem.getChildren().add(remove);
+		HBox h_drop = new HBox();
+		h_addRem.setTranslateX(20);
+		h_drop.getChildren().add(dropdown);
+		h_drop.getChildren().add(h_addRem);
+		HBox h_click = new HBox();
+		h_drop.setTranslateX(20);
+		h_click.getChildren().add(click);
+		h_click.getChildren().add(h_drop);
+		clickType.getChildren().add(h_click);
 		return clickType;
 		
 		/*
