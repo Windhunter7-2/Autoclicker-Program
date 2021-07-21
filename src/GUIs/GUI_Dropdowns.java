@@ -185,6 +185,7 @@ public class GUI_Dropdowns {
 		submit.setOnMouseClicked(event -> s.hide());
 		vb.getChildren().addAll(t1, clickField, t2, cdoField, t3, holdField, t4, strField, submit);
 		s.setScene(new Scene(vb, 420, 275));
+		s.showAndWait();
 		return "Keyboard " + clickField.getText() + " " + cdoField.getText() + " " + holdField.getText() + " " + strField.getText();
 	}
 
