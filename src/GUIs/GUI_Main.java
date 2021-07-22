@@ -1,41 +1,24 @@
 package GUIs;
 
 import java.awt.AWTException;
-import java.awt.Label;
 import java.io.File;
 import java.io.IOException;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import External.ImageEditing;
 import External.MainDirectory;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ContentDisplay;
-import javafx.scene.control.Separator;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.image.PixelReader;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
-import javafx.scene.text.TextFlow;
-import javafx.scene.transform.Scale;
 import javafx.stage.FileChooser;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-
-import javafx.application.Application;
 import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
 
 public class GUI_Main {
 	
@@ -74,9 +57,11 @@ public class GUI_Main {
 	/**
 	 * This is which autoclicker is currently active.
 	 */
-	
 	private String curAutoclicker = "";
 	
+	/**
+	 * Calls the initial (Startup) GUI.
+	 */
 	public void gui_initial()
 	{
 		mainMenu = gui_general("Initial GUI", false);
@@ -85,11 +70,12 @@ public class GUI_Main {
 		mainStage.setMinWidth(430);
 		mainStage.setMinHeight(230);
 		mainStage.show();
-		/*
-		 * Call gui_general("Initial GUI", false), and have this Pane be centered on the screen, in decently larger dimensions
-		 */
 	}
 	
+	/**
+	 * Calls the main GUI, and has it off to the side. (AKA after an autoclicker is loaded or created)
+	 * @param autoclickName The name of the autoclicker loaded into the program
+	 */
 	public void gui_main(String autoclickName)
 	{
 		mainMenu = gui_general(autoclickName, true);
@@ -97,19 +83,17 @@ public class GUI_Main {
 		mainStage.setMinWidth(425);
 		mainStage.setMinHeight(350);
 		mainStage.setX(Screen.getPrimary().getVisualBounds().getMaxX()-420);	
-		/*
-		 * Call gui_general(autoclickName, true), and have this Pane be off to the right in a smaller size, like in the drawn
-		 * GUI specs
-		 */
 	}
 	
-	/*
-	 * Creates a Pane of 4 HBoxes/VBoxes, in the order, from top to bottom, of:
+	/**
+	 * Creates a Pane of 4 general areas, in the order, from top to bottom, of:
 	 * (1) gui_message(autoclickName)
 	 * (2) gui_mainButtons()
 	 * (3) If and only if runButton is true, gui_autoclickButton()
 	 * (4) gui_exit()
-	 * (These should be top to bottom like a VBox; if it doesn't go that way normally, force it via a nested VBox)
+	 * @param autoclickName The name of the autoclicker loaded (Or, if applicable, the String indicating initual GUI)
+	 * @param runButton Whether or not the button to run the loaded autoclicker should be loaded
+	 * @return A VBox of these 4 sections
 	 */
 	public VBox gui_general(String autoclickName, boolean runButton)
 	{
@@ -140,10 +124,9 @@ public class GUI_Main {
 		
 	}
 	
-	/*
-	 * Must be O(1)
-	 * This just returns an HBox with a very small button on the lower-right corner of the HBox, which says "Exit";
-	 * when clicked on, should call System.exit(0). (See drawn GUI for more position specifics)
+	/**
+	 * Creates an HBox with an "Exit" button
+	 * @return The HBox with the "Exit" button
 	 */
 	public HBox gui_exit()
 	{
@@ -154,12 +137,13 @@ public class GUI_Main {
 		return h;
 	}
 
-	/*
-	 * Must be O(n), where n is the number of characters in autoclickName
-	 * Return an HBox that contains a message (Or series of messages), based on the input of the autoclicker's name;
-	 * 		If autoclickName equals "Initial GUI", this message should be one welcoming the user to the program
-	 * 		Otherwise, it should be a reminder to the user of *which* autoclicker, indicated by autoclickName, is
-	 * 		currently loaded into the program
+	/**
+	 * Return an HBox that contains a message (Or series of messages), based on the input of the autoclicker's name.
+	 * If autoclickName equals "Initial GUI", this message should be one welcoming the user to the program; otherwise,
+	 * it should be a reminder to the user of *which* autoclicker, indicated by autoclickName, is currently loaded
+	 * into the program.
+	 * @param autoclickName Which autoclicker is loaded (If applicable), or alternatively, the String representatin the initial GUI
+	 * @return An HBox of the appropriate text message
 	 */
 	public HBox gui_message(String autoclickName)
 	{
@@ -176,17 +160,12 @@ public class GUI_Main {
 		return h;
 	}
 	
+	/**
+	 * The two main buttons of the program, which are to load an autoclicker and to create an autoclicker.
+	 * @return A VBox with these two buttons
+	 */
 	public VBox gui_mainButtons()
 	{
-		/*
-		 * Must be O(1)
-		 * This should be the two buttons, "Create Autoclicker" and "Load Autoclicker", as drawn in the GUI specs.
-		 * If "Load Autoclicker" is clicked, the user first gets a prompt in the "Autoclickers" folder to select which
-		 * autoclicker they would like to load (And reminds them that they should be in that folder, since calibration
-		 * requires it), and then after they select the file, set curAutoclicker equal to the name of that file, but
-		 * *without* any extensions or folder location data, and then calls gui_main(curAutoclicker). If "Create Autoclicker"
-		 * is clicked, just call gui_createAutoclicker().
-		 */
 		VBox v = new VBox();
 		Button b1 = new Button("CreateAutoclicker");
 		b1.setOnMouseClicked(event -> {gui_createAutoclicker();}); 
@@ -210,12 +189,14 @@ public class GUI_Main {
 		return v;
 	}
 	
+	/**
+	 * The button to run the currently loaded autoclicker. Also has a horizontal separator for looking nicer.
+	 * @return A VBox with the button that runs the autoclicker
+	 */
 	public VBox gui_autoclickButton()
 	{
 		//General Setup & Location Settings
 		VBox vbox = new VBox();
-		//Text blank1 = new Text("\t\n\n\t");
-		//Text blank2 = new Text("\t");
 		ImageEditing img = new ImageEditing();
 		MainDirectory md = new MainDirectory();
 		String location = (md.getMainDirectory() + "Autoclicker-Program/Settings/Graphics/");
@@ -246,15 +227,12 @@ public class GUI_Main {
 			}
 		});
 		return vbox;
-		
-		/*
-		 * Must be O(1)
-		 * This should have two things: A horizontal separator, and a button for running the current autoclicker. (See
-		 * the drawn GUI specs for the exact wording, etc. requirements for the button) When the button is clicked, it
-		 * should call GUI_General.runAutoclick(), with the String being passed being curAutoclicker.
-		 */
 	}
 	
+	/**
+	 * The functionality of the "Submit" button in the "Create Autoclicker" GUI.
+	 * @param createStage The stage that is the "Create Autoclicker" main GUI
+	 */
 	private void gui_create_submit(Stage createStage)
 	{
 		//Error Check: Ignore Button if No Instructions Yet
@@ -283,6 +261,9 @@ public class GUI_Main {
 		return;
 	}
 	
+	/**
+	 * The main "Create Autoclicker" GUI.
+	 */
 	public void gui_createAutoclicker()
 	{
 		//Initialization
@@ -317,12 +298,15 @@ public class GUI_Main {
 		Scene scene = new Scene(list, 700, 500);
 		stage.setScene(scene);
 		stage.show();
-		
-		/*
-		 * This is the main GUI for creating autoclickers.
-		 */
 	}
 	
+	/**
+	 * This is the functionality for the "Add" button in the "Create Autoclicker" GUI.
+	 * @param choiceBox The dropdown for which click type
+	 * @param addBttn A reference to the button itself, for enabling/disabling purposes
+	 * @param remBttn A reference to the "Remove" button, for enabling/disabling purposes
+	 * @param clickNum The instruction's number (e.g. The third instruction added would have this as 3)
+	 */
 	private void gui_click_addButton(ChoiceBox<String> choiceBox, Button addBttn, Button remBttn, int clickNum)
 	{
 		//Error Check: If Still on "Select", Return (AKA Do Nothing from the Button)
@@ -366,6 +350,11 @@ public class GUI_Main {
 		return;
 	}
 	
+	/**
+	 * This is the functionality for the "Remove" button in the "Create Autoclicker" GUI.
+	 * @param choiceBox The dropdown for which click type
+	 * @param clickNum The instruction's number (e.g. The third instruction added would have this as 3)
+	 */
 	private void gui_click_remButton(ChoiceBox<String> choiceBox, int clickNum)
 	{
 		//Error Check: If Still on "Select", Return (AKA Do Nothing from the Button)
@@ -385,6 +374,12 @@ public class GUI_Main {
 		return;
 	}
 	
+	/**
+	 * This is each one of the horizontal rows of buttons for each individual click instruction. It uses a relatively primitive
+	 * data structure to support adding and removing while maintaining numerical order.
+	 * @param clickNum The instruction's number (e.g. The third instruction added would have this as 3)
+	 * @return An HBox of that particular instruction's buttons (Note that these buttons will be unique per each instruction)
+	 */
 	public HBox gui_click(int clickNum)
 	{
 		//Main Part: Number Plus Main HBox
@@ -437,10 +432,6 @@ public class GUI_Main {
 		h_click.getChildren().add(h_drop);
 		clickType.getChildren().add(h_click);
 		return clickType;
-		
-		/*
-		 * This is an individual row of the text, and buttons, for each click, as per the GUI drawn specs, etc.
-		 */
 	}
 
 	/**

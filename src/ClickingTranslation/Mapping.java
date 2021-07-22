@@ -8,7 +8,6 @@ import java.awt.AWTException;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-
 import ImageComparison.CompareImages;
 
 public class Mapping {

@@ -1,34 +1,50 @@
 package FileHandling;
 
-import java.awt.event.*;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.awt.AWTException;
-import java.awt.GraphicsConfiguration;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.Toolkit;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.Scanner;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-
 import External.MainDirectory;
-import javafx.stage.Screen;
 
 public class CalibrationFiles {
+	
+	/**
+	 * For a quick reference to the main directory getter method.
+	 */
 	private MainDirectory md = new MainDirectory();
+	
+	/**
+	 * For a quick reference to file handling methods.
+	 */
 	private FileHandling fh = new FileHandling();
+	
+	/**
+	 * How long to wait after prompt closes before continuing.
+	 */
 	private long inputWait = 5000L;
+	
+	/**
+	 * How long to wait before closing prompts.
+	 */
 	private long infoWait = 5000L; 
+	
+	/**
+	 * Check if calibration is needed or not. If calibration is needed, calibrate.
+	 * Calibration generates the .autoclick files in the Settings/Calibration folder.
+	 * @param fileName The filename of the autoclicker
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
 	public void calibrate(String fileName) throws IOException, InterruptedException
 	{
 		if(new File(md.getMainDirectory()+"Autoclicker-Program/Settings/Calibration/"+fileName+".autoclick").exists()) {
@@ -43,14 +59,14 @@ public class CalibrationFiles {
 //			return;
 			}
 		else createAutoclicker(fileName);
-		
-		/*
-		 * Must be O(1)
-		 * Checks if "Settings/Calibration/fileName.autoclick" exists; if it does exist, simply return; otherwise,
-		 * call createAutoclicker()
-		 */
 	}
 	
+	/**
+	 * Perform calibration of an autoclicker, generating a .autoclick file.
+	 * @param fileName The filename of the autoclicker
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
 	private void createAutoclicker(String fileName) throws IOException, InterruptedException
 	{
 		boolean isChanged = false; //Test if we do any mouse-based calibrations
@@ -134,25 +150,14 @@ public class CalibrationFiles {
 			Thread.sleep(infoWait);
 			endFrame.dispose();
 		}
-		/*
-		 * Must be O(n)*, where n is the number of characters in the autoclicker template file
-		 * (O() might be different for CompareImages, because of the pixels)
-		 * Creates the file "Settings/Calibration/fileName.autoclick", and puts into it the edited contents of the file
-		 * "Autoclickers/fileName.txt"
-		 * These edits should look for any line that starts with "Mouse", or "CompareImages", and do some replacement to the String
-		 * For lines with "Mouse", any "x:NameOfPosition" should prompt the user to point to the location "Name Of Position"
-		 * (Yes, capitalization is what defines the spacing for printing to the user), in which case the edit to the string will
-		 * replace that bit of "x:NameOfPosition" with "x y", where x and y are the x position and y position of the mouse,
-		 * respectively
-		 * For lines with "CompareImages", instead what will be replaced will be "xs:NameOfPosition", and will prompt the user to
-		 * draw a box around the part of the screen they want to compare images against; after they draw this box, the 4 corners of
-		 * the box, *in the order* of [TopLeft x Position, TopLeft y Position, BottomRight x Position, BottomRight y Position] will
-		 * be the replacement for "xs:NameOfPosition", and it will also create a BufferedImage screen capture of this screen at those
-		 * exact pixels, and call ImageCompareFiles.saveImage(), with fileName in the parameter being the same as createAutoclicker()'s
-		 * fileName, to save the image as a .png
-		 */
 	}
 	
+	/**
+	 * Give user prompt regarding the calibration, so they know to point their mouse in the proper places.
+	 * @param inText What's written in the prompt
+	 * @return The location of where the user points
+	 * @throws InterruptedException
+	 */
 	private Point calibSetup(String inText) throws InterruptedException {
 		JFrame jf = new JFrame();
 		jf.setTitle("Calibration in Progress...");

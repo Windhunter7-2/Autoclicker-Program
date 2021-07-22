@@ -1,22 +1,25 @@
 package ClickingTranslation;
 
 import java.awt.AWTException;
-import java.awt.GraphicsConfiguration;
-import java.awt.GraphicsEnvironment;
-import java.awt.MouseInfo;
 import java.awt.Robot;
 import java.awt.event.InputEvent;
 import java.util.ArrayList;
 
-import javafx.stage.Screen;
-import javafx.stage.Window;
-
-import java.awt.Toolkit;
-
 public class Mouse {
 
+	/**
+	 * Whether or not clicks are used (Instead of mouse wheel)
+	 */
 	private boolean clickUsed = false;
+	
+	/**
+	 * The x position of the mouse location.
+	 */
 	private int xPos = 0;
+	
+	/**
+	 * The y position of the mouse location.
+	 */
 	private int yPos = 0;
 	
 	/**

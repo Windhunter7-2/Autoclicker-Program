@@ -3,7 +3,6 @@ package ClickingTranslation;
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
@@ -34,20 +33,13 @@ public class Advanced_Keyboard {
 	 */
 	private boolean isUnicode;
 
+	/**
+	 * This starts the auto-click of the given instructions.
+	 * @param instructions The instructions given (In order) for the auto-click
+	 * @throws InterruptedException
+	 */
 	public void startAutoclick(ArrayList<String> instructions) throws InterruptedException
 	{
-		/*
-		 * Must be O(n), where n is numClicks
-		 * This starts the auto-click of the given instructions. First call convertInstructions(instructions) to set the
-		 * globals to be used, and then implement the keypresses, via either calling clickUnicode(), if unicodeKey is not
-		 * equal to 0, or if it is 0, instead do a series of keyPresses with a Robot class, matching the keyboard combination
-		 * in the String keyCombo. The currently supported ones in Version 1 of the program will be:
-		 * “Windows + .”, “Windows + Shift + S”, “Alt + Tab”, “Printscreen”, “Caps Lock”, “Tab”, “Enter”, “Escape”, “Delete”,
-		 * “Backspace”, “Shift” (Hold), “Alt” (Hold), “Ctrl” (Hold), and “FX” where “X” is which number (For example, “F1”, “F2”, etc.)
-		 * For example, if after calling convertInstructions(), numClicks is 2, unicodeKey is 0, and keyCombo is “Alt + Tab”, it should
-		 * use the Robot to hold down the Alt key while pressing the Tab key, and then do that a second time, as well. See the Keyboard
-		 * class for a similar example.
-		 */
 		convertInstructions(instructions);
 		Robot click = null;
 		try {
@@ -103,11 +95,6 @@ public class Advanced_Keyboard {
 						click.delay(1000); //TODO figure out how long to hold for
 						click.keyRelease(KeyEvent.VK_CONTROL);
 						break;
-						/* NOTE: holding the "Fn" key while using this program does nothing. 
-						 * The function keys act as they would in the application's context.
-						 * There's no KeyEvent.VK_FN either.
-						 * The Fn key might be special to my laptop's keyboard, but I don't know.
-						 */
 					case "F1":
 						pressOrder(click, new int[] {KeyEvent.VK_F1});
 						break;
@@ -132,7 +119,7 @@ public class Advanced_Keyboard {
 					case "F8":
 						pressOrder(click, new int[] {KeyEvent.VK_F8});
 						break;
-					case "F9": //I wasn't able to test this one because Eclipse doesn't use F9
+					case "F9":
 						pressOrder(click, new int[] {KeyEvent.VK_F9});
 						break;
 					case "F10":
@@ -158,6 +145,7 @@ public class Advanced_Keyboard {
 	 * Presses keys in the given order, left to right.
 	 * Releases them in reverse order.
 	 * O(n), where n is the number of keys.
+	 * @param r The Robot that does the KeyEvents.
 	 * @param events the list of KeyEvents.
 	 */
 	private void pressOrder(Robot r, int[] events) {
@@ -174,7 +162,8 @@ public class Advanced_Keyboard {
 	 * This isn't quite an "input", as many unicode characters don't have direct device inputs.
 	 * Instead, it's a copy-paste from a file containing several Unicode planes.
 	 * Credit to Paul Sarena (https://github.com/bits/UTF-8-Unicode-Test-Documents) for the base Unicode file.
-	 * @throws InterruptedException 
+	 * @param r The Robot that does the KeyEvents
+	 * @throws InterruptedException
 	 */
 	private void clickUnicode(Robot r) throws InterruptedException
 	{
@@ -183,38 +172,22 @@ public class Advanced_Keyboard {
 		c.setContents(s, null);
 		pressOrder(r, new int[] {KeyEvent.VK_CONTROL, KeyEvent.VK_V});
 		Thread.sleep(100);
-		/*
-		 * Must be less than or equal to O(n), where n is the number of Unicode characters
-		 * Creating the additionally required file (The Unicode document) is part of this method, and the reason is that since this
-		 * is open-ended implementation, you can design the document however you wish; just make sure that the integers in the document
-		 * represent the Unicode counterparts in the same way as mentioned in the description of the unicodeKey variable.
-		 * (Note that the variable “unicodeKey” is the integer you’re converting to the Unicode character) This function should use a
-		 * Robot class and a series of key presses to simulate “pressing a key” that represents a single Unicode character;
-		 * specifically, it should get the corresponding character from the document, use auto clicking to physically select the
-		 * associated character and copy that to the user’s clipboard, followed by pasting that character from the clipboard (Via Ctrl+V).
-		 * Note that much of this will be a lot easier using the already-defined auto-clicks, which is fine for this particular method.
-		 */
 	}
 	
+	/**
+	 * Converts the instructions from String form to the proper forms (As globals). (i.e. ints, etc.)
+	 * @param instructions The instructions to be converted
+	 */
 	private void convertInstructions(ArrayList<String> instructions)
 	{
 		numClicks = Integer.valueOf(instructions.get(0));
 		try {
 			unicodeKey = Integer.valueOf(instructions.get(1), 16);
-			//unicodeKey = Integer.valueOf(instructions.get(1));
 		} catch (NumberFormatException e) {
 			throw e;
 		}
 		keyCombo = instructions.get(2);
 		isUnicode = Boolean.valueOf(instructions.get(3));
-		/*
-		 * Must be O(1)
-		 * Given that the format of the given instructions ArrayList is the following:
-		 * [numClicks, unicodeKey, keyCombo, isUnicode]
-		 * Where each corresponds to its respective index ( For example, numClicks is instructions.get(0) ), and isUnicode is 0
-		 * for using a keyCombo and 1 for using a unicodeKey, set all 4 of these to their respective global variables. Note that
-		 * there is no checking needed, and all 4 are always set, 1 to 1.
-		 */
 	}
 
 	/**
@@ -227,13 +200,10 @@ public class Advanced_Keyboard {
 		for (int i = 0; i < 26; ++i) {
 			ArrayList<String> instr = new ArrayList<String>();
 			instr.add("1");	//Number of Clicks
-			instr.add(String.valueOf(8162+i));	//UnicodeKey
-			instr.add("F12");//KeyCombo
+			instr.add(String.valueOf(8162 + i));	//UnicodeKey
+			instr.add("F4");//KeyCombo
 			instr.add("true"); //IsUnicode
 			forTesting.startAutoclick(instr);			//Thread.sleep(1000L);
 		}
 	}
-	/*
-	 *
-	 */
 }

@@ -6,9 +6,7 @@ import java.awt.Robot;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
-
 import javax.swing.JOptionPane;
-
 import External.MainDirectory;
 import FileHandling.ImageCompareFiles;
 
