@@ -1,2 +1,0 @@
-CompareImages ExampleScreenshot_0.png xs:ExampleScreenshotA false true
-CompareImages ExampleScreenshot_1.png xs:ExampleScreenshotB false true

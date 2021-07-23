@@ -1,5 +1,0 @@
-Keyboard 1 2 1000 Blehh
-AdvKeyboard 1 2 Ctrl false
-Mouse true x:Mouse1 LeftClick 1 false 0 30 100
-Wait 3000
-CompareImages Region1 xs:Box1 true false

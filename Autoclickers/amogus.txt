@@ -1,2 +1,0 @@
-Mouse true x:Clickmogus LeftClick 1 false 0 0 0
-Keyboard 1 0 0 Among Us!

@@ -464,17 +464,27 @@ public class GUI_Dropdowns {
 		s.setTitle("Define Image Comparison");
 		VBox vb = new VBox();
 		
-		//Selecting to Wait Until Same Or Different
+		//Selecting to Wait Until Same Or Different		
 		Text t1 = new Text("Select if you would like to wait until the images are the same or different:\n\n");
-		Text t2 = new Text("Wait Until Images Are the Same");
-		Text t3 = new Text("Wait Until Images Are Different");
+		
+		VBox vb2 = new VBox();
+		ToggleGroup tg1 = new ToggleGroup();
+		RadioButton rb1 = new RadioButton("Wait Until Images Are The Same");
+		RadioButton rb2 = new RadioButton("Wait Until Images Are Different");
+		rb1.setToggleGroup(tg1);
+		rb2.setToggleGroup(tg1);
+		tg1.selectToggle(rb1);
+		
+		vb2.getChildren().addAll(rb1, rb2);
+		//Text t2 = new Text("Wait Until Images Are the Same");
+		//Text t3 = new Text("Wait Until Images Are Different");
 		Text t4 = new Text("\nNote: The image location and image to compare against will be configured during calibration"
 				+ "\n(Calibration occurs when the autoclicker is loaded the first time)\n\n");
-		HBox hb = new HBox();
+		/*HBox hb = new HBox();
 		CheckBox cb1 = new CheckBox();
 		cb1.setSelected(true);
 		CheckBox cb2 = new CheckBox();
-		hb.getChildren().addAll(t2, cb1, t3, cb2);
+		hb.getChildren().addAll(t2, cb1, t3, cb2);*/
 		
 		//Image Name
 		Text t5 = new Text("What would you like to call this image to be compared?");
@@ -486,13 +496,13 @@ public class GUI_Dropdowns {
 		submit.setTranslateY(20);
 		
 		//Set Scene
-		vb.getChildren().addAll(t1, hb, t4, t5, nameField, submit);
+		vb.getChildren().addAll(t1, vb2, t4, t5, nameField, submit);
 		s.setScene(new Scene(vb, 520, 275));
 		s.showAndWait();
 		return ( "CompareImages "
 				+ "autoclickerName_" + imageNumber + ".png "
 				+ "xs:" + nameField.getText().replaceAll("\\s+", "") + " "
-				+ cb1.isSelected() + " " + cb2.isSelected() );
+				+ tg1.getSelectedToggle().equals(rb1) + " " + tg1.getSelectedToggle().equals(rb2) );
 	}
 	
 	/**

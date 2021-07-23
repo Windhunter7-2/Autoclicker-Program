@@ -1,0 +1,1 @@
+CompareImages fb_0.png xs:NameofImage false true

@@ -1,0 +1,1 @@
+Mouse false x:NameOfClick LeftClick 0 true 40 0 0

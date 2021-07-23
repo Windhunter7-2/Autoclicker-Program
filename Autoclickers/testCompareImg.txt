@@ -1,2 +1,0 @@
-CompareImages testCompareImg_0.png xs:maybeCalib true false
-Mouse true x:NameOfClick LeftClick 1 false 0 0 0
