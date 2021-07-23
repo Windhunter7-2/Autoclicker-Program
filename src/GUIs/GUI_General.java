@@ -1,9 +1,11 @@
 package GUIs;
 
 import java.awt.AWTException;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import ClickingTranslation.Mapping;
+import External.MainDirectory;
 import FileHandling.CalibrationFiles;
 import FileHandling.FileHandling;
 import FileHandling.MappingFiles;
@@ -29,6 +31,12 @@ public class GUI_General {
 			outContents = outContents + s + "\n";
 		}
 		fh.setText("Autoclicker-Program/Autoclickers/" + fileNameWithExt, outContents.substring(0, outContents.length()-1));
+		String fileName = new MainDirectory().getMainDirectory() 
+			+ "Autoclicker-Program/Settings/Calibration/" 
+			+ fileNameWithExt.substring(0, fileNameWithExt.length()-4) 
+			+ ".autoclick"; //Undoing the addition of the extension is bad form. I must fix this later.
+		new File(fileName).delete();
+		//new File("Autoclicker-Program/Settings/Calibration/" + fileNameWithExt.substring(0, fileNameWithExt.length()-4) + ".autoclick").delete();
 	}
 	
 	/**

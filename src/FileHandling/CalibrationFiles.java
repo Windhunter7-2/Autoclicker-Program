@@ -55,8 +55,8 @@ public class CalibrationFiles {
 			
 			
 			
-			createAutoclicker(fileName);
-//			return;
+			//createAutoclicker(fileName);
+			return;
 			}
 		else createAutoclicker(fileName);
 	}
