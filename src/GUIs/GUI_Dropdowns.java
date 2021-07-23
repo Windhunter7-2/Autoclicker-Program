@@ -6,7 +6,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -348,10 +350,18 @@ public class GUI_Dropdowns {
 		s.setTitle("Define Mouse Click");
 		VBox vb = new VBox();
 		
-		HBox hb1 = new HBox(new Text("Use click?"));
-		CheckBox cb1 = new CheckBox();
-		hb1.getChildren().add(cb1);
-		hb1.setPadding(new Insets(0, 0, 8, 0));
+		HBox hb1 = new HBox(new Text("Operation:"));
+		ToggleGroup tg1 = new ToggleGroup();
+		RadioButton rb1 = new RadioButton("Mouse click");
+		RadioButton rb2 = new RadioButton("Scroll Wheel");
+		rb1.setToggleGroup(tg1);
+		rb2.setToggleGroup(tg1);
+		tg1.selectToggle(rb1);
+		hb1.getChildren().addAll(rb1, rb2);
+		
+		//CheckBox cb1 = new CheckBox();
+		//hb1.getChildren().add(cb1);
+		//hb1.setPadding(new Insets(0, 0, 8, 0));
 		
 		HBox hb2 = new HBox(new Text("Name for this action:"));
 		TextField nameField = new TextField("Name Of Click");
@@ -375,10 +385,10 @@ public class GUI_Dropdowns {
 		TextField numField = new TextField("0");
 		hb4.getChildren().add(numField);
 		
-		HBox hb5 = new HBox(new Text("Use mouse wheel?"));
+		/*HBox hb5 = new HBox(new Text("Use mouse wheel?"));
 		CheckBox cb2 = new CheckBox();
 		hb5.getChildren().add(cb2);
-		hb5.setPadding(new Insets(0,0,8,0));
+		hb5.setPadding(new Insets(0,0,8,0));*/
 		
 		HBox hb6 = new HBox(new Text("How far to scroll? (positive values scroll downwards)"));
 		TextField scrollField = new TextField("0");
@@ -394,7 +404,7 @@ public class GUI_Dropdowns {
 		
 		Button submit = new Button("Submit Instruction");
 		submit.setOnMouseClicked(event -> s.hide());
-		vb.getChildren().addAll(hb1, hb2, hb3, hb4, hb5, hb6, hb7, hb8, submit);
+		vb.getChildren().addAll(hb1, hb2, hb3, hb4, hb6, hb7, hb8, submit);
 		s.setScene(new Scene(vb, 420, 275));
 		s.showAndWait();
 		
@@ -405,7 +415,7 @@ public class GUI_Dropdowns {
 			type = "NoClick";
 		
 		return "Mouse " 
-		+ cb1.isSelected() 
+		+ tg1.getSelectedToggle().equals(rb1)
 		+ " x:"
 		+ nameField.getText()
 		+ " "
@@ -413,7 +423,7 @@ public class GUI_Dropdowns {
 		+ " "
 		+ numField.getText()
 		+ " "
-		+ cb2.isSelected()
+		+ tg1.getSelectedToggle().equals(rb2)
 		+ " "
 		+ scrollField.getText()
 		+ " "
