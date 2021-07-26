@@ -1,5 +1,7 @@
 package GUIs;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -8,6 +10,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -359,15 +362,11 @@ public class GUI_Dropdowns {
 		tg1.selectToggle(rb1);
 		hb1.getChildren().addAll(rb1, rb2);
 		
-		//CheckBox cb1 = new CheckBox();
-		//hb1.getChildren().add(cb1);
-		//hb1.setPadding(new Insets(0, 0, 8, 0));
-		
 		HBox hb2 = new HBox(new Text("Name for this action:"));
 		TextField nameField = new TextField("Name Of Click");
 		nameField.setText( nameField.getText().replaceAll("\\s+", "") );	//Delete Spaces from Name Field
 		hb2.getChildren().add(nameField);
-	
+		//Mouse only
 		HBox hb3 = new HBox(new Text("Type of click:"));
 		ChoiceBox<String> typeField = new ChoiceBox<>();
 		String select = "Select Click Type...";
@@ -380,16 +379,11 @@ public class GUI_Dropdowns {
 		if (typeField.getValue() != null)	//Remove Original "Selection" Button
 			typeField.getItems().remove(0);
 		hb3.getChildren().add(typeField);	//Add to HBox
-		
+		//Mouse only
 		HBox hb4 = new HBox(new Text("Number of clicks:"));
 		TextField numField = new TextField("0");
 		hb4.getChildren().add(numField);
-		
-		/*HBox hb5 = new HBox(new Text("Use mouse wheel?"));
-		CheckBox cb2 = new CheckBox();
-		hb5.getChildren().add(cb2);
-		hb5.setPadding(new Insets(0,0,8,0));*/
-		
+		//Scroll only
 		HBox hb6 = new HBox(new Text("How far to scroll? (positive values scroll downwards)"));
 		TextField scrollField = new TextField("0");
 		hb6.getChildren().add(scrollField);
@@ -397,13 +391,26 @@ public class GUI_Dropdowns {
 		HBox hb7 = new HBox(new Text("Delay between clicks / turns:"));
 		TextField cdoField = new TextField("0");
 		hb7.getChildren().add(cdoField);
-		
+		//Mouse only
 		HBox hb8 = new HBox(new Text("How long to hold each click:"));
 		TextField holdField = new TextField("0");
 		hb8.getChildren().add(holdField);
 		
 		Button submit = new Button("Submit Instruction");
 		submit.setOnMouseClicked(event -> s.hide());
+		
+		//An observer to show and hide relevant fields.
+		tg1.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
+			@Override
+			public void changed(ObservableValue<? extends Toggle> observed, Toggle oldT, Toggle newT) {
+				if(rb1.isSelected()) {
+					vb.getChildren().addAll(hb3, hb4, hb8);
+				} else {
+					vb.getChildren().removeAll(hb3, hb4, hb8);
+				}
+			}
+		});
+		//Show
 		vb.getChildren().addAll(hb1, hb2, hb3, hb4, hb6, hb7, hb8, submit);
 		s.setScene(new Scene(vb, 420, 275));
 		s.showAndWait();
