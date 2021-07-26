@@ -359,7 +359,6 @@ public class GUI_Dropdowns {
 		RadioButton rb2 = new RadioButton("Scroll Wheel");
 		rb1.setToggleGroup(tg1);
 		rb2.setToggleGroup(tg1);
-		tg1.selectToggle(rb1);
 		hb1.getChildren().addAll(rb1, rb2);
 		
 		HBox hb2 = new HBox(new Text("Name for this action:"));
@@ -399,19 +398,22 @@ public class GUI_Dropdowns {
 		Button submit = new Button("Submit Instruction");
 		submit.setOnMouseClicked(event -> s.hide());
 		
+		VBox vbSelect = new VBox(); //Holds fields dependent on 
 		//An observer to show and hide relevant fields.
 		tg1.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
 			@Override
 			public void changed(ObservableValue<? extends Toggle> observed, Toggle oldT, Toggle newT) {
 				if(rb1.isSelected()) {
-					vb.getChildren().addAll(hb3, hb4, hb8);
+					vbSelect.getChildren().addAll(hb3, hb4, hb8);
+					vbSelect.getChildren().remove(hb6);
 				} else {
-					vb.getChildren().removeAll(hb3, hb4, hb8);
+					vbSelect.getChildren().add(hb6);
+					vbSelect.getChildren().removeAll(hb3, hb4, hb8);
 				}
 			}
 		});
 		//Show
-		vb.getChildren().addAll(hb1, hb2, hb3, hb4, hb6, hb7, hb8, submit);
+		vb.getChildren().addAll(hb1, hb2, vbSelect, hb7, submit);
 		s.setScene(new Scene(vb, 420, 275));
 		s.showAndWait();
 		
