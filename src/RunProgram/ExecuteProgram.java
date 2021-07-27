@@ -8,8 +8,6 @@ import javafx.stage.Stage;
 
 public class ExecuteProgram extends Application {
 	
-	//TO DO -> Finishing Planning...
-	
 	/**
 	 * Initializes the program. 
 	 * @param nullStage A dummy parameter
