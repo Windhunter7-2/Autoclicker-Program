@@ -9,7 +9,14 @@ import javafx.stage.Stage;
 
 public class CmdVersion extends Application{
 	
+	/**
+	 * The argument type (e.g. "Create", "Run").
+	 */
 	public static String argType;
+	
+	/**
+	 * The input for that particular type. For example, if "Run" is used, the input must be the name of the autoclicker to run.
+	 */
 	public static String input;
 	
 	/**
