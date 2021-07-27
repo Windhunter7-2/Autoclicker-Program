@@ -161,7 +161,6 @@ public class Advanced_Keyboard {
 	 * Used to print a unicode character.
 	 * This isn't quite an "input", as many unicode characters don't have direct device inputs.
 	 * Instead, it's a copy-paste from a file containing several Unicode planes.
-	 * Credit to Paul Sarena (https://github.com/bits/UTF-8-Unicode-Test-Documents) for the base Unicode file.
 	 * @param r The Robot that does the KeyEvents
 	 * @throws InterruptedException
 	 */
