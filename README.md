@@ -20,25 +20,23 @@ Initial Autoclickers to Create for the User-Generated Library (Some of These Wer
 Another function of this program will be that it will support autoclickers as macros. For instance, the user could set it up that when he presses ‘G’ on the keyboard and the program is running, that the autoclicker he linked to the key runs. 
 
 
+# How to Install All Dragon Games Programs
+- (0) Once, for All Dragon Games Programs, do the following steps. First, Create a Main "Installation" Folder, and Extract "_Universal Settings.zip" to There (Also from the Google Drive)
+- (1) Go to C:/Users/Public
+- (2) Create a File "Windhunter's Programs - Main Folder Location.txt"
+- (3) In This .txt File, Put the Location of Your Installation Directory (e.g. "C:/Windhunter's Programs/")
+- (4) Put the "Autoclicker-Program" Folder (With Its Name As-Is) in This "Installation" Directory
+- (5) Install Java (SE 9 Or Higher Might Work; SE 13 and Higher Have Been Tested to Work)
+- (6) Use Either "Autoclicker Program.exe" Or "Autoclicker Program.sh" to Run the Program 😀 (If the .exe Is Preferred; Note That "Autoclicker Program.exe" Requires the Given .sig File with It, Whereas the "Autoclicker Program.sh" Instead Requires Further Setup)
+
+# Changelog
+- Version 1.0 -> Initial Program
+
 # Notes
-- This is still currently in development for version 1.0
+- None Right Now
 
 # Authors (So Far)
 - Evan Baker
 - Nicholas Szymonik
 
-LICENSE FOR UNICODE FILE
-
-Copyright (c) 2012-2018, Paul Sarena
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
-
-- Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
-
-- Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
-
-- Neither the name of the iTools nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
