@@ -27,7 +27,7 @@ Another function of this program will be that it will support autoclickers as ma
 - (3) In This .txt File, Put the Location of Your Installation Directory (e.g. "C:/Windhunter's Programs/")
 - (4) Put the "Autoclicker-Program" Folder (With Its Name As-Is) in This "Installation" Directory
 - (5) Install Java (SE 9 Or Higher Might Work; SE 13 and Higher Have Been Tested to Work)
-- (6) Use Either "Autoclicker Program.exe" Or "Autoclicker Program.sh" to Run the Program 😀 (If the .exe Is Preferred; Note That "Autoclicker Program.exe" Requires the Given .sig File with It, Whereas the "Autoclicker Program.sh" Instead Requires Further Setup)
+- (6) Use "Autoclicker Program.sh" to Run the Program (Note: This Is a Shell Script, So Might Require a Little Bit of Setup)
 
 # Changelog
 - Version 1.0 -> Initial Program
