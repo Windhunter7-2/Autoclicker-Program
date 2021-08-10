@@ -1,10 +1,12 @@
 #See Autoclicker-Program for Examples
 1) Export from Eclipse As .jar
-2) Create NameOfPython.py (To Run the .jar)
-3) Open PowerShell
-4) pyinstaller --onefile -w NameOfPython.py
-5) Delete build & pycache Folders (And the .spec File)
-6) Grab .exe File from dist Folder
-7) Use Resource Hacker (Shortcut in "Blender Docs" Folder) to Put the Icon onto the Exe
-8) Right-Click Exe and "Sign and Encrypt" with Kleopatra!!! (Most Important Step!)
-9) Make Shell Script (.sh) File That Mimicks the Exe (For a Single-File Load Alternative)
+2) Make Shell Script (.sh) File That Mimicks an Exe
+
+//BUGGY!!! EXE DETECTED AS "VIRUS" STILL!!!
+1) Create NameOfPython.py (To Run the .jar)
+2) Open PowerShell
+3) pyinstaller --onefile -w NameOfPython.py
+4) Delete build & pycache Folders (And the .spec File)
+5) Grab .exe File from dist Folder
+6) Use Resource Hacker (Shortcut in "Blender Docs" Folder) to Put the Icon onto the Exe
+7) Right-Click Exe and "Sign and Encrypt" with Kleopatra!!! (Most Important Step!)

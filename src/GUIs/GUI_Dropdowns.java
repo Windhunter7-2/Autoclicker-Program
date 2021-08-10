@@ -2,10 +2,8 @@ package GUIs;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
@@ -380,7 +378,7 @@ public class GUI_Dropdowns {
 		hb3.getChildren().add(typeField);	//Add to HBox
 		//Mouse only
 		HBox hb4 = new HBox(new Text("Number of clicks:"));
-		TextField numField = new TextField("0");
+		TextField numField = new TextField("1");
 		hb4.getChildren().add(numField);
 		//Scroll only
 		HBox hb6 = new HBox(new Text("How far to scroll? (positive values scroll downwards)"));
